@@ -1,0 +1,47 @@
+name: Auto Tag
+
+on:
+  push:
+    branches:
+      - main  # или ваша основная ветка
+
+jobs:
+  tag:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Get latest tag
+        id: get_tag
+        run: |
+          git fetch --tags
+          latest_tag=$(git describe --tags `git rev-list --tags --max-count=1` 2>/dev/null || echo "v0.0.0")
+          echo "Latest tag: $latest_tag"
+          echo "latest_tag=$latest_tag" >> $GITHUB_OUTPUT
+
+      - name: Bump patch version and create new tag
+        id: new_tag
+        run: |
+          latest=${{ steps.get_tag.outputs.latest_tag }}
+          echo "Previous tag: $latest"
+
+          # Разбиваем версию на части
+          version=${latest#v}
+          IFS='.' read -r major minor patch <<< "$version"
+
+          # Увеличиваем PATCH
+          patch=$((patch + 1))
+          new_tag="$major.$minor.$patch"
+
+          echo "New tag: $new_tag"
+          echo "new_tag=$new_tag" >> $GITHUB_OUTPUT
+
+      - name: Push new tag
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git tag ${{ steps.new_tag.outputs.new_tag }}
+          git push origin ${{ steps.new_tag.outputs.new_tag }}
