@@ -1,0 +1,75 @@
+syntax = "proto3";
+
+package guild.v1;
+
+option go_package = "github.com/DiscordMHS/protocols/gen/go/guild/v1;guild";
+
+import "buf/validate/validate.proto";
+import "google/api/annotations.proto";
+import "protoc-gen-openapiv2/options/annotations.proto";
+
+option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
+  info : {title : "Guild Service API" version : "0.0.1"}
+};
+
+service GuildService {
+  rpc GetGuildById(GetGuildByIdRequest) returns (Guild) {
+    option (google.api.http) = {
+      post : "/api/v1/guild/{id}"
+      body : "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags : "Guild"
+    };
+  };
+
+  rpc GetPublicGuilds(GetPublicGuildsPageRequest) returns (GetPublicGuildsPageResponse) {
+    option (google.api.http) = {
+        post : "/api/v1/guild/page/{page}"
+        body : "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags : "Guild"
+    };
+  };
+}
+
+message GetGuildByIdRequest {
+  uint64 id = 1 [
+    (buf.validate.field).uint64.gt = 0
+  ];
+}
+
+message GetPublicGuildsPageResponse {
+    repeated Guild guilds = 1;
+    uint64 total_pages = 2;
+    uint64 current_page = 3;
+}
+
+message GetPublicGuildsPageRequest {
+    uint64 page = 1 [
+        (buf.validate.field).uint64.gt = 0
+    ];
+}
+
+message Guild {
+  uint64 id = 1 [
+    (buf.validate.field).uint64.gt = 0
+  ];
+  uint64 owner_id = 2 [
+    (buf.validate.field).uint64.gt = 0
+  ];
+  string title = 3 [
+    (buf.validate.field).required = true
+  ];
+  string description = 4;
+  optional string avatar_url = 5 [
+    (buf.validate.field).string.uri = true
+  ];
+  optional string wallpaper_url = 6 [
+    (buf.validate.field).string.uri = true
+  ];
+  int32 visibility = 7 [
+    (buf.validate.field).int32.gt = 0
+  ];
+}
