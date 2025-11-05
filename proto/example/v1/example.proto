@@ -20,8 +20,18 @@ service ExampleService {
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags : "Example";
+    };
   };
-}
+
+  rpc Hello2(HelloRequest2) returns (HelloResponse2) {
+    option (google.api.http) = {
+      post : "/api/v1/hello2/{id}"
+      body : "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags : "Example";
+    };
+  };
 }
 
 message HelloRequest {
@@ -32,3 +42,12 @@ message HelloRequest {
 }
 
 message HelloResponse { string msg = 1; }
+
+message HelloRequest2 {
+  string id = 1 [
+    (buf.validate.field).required = true,
+    (buf.validate.field).string.uuid = true
+  ];
+}
+
+message HelloResponse2 { string msg = 1; }

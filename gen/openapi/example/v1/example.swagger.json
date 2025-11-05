@@ -53,9 +53,50 @@
           "Example"
         ]
       }
+    },
+    "/api/v1/hello2/{id}": {
+      "post": {
+        "operationId": "ExampleService_Hello2",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1HelloResponse2"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ExampleServiceHello2Body"
+            }
+          }
+        ],
+        "tags": [
+          "Example"
+        ]
+      }
     }
   },
   "definitions": {
+    "ExampleServiceHello2Body": {
+      "type": "object"
+    },
     "ExampleServiceHelloBody": {
       "type": "object"
     },
@@ -88,6 +129,14 @@
       }
     },
     "v1HelloResponse": {
+      "type": "object",
+      "properties": {
+        "msg": {
+          "type": "string"
+        }
+      }
+    },
+    "v1HelloResponse2": {
       "type": "object",
       "properties": {
         "msg": {
