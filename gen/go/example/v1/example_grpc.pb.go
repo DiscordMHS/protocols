@@ -19,8 +19,9 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	ExampleService_Hello_FullMethodName  = "/example.v1.ExampleService/Hello"
-	ExampleService_Hello2_FullMethodName = "/example.v1.ExampleService/Hello2"
+	ExampleService_Hello_FullMethodName        = "/example.v1.ExampleService/Hello"
+	ExampleService_Hello2_FullMethodName       = "/example.v1.ExampleService/Hello2"
+	ExampleService_GetGuildById_FullMethodName = "/example.v1.ExampleService/GetGuildById"
 )
 
 // ExampleServiceClient is the client API for ExampleService service.
@@ -29,6 +30,7 @@ const (
 type ExampleServiceClient interface {
 	Hello(ctx context.Context, in *HelloRequest, opts ...grpc.CallOption) (*HelloResponse, error)
 	Hello2(ctx context.Context, in *HelloRequest2, opts ...grpc.CallOption) (*HelloResponse2, error)
+	GetGuildById(ctx context.Context, in *GetGuildByIdRequest, opts ...grpc.CallOption) (*GetGuildByIdResponse, error)
 }
 
 type exampleServiceClient struct {
@@ -59,12 +61,23 @@ func (c *exampleServiceClient) Hello2(ctx context.Context, in *HelloRequest2, op
 	return out, nil
 }
 
+func (c *exampleServiceClient) GetGuildById(ctx context.Context, in *GetGuildByIdRequest, opts ...grpc.CallOption) (*GetGuildByIdResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetGuildByIdResponse)
+	err := c.cc.Invoke(ctx, ExampleService_GetGuildById_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ExampleServiceServer is the server API for ExampleService service.
 // All implementations must embed UnimplementedExampleServiceServer
 // for forward compatibility.
 type ExampleServiceServer interface {
 	Hello(context.Context, *HelloRequest) (*HelloResponse, error)
 	Hello2(context.Context, *HelloRequest2) (*HelloResponse2, error)
+	GetGuildById(context.Context, *GetGuildByIdRequest) (*GetGuildByIdResponse, error)
 	mustEmbedUnimplementedExampleServiceServer()
 }
 
@@ -80,6 +93,9 @@ func (UnimplementedExampleServiceServer) Hello(context.Context, *HelloRequest) (
 }
 func (UnimplementedExampleServiceServer) Hello2(context.Context, *HelloRequest2) (*HelloResponse2, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Hello2 not implemented")
+}
+func (UnimplementedExampleServiceServer) GetGuildById(context.Context, *GetGuildByIdRequest) (*GetGuildByIdResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetGuildById not implemented")
 }
 func (UnimplementedExampleServiceServer) mustEmbedUnimplementedExampleServiceServer() {}
 func (UnimplementedExampleServiceServer) testEmbeddedByValue()                        {}
@@ -138,6 +154,24 @@ func _ExampleService_Hello2_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ExampleService_GetGuildById_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetGuildByIdRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ExampleServiceServer).GetGuildById(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ExampleService_GetGuildById_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ExampleServiceServer).GetGuildById(ctx, req.(*GetGuildByIdRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // ExampleService_ServiceDesc is the grpc.ServiceDesc for ExampleService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -152,6 +186,10 @@ var ExampleService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Hello2",
 			Handler:    _ExampleService_Hello2_Handler,
+		},
+		{
+			MethodName: "GetGuildById",
+			Handler:    _ExampleService_GetGuildById_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

@@ -32,6 +32,45 @@ service ExampleService {
       tags : "Example";
     };
   };
+
+  rpc GetGuildById(GetGuildByIdRequest) returns (GetGuildByIdResponse) {
+    option (google.api.http) = {
+      post : "/api/v1/guild/{id}"
+      body : "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags : "Guild"
+    };
+  };
+}
+
+message GetGuildByIdRequest {
+  int64 id = 1 [
+    (buf.validate.field).int64.gt = 0
+  ];
+}
+
+message GetGuildByIdResponse {
+  Guild guild = 1;
+}
+
+message Guild {
+  int64 id = 1 [
+    (buf.validate.field).int64.gt = 0
+  ];
+  int64 owner_id = 2 [
+    (buf.validate.field).int64.gt = 0
+  ];
+  string title = 3 [
+    (buf.validate.field).required = true
+  ];
+  string description = 4;
+  optional string avatar_url = 5 [
+    (buf.validate.field).string.uri = true
+  ];
+  int32 visibility = 6 [
+    (buf.validate.field).int32.gt = 0
+  ];
 }
 
 message HelloRequest {
