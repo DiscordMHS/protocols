@@ -4,7 +4,7 @@
 // - protoc             (unknown)
 // source: guild/v1/guild.proto
 
-package example
+package guild
 
 import (
 	context "context"
