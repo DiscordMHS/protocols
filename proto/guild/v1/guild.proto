@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package guild.v1;
 
-option go_package = "github.com/DiscordMHS/protocols/gen/go/example/v1;guild";
+option go_package = "github.com/DiscordMHS/protocols/gen/go/guild/v1;guild";
 
 import "buf/validate/validate.proto";
 import "google/api/annotations.proto";
