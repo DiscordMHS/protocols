@@ -16,45 +16,6 @@
     "application/json"
   ],
   "paths": {
-    "/api/v1/guild/{id}": {
-      "post": {
-        "operationId": "ExampleService_GetGuildById",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1GetGuildByIdResponse"
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "format": "int64"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/ExampleServiceGetGuildByIdBody"
-            }
-          }
-        ],
-        "tags": [
-          "Guild"
-        ]
-      }
-    },
     "/api/v1/hello/{id}": {
       "post": {
         "operationId": "ExampleService_Hello",
@@ -133,9 +94,6 @@
     }
   },
   "definitions": {
-    "ExampleServiceGetGuildByIdBody": {
-      "type": "object"
-    },
     "ExampleServiceHello2Body": {
       "type": "object"
     },
@@ -167,40 +125,6 @@
             "type": "object",
             "$ref": "#/definitions/protobufAny"
           }
-        }
-      }
-    },
-    "v1GetGuildByIdResponse": {
-      "type": "object",
-      "properties": {
-        "guild": {
-          "$ref": "#/definitions/v1Guild"
-        }
-      }
-    },
-    "v1Guild": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string",
-          "format": "int64"
-        },
-        "ownerId": {
-          "type": "string",
-          "format": "int64"
-        },
-        "title": {
-          "type": "string"
-        },
-        "description": {
-          "type": "string"
-        },
-        "avatarUrl": {
-          "type": "string"
-        },
-        "visibility": {
-          "type": "integer",
-          "format": "int32"
         }
       }
     },

@@ -32,7 +32,7 @@ service ExampleService {
       tags : "Example";
     };
   };
-
+  /*
   rpc GetGuildById(GetGuildByIdRequest) returns (GetGuildByIdResponse) {
     option (google.api.http) = {
       post : "/api/v1/guild/{id}"
@@ -42,8 +42,9 @@ service ExampleService {
       tags : "Guild"
     };
   };
+  */
 }
-
+/**
 message GetGuildByIdRequest {
   int64 id = 1 [
     (buf.validate.field).int64.gt = 0
@@ -72,6 +73,7 @@ message Guild {
     (buf.validate.field).int32.gt = 0
   ];
 }
+*/
 
 message HelloRequest {
   string id = 1 [
