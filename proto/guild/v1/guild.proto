@@ -25,7 +25,7 @@ service GuildService {
 
   rpc GetPublicGuilds(GetPublicGuildsPageRequest) returns (GetPublicGuildsPageResponse) {
     option (google.api.http) = {
-        post : "/api/v1/guild/{page}"
+        post : "/api/v1/guild/page/{page}"
         body : "*"
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {

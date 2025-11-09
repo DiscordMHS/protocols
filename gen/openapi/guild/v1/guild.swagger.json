@@ -16,6 +16,45 @@
     "application/json"
   ],
   "paths": {
+    "/api/v1/guild/page/{page}": {
+      "post": {
+        "operationId": "GuildService_GetPublicGuilds",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1GetPublicGuildsPageResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "page",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/GuildServiceGetPublicGuildsBody"
+            }
+          }
+        ],
+        "tags": [
+          "Guild"
+        ]
+      }
+    },
     "/api/v1/guild/{id}": {
       "post": {
         "operationId": "GuildService_GetGuildById",
@@ -47,45 +86,6 @@
             "required": true,
             "schema": {
               "$ref": "#/definitions/GuildServiceGetGuildByIdBody"
-            }
-          }
-        ],
-        "tags": [
-          "Guild"
-        ]
-      }
-    },
-    "/api/v1/guild/{page}": {
-      "post": {
-        "operationId": "GuildService_GetPublicGuilds",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1GetPublicGuildsPageResponse"
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "page",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "format": "int64"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/GuildServiceGetPublicGuildsBody"
             }
           }
         ],

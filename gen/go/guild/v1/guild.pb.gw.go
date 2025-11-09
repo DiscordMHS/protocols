@@ -151,7 +151,7 @@ func RegisterGuildServiceHandlerServer(ctx context.Context, mux *runtime.ServeMu
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/guild.v1.GuildService/GetPublicGuilds", runtime.WithHTTPPathPattern("/api/v1/guild/{page}"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/guild.v1.GuildService/GetPublicGuilds", runtime.WithHTTPPathPattern("/api/v1/guild/page/{page}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -226,7 +226,7 @@ func RegisterGuildServiceHandlerClient(ctx context.Context, mux *runtime.ServeMu
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/guild.v1.GuildService/GetPublicGuilds", runtime.WithHTTPPathPattern("/api/v1/guild/{page}"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/guild.v1.GuildService/GetPublicGuilds", runtime.WithHTTPPathPattern("/api/v1/guild/page/{page}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -244,7 +244,7 @@ func RegisterGuildServiceHandlerClient(ctx context.Context, mux *runtime.ServeMu
 
 var (
 	pattern_GuildService_GetGuildById_0    = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"api", "v1", "guild", "id"}, ""))
-	pattern_GuildService_GetPublicGuilds_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"api", "v1", "guild", "page"}, ""))
+	pattern_GuildService_GetPublicGuilds_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 3}, []string{"api", "v1", "guild", "page"}, ""))
 )
 
 var (
