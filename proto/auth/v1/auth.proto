@@ -1,0 +1,393 @@
+syntax = "proto3";
+
+package auth.v1;
+
+option go_package = "github.com/DiscordMHS/protocols/gen/go/auth/v1;authv1";
+
+import "buf/validate/validate.proto";
+import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+import "protoc-gen-openapiv2/options/annotations.proto";
+
+// =====================
+// === OpenAPI Info ====
+// =====================
+option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
+  info : {
+    title : "Auth Service API"
+    version : "1.0.0"
+    description : "Authentication and user management service"
+  }
+  schemes : HTTP
+  schemes : HTTPS
+  consumes : "application/json"
+  produces : "application/json"
+  security_definitions: {
+    security: {
+      key: "BearerAuth"
+      value: {
+        type: TYPE_API_KEY
+        name: "Authorization"
+        in: IN_HEADER
+        description: "JWT Bearer token"
+      }
+    }
+  }
+};
+
+
+// ==========================
+// ======= SERVICES =========
+// ==========================
+
+service AuthService {
+  rpc Register(RegisterRequest) returns (RegisterResponse) {
+    option (google.api.http) = {
+      post : "/api/v1/auth/register"
+      body : "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags : "AuthService"
+      summary : "Register a new user"
+    };
+  }
+
+  rpc Login(LoginRequest) returns (LoginResponse) {
+    option (google.api.http) = {
+      post : "/api/v1/auth/login"
+      body : "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags : "AuthService"
+      summary : "Login user"
+    };
+  }
+
+  rpc Refresh(RefreshRequest) returns (RefreshResponse) {
+    option (google.api.http) = {
+      post : "/api/v1/auth/refresh"
+      body : "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags : "AuthService"
+      summary : "Refresh JWT tokens"
+    };
+  }
+
+  rpc VerifyEmail(VerifyEmailRequest) returns (VerifyEmailResponse) {
+    option (google.api.http) = {
+      get : "/api/v1/auth/verify-email"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags : "AuthService"
+      summary : "Verify email by token"
+    };
+  }
+
+  rpc ForgotPassword(ForgotPasswordRequest) returns (ForgotPasswordResponse) {
+    option (google.api.http) = {
+      post : "/api/v1/auth/forgot-password"
+      body : "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags : "AuthService"
+      summary : "Send password reset email"
+    };
+  }
+
+  rpc ResetPassword(ResetPasswordRequest) returns (ResetPasswordResponse) {
+    option (google.api.http) = {
+      post : "/api/v1/auth/reset-password"
+      body : "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags : "AuthService"
+      summary : "Reset password using token"
+    };
+  }
+
+  rpc GetMe(GetMeRequest) returns (GetMeResponse) {
+    option (google.api.http) = {
+      get : "/api/v1/auth/me"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags : "AuthService"
+      summary : "Get current user info"
+      security: {
+        security_requirement: {
+          key: "BearerAuth";
+          value: {}
+        }
+      }
+    };
+  }
+}
+
+service UserService {
+  rpc ListUsers(ListUsersRequest) returns (ListUsersResponse) {
+    option (google.api.http) = {
+      get : "/api/v1/users"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags : "UserService"
+      summary : "List all users"
+      security: {
+        security_requirement: {
+          key: "BearerAuth";
+          value: {}
+        }
+      }
+    };
+  }
+
+  rpc GetUser(GetUserRequest) returns (GetUserResponse) {
+    option (google.api.http) = {
+      get : "/api/v1/users/{id}"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags : "UserService"
+      summary : "Get user by ID"
+      security: {
+        security_requirement: {
+          key: "BearerAuth";
+          value: {}
+        }
+      }
+    };
+  }
+
+  rpc CreateUser(CreateUserRequest) returns (CreateUserResponse) {
+    option (google.api.http) = {
+      post : "/api/v1/users"
+      body : "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags : "UserService"
+      summary : "Create new user (admin)"
+      security: {
+        security_requirement: {
+          key: "BearerAuth";
+          value: {}
+        }
+      }
+    };
+  }
+
+  rpc UpdateUser(UpdateUserRequest) returns (UpdateUserResponse) {
+    option (google.api.http) = {
+      put : "/api/v1/users/{id}"
+      body : "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags : "UserService"
+      summary : "Update user by ID"
+      security: {
+        security_requirement: {
+          key: "BearerAuth";
+          value: {}
+        }
+      }
+    };
+  }
+
+  rpc ChangePassword(ChangePasswordRequest) returns (ChangePasswordResponse) {
+    option (google.api.http) = {
+      post : "/api/v1/users/{id}/change-password"
+      body : "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags : "UserService"
+      summary : "Change password for user by ID"
+      security: {
+        security_requirement: {
+          key: "BearerAuth";
+          value: {}
+        }
+      }
+    };
+  }
+
+  rpc DeleteUser(DeleteUserRequest) returns (DeleteUserResponse) {
+    option (google.api.http) = {
+      delete : "/api/v1/users/{id}"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags : "UserService"
+      summary : "Delete user by ID"
+      security: {
+        security_requirement: {
+          key: "BearerAuth";
+          value: {}
+        }
+      }
+    };
+  }
+}
+
+// =====================
+// ==== MESSAGES =======
+// =====================
+
+message User {
+  int64 id = 1;
+  string username = 2;
+  string email = 3;
+  bool email_verified = 4;
+  string first_name = 5;
+  string last_name = 6;
+  string second_name = 7;
+  string about_me = 8;
+  string status = 9;
+  string avatar_url = 10;
+  bool is_deleted = 11;
+  google.protobuf.Timestamp last_online = 12;
+  google.protobuf.Timestamp created_at = 13;
+  google.protobuf.Timestamp updated_at = 14;
+}
+
+message Tokens {
+  string access_token = 1;
+  string refresh_token = 2;
+}
+
+// =====================
+// ======= AUTH ========
+// =====================
+
+message RegisterRequest {
+  string email = 1 [
+    (buf.validate.field).required = true,
+    (buf.validate.field).string.email = true
+  ];
+  string username = 2 [ (buf.validate.field).required = true ];
+  string password = 3 [
+    (buf.validate.field).required = true,
+    (buf.validate.field).string.min_len = 8,
+    (buf.validate.field).string.max_len = 64
+  ];
+}
+
+message RegisterResponse {}
+
+message LoginRequest {
+  oneof identifier {
+    option (buf.validate.oneof).required = true;
+
+    string email = 1 [ (buf.validate.field).string.email = true ];
+
+    string username = 2 [
+      (buf.validate.field).string.min_len = 3,
+      (buf.validate.field).string.max_len = 64
+    ];
+  }
+
+  string password = 3 [
+    (buf.validate.field).required = true,
+    (buf.validate.field).string.min_len = 8,
+    (buf.validate.field).string.max_len = 64
+  ];
+}
+
+message LoginResponse { Tokens tokens = 1; }
+
+message RefreshRequest {
+  string refresh_token = 1 [ (buf.validate.field).required = true ];
+}
+
+message RefreshResponse { Tokens tokens = 1; }
+
+message VerifyEmailRequest {
+  string token = 1 [ (buf.validate.field).required = true ];
+}
+
+message VerifyEmailResponse {}
+
+message ForgotPasswordRequest {
+  string email = 1 [
+    (buf.validate.field).required = true,
+    (buf.validate.field).string.email = true
+  ];
+}
+
+message ForgotPasswordResponse {}
+
+message ResetPasswordRequest {
+  string token = 1 [ (buf.validate.field).required = true ];
+  string new_password = 2 [
+    (buf.validate.field).required = true,
+    (buf.validate.field).string.min_len = 8,
+    (buf.validate.field).string.max_len = 64
+  ];
+}
+
+message ResetPasswordResponse {}
+
+message GetMeRequest {}
+message GetMeResponse { User user = 1; }
+
+// ==========================
+// ===== CRUD USERS =========
+// ==========================
+
+message GetUserRequest {
+  int64 id = 1 [ (buf.validate.field).required = true ];
+}
+
+message GetUserResponse { User user = 1; }
+
+message ListUsersRequest {
+  int32 limit = 1;
+  int32 offset = 2;
+  string search = 3;
+}
+
+message ListUsersResponse { repeated User users = 1; }
+
+message CreateUserRequest {
+  string email = 1 [
+    (buf.validate.field).required = true,
+    (buf.validate.field).string.email = true
+  ];
+  string username = 2 [ (buf.validate.field).required = true ];
+  string password = 3 [ (buf.validate.field).required = true ];
+  optional bool email_verified = 4;
+  optional string first_name = 5;
+  optional string last_name = 6;
+  optional string second_name = 7;
+  optional string about_me = 8;
+  optional string status = 9;
+  optional string avatar_url = 10;
+  optional bool is_deleted = 11;
+}
+
+message CreateUserResponse { User user = 1; }
+
+message UpdateUserRequest {
+  int64 id = 1 [ (buf.validate.field).required = true ];
+  optional string username = 2;
+  optional string email = 3 [ (buf.validate.field).string.email = true ];
+  optional bool email_verified = 4;
+  optional string first_name = 5;
+  optional string last_name = 6;
+  optional string second_name = 7;
+  optional string about_me = 8;
+  optional string status = 9;
+  optional string avatar_url = 10;
+  optional bool is_deleted = 11;
+}
+
+message UpdateUserResponse { User user = 1; }
+
+message ChangePasswordRequest {
+  int64 id = 1 [ (buf.validate.field).required = true ];
+  string current_password = 2 [ (buf.validate.field).required = true ];
+  string new_password = 3 [ (buf.validate.field).required = true ];
+}
+
+message ChangePasswordResponse {}
+
+message DeleteUserRequest {
+  int64 id = 1 [ (buf.validate.field).required = true ];
+}
+
+message DeleteUserResponse {}
