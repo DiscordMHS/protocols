@@ -30,6 +30,18 @@ message GetGuildByIdRequest {
   ];
 }
 
+message GetPublicGuildsPageResponse {
+    repeated Guild guilds = 1;
+    int64 total_pages = 2;
+    int64 current_page = 3;
+}
+
+message GetPublicGuildsPageRequest {
+    int64 page = 1 [
+        (buf.validate.field).int64.gt = 0
+    ];
+}
+
 message Guild {
   int64 id = 1 [
     (buf.validate.field).int64.gt = 0
