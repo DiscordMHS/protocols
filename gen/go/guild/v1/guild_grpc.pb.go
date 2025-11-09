@@ -19,7 +19,8 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	GuildService_GetGuildById_FullMethodName = "/guild.v1.GuildService/GetGuildById"
+	GuildService_GetGuildById_FullMethodName    = "/guild.v1.GuildService/GetGuildById"
+	GuildService_GetPublicGuilds_FullMethodName = "/guild.v1.GuildService/GetPublicGuilds"
 )
 
 // GuildServiceClient is the client API for GuildService service.
@@ -27,6 +28,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type GuildServiceClient interface {
 	GetGuildById(ctx context.Context, in *GetGuildByIdRequest, opts ...grpc.CallOption) (*Guild, error)
+	GetPublicGuilds(ctx context.Context, in *GetPublicGuildsPageRequest, opts ...grpc.CallOption) (*GetPublicGuildsPageResponse, error)
 }
 
 type guildServiceClient struct {
@@ -47,11 +49,22 @@ func (c *guildServiceClient) GetGuildById(ctx context.Context, in *GetGuildByIdR
 	return out, nil
 }
 
+func (c *guildServiceClient) GetPublicGuilds(ctx context.Context, in *GetPublicGuildsPageRequest, opts ...grpc.CallOption) (*GetPublicGuildsPageResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetPublicGuildsPageResponse)
+	err := c.cc.Invoke(ctx, GuildService_GetPublicGuilds_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // GuildServiceServer is the server API for GuildService service.
 // All implementations must embed UnimplementedGuildServiceServer
 // for forward compatibility.
 type GuildServiceServer interface {
 	GetGuildById(context.Context, *GetGuildByIdRequest) (*Guild, error)
+	GetPublicGuilds(context.Context, *GetPublicGuildsPageRequest) (*GetPublicGuildsPageResponse, error)
 	mustEmbedUnimplementedGuildServiceServer()
 }
 
@@ -64,6 +77,9 @@ type UnimplementedGuildServiceServer struct{}
 
 func (UnimplementedGuildServiceServer) GetGuildById(context.Context, *GetGuildByIdRequest) (*Guild, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetGuildById not implemented")
+}
+func (UnimplementedGuildServiceServer) GetPublicGuilds(context.Context, *GetPublicGuildsPageRequest) (*GetPublicGuildsPageResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetPublicGuilds not implemented")
 }
 func (UnimplementedGuildServiceServer) mustEmbedUnimplementedGuildServiceServer() {}
 func (UnimplementedGuildServiceServer) testEmbeddedByValue()                      {}
@@ -104,6 +120,24 @@ func _GuildService_GetGuildById_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
+func _GuildService_GetPublicGuilds_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetPublicGuildsPageRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GuildServiceServer).GetPublicGuilds(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: GuildService_GetPublicGuilds_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GuildServiceServer).GetPublicGuilds(ctx, req.(*GetPublicGuildsPageRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // GuildService_ServiceDesc is the grpc.ServiceDesc for GuildService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -114,6 +148,10 @@ var GuildService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetGuildById",
 			Handler:    _GuildService_GetGuildById_Handler,
+		},
+		{
+			MethodName: "GetPublicGuilds",
+			Handler:    _GuildService_GetPublicGuilds_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

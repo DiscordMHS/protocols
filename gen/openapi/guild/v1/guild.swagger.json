@@ -54,10 +54,52 @@
           "Guild"
         ]
       }
+    },
+    "/api/v1/guild/{page}": {
+      "post": {
+        "operationId": "GuildService_GetPublicGuilds",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1GetPublicGuildsPageResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "page",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/GuildServiceGetPublicGuildsBody"
+            }
+          }
+        ],
+        "tags": [
+          "Guild"
+        ]
+      }
     }
   },
   "definitions": {
     "GuildServiceGetGuildByIdBody": {
+      "type": "object"
+    },
+    "GuildServiceGetPublicGuildsBody": {
       "type": "object"
     },
     "protobufAny": {
@@ -85,6 +127,26 @@
             "type": "object",
             "$ref": "#/definitions/protobufAny"
           }
+        }
+      }
+    },
+    "v1GetPublicGuildsPageResponse": {
+      "type": "object",
+      "properties": {
+        "guilds": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1Guild"
+          }
+        },
+        "totalPages": {
+          "type": "string",
+          "format": "int64"
+        },
+        "currentPage": {
+          "type": "string",
+          "format": "int64"
         }
       }
     },

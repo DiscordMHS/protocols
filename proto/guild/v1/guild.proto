@@ -22,6 +22,16 @@ service GuildService {
       tags : "Guild"
     };
   };
+
+  rpc GetPublicGuilds(GetPublicGuildsPageRequest) returns (GetPublicGuildsPageResponse) {
+    option (google.api.http) = {
+        post : "/api/v1/guild/{page}"
+        body : "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags : "Guild"
+    };
+  };
 }
 
 message GetGuildByIdRequest {
