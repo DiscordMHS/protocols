@@ -98,9 +98,7 @@ message UpdateGuildRequest {
     uint64 id = 1 [
       (buf.validate.field).required = true
     ];
-    string title = 2 [
-      (buf.validate.field).required = true
-    ];
+    optional string title = 2;
     optional string description = 3;
     optional string avatar_url = 4;
     optional string wallpaper_url = 5;
