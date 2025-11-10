@@ -35,29 +35,29 @@ service GuildService {
 }
 
 message GetGuildByIdRequest {
-  int64 id = 1 [
-    (buf.validate.field).int64.gt = 0
+  uint64 id = 1 [
+    (buf.validate.field).uint64.gt = 0
   ];
 }
 
 message GetPublicGuildsPageResponse {
     repeated Guild guilds = 1;
-    int64 total_pages = 2;
-    int64 current_page = 3;
+    uint64 total_pages = 2;
+    uint64 current_page = 3;
 }
 
 message GetPublicGuildsPageRequest {
-    int64 page = 1 [
-        (buf.validate.field).int64.gt = 0
+    uint64 page = 1 [
+        (buf.validate.field).uint64.gt = 0
     ];
 }
 
 message Guild {
-  int64 id = 1 [
-    (buf.validate.field).int64.gt = 0
+  uint64 id = 1 [
+    (buf.validate.field).uint64.gt = 0
   ];
-  int64 owner_id = 2 [
-    (buf.validate.field).int64.gt = 0
+  uint64 owner_id = 2 [
+    (buf.validate.field).uint64.gt = 0
   ];
   string title = 3 [
     (buf.validate.field).required = true

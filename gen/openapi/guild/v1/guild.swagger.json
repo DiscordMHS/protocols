@@ -39,7 +39,7 @@
             "in": "path",
             "required": true,
             "type": "string",
-            "format": "int64"
+            "format": "uint64"
           },
           {
             "name": "body",
@@ -78,7 +78,7 @@
             "in": "path",
             "required": true,
             "type": "string",
-            "format": "int64"
+            "format": "uint64"
           },
           {
             "name": "body",
@@ -142,11 +142,11 @@
         },
         "totalPages": {
           "type": "string",
-          "format": "int64"
+          "format": "uint64"
         },
         "currentPage": {
           "type": "string",
-          "format": "int64"
+          "format": "uint64"
         }
       }
     },
@@ -155,11 +155,11 @@
       "properties": {
         "id": {
           "type": "string",
-          "format": "int64"
+          "format": "uint64"
         },
         "ownerId": {
           "type": "string",
-          "format": "int64"
+          "format": "uint64"
         },
         "title": {
           "type": "string"
