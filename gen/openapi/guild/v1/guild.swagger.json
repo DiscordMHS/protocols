@@ -16,6 +16,38 @@
     "application/json"
   ],
   "paths": {
+    "/api/v1/guild/create": {
+      "post": {
+        "operationId": "GuildService_CreateGuild",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1CreateGuildResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1CreateGuildRequest"
+            }
+          }
+        ],
+        "tags": [
+          "Guild"
+        ]
+      }
+    },
     "/api/v1/guild/page/{page}": {
       "post": {
         "operationId": "GuildService_GetPublicGuilds",
@@ -93,14 +125,116 @@
           "Guild"
         ]
       }
+    },
+    "/api/v1/guild/{id}/delete": {
+      "post": {
+        "operationId": "GuildService_DeleteGuild",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1DeleteGuildResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uint64"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/GuildServiceDeleteGuildBody"
+            }
+          }
+        ],
+        "tags": [
+          "Guild"
+        ]
+      }
+    },
+    "/api/v1/guild/{id}/update": {
+      "post": {
+        "operationId": "GuildService_UpdateGuild",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1UpdateGuildResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uint64"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/GuildServiceUpdateGuildBody"
+            }
+          }
+        ],
+        "tags": [
+          "Guild"
+        ]
+      }
     }
   },
   "definitions": {
+    "GuildServiceDeleteGuildBody": {
+      "type": "object"
+    },
     "GuildServiceGetGuildByIdBody": {
       "type": "object"
     },
     "GuildServiceGetPublicGuildsBody": {
       "type": "object"
+    },
+    "GuildServiceUpdateGuildBody": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "avatarUrl": {
+          "type": "string"
+        },
+        "wallpaperUrl": {
+          "type": "string"
+        },
+        "visibility": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
     },
     "protobufAny": {
       "type": "object",
@@ -129,6 +263,32 @@
           }
         }
       }
+    },
+    "v1CreateGuildRequest": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "visibility": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    },
+    "v1CreateGuildResponse": {
+      "type": "object",
+      "properties": {
+        "guild": {
+          "$ref": "#/definitions/v1Guild"
+        }
+      }
+    },
+    "v1DeleteGuildResponse": {
+      "type": "object"
     },
     "v1GetPublicGuildsPageResponse": {
       "type": "object",
@@ -176,6 +336,14 @@
         "visibility": {
           "type": "integer",
           "format": "int32"
+        }
+      }
+    },
+    "v1UpdateGuildResponse": {
+      "type": "object",
+      "properties": {
+        "guild": {
+          "$ref": "#/definitions/v1Guild"
         }
       }
     }

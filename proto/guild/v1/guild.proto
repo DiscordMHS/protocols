@@ -32,6 +32,36 @@ service GuildService {
       tags : "Guild"
     };
   };
+
+  rpc CreateGuild(CreateGuildRequest) returns (CreateGuildResponse) {
+    option (google.api.http) = {
+      post : "/api/v1/guild/create"
+      body : "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags : "Guild"
+    };
+  };
+
+  rpc UpdateGuild(UpdateGuildRequest) returns (UpdateGuildResponse) {
+    option (google.api.http) = {
+      post : "/api/v1/guild/{id}/update"
+      body : "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags : "Guild"
+    };
+  };
+
+  rpc DeleteGuild(DeleteGuildRequest) returns (DeleteGuildResponse) {
+    option (google.api.http) = {
+      post : "/api/v1/guild/{id}/delete"
+      body : "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags : "Guild"
+    };
+  };
 }
 
 message GetGuildByIdRequest {
@@ -51,6 +81,41 @@ message GetPublicGuildsPageRequest {
         (buf.validate.field).uint64.gt = 0
     ];
 }
+
+message CreateGuildRequest {
+    string title = 1 [
+      (buf.validate.field).required = true
+    ];
+    optional string description = 2;
+    optional uint32 visibility = 3;
+}
+
+message CreateGuildResponse {
+  Guild guild = 1;
+}
+
+message UpdateGuildRequest {
+    uint64 id = 1 [
+      (buf.validate.field).required = true
+    ];
+    optional string title = 2;
+    optional string description = 3;
+    optional string avatar_url = 4;
+    optional string wallpaper_url = 5;
+    optional uint32 visibility = 6;
+}
+
+message UpdateGuildResponse {
+  Guild guild = 1;
+}
+
+message DeleteGuildRequest {
+  uint64 id = 1 [
+    (buf.validate.field).required = true
+  ];
+}
+
+message DeleteGuildResponse {}
 
 message Guild {
   uint64 id = 1 [
