@@ -2,12 +2,17 @@
   "swagger": "2.0",
   "info": {
     "title": "Guild Service API",
+    "description": "Guild Management Service",
     "version": "0.0.1"
   },
   "tags": [
     {
       "name": "GuildService"
     }
+  ],
+  "schemes": [
+    "http",
+    "https"
   ],
   "consumes": [
     "application/json"
@@ -45,6 +50,11 @@
         ],
         "tags": [
           "Guild"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
         ]
       }
     },
@@ -84,6 +94,11 @@
         ],
         "tags": [
           "Guild"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
         ]
       }
     },
@@ -123,6 +138,11 @@
         ],
         "tags": [
           "Guild"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
         ]
       }
     },
@@ -162,6 +182,11 @@
         ],
         "tags": [
           "Guild"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
         ]
       }
     },
@@ -201,6 +226,11 @@
         ],
         "tags": [
           "Guild"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
         ]
       }
     }
@@ -346,6 +376,14 @@
           "$ref": "#/definitions/v1Guild"
         }
       }
+    }
+  },
+  "securityDefinitions": {
+    "BearerAuth": {
+      "type": "apiKey",
+      "description": "JWT Bearer token",
+      "name": "Authorization",
+      "in": "header"
     }
   }
 }
