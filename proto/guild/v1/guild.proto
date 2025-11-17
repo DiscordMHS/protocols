@@ -134,7 +134,7 @@ message Guild {
   optional string wallpaper_url = 6 [
     (buf.validate.field).string.uri = true
   ];
-  int32 visibility = 7 [
-    (buf.validate.field).int32.gt = 0
+  uint32 visibility = 7 [
+    (buf.validate.field).uint32.gt = 0
   ];
 }
