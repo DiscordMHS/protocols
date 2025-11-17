@@ -2,12 +2,17 @@
   "swagger": "2.0",
   "info": {
     "title": "Guild Service API",
+    "description": "Guild Management Service",
     "version": "0.0.1"
   },
   "tags": [
     {
       "name": "GuildService"
     }
+  ],
+  "schemes": [
+    "http",
+    "https"
   ],
   "consumes": [
     "application/json"
@@ -45,11 +50,16 @@
         ],
         "tags": [
           "Guild"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
         ]
       }
     },
     "/api/v1/guild/page/{page}": {
-      "post": {
+      "get": {
         "operationId": "GuildService_GetPublicGuilds",
         "responses": {
           "200": {
@@ -72,23 +82,20 @@
             "required": true,
             "type": "string",
             "format": "uint64"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/GuildServiceGetPublicGuildsBody"
-            }
           }
         ],
         "tags": [
           "Guild"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
         ]
       }
     },
     "/api/v1/guild/{id}": {
-      "post": {
+      "get": {
         "operationId": "GuildService_GetGuildById",
         "responses": {
           "200": {
@@ -111,23 +118,20 @@
             "required": true,
             "type": "string",
             "format": "uint64"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/GuildServiceGetGuildByIdBody"
-            }
           }
         ],
         "tags": [
           "Guild"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
         ]
       }
     },
     "/api/v1/guild/{id}/delete": {
-      "post": {
+      "delete": {
         "operationId": "GuildService_DeleteGuild",
         "responses": {
           "200": {
@@ -150,23 +154,20 @@
             "required": true,
             "type": "string",
             "format": "uint64"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/GuildServiceDeleteGuildBody"
-            }
           }
         ],
         "tags": [
           "Guild"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
         ]
       }
     },
     "/api/v1/guild/{id}/update": {
-      "post": {
+      "put": {
         "operationId": "GuildService_UpdateGuild",
         "responses": {
           "200": {
@@ -201,20 +202,16 @@
         ],
         "tags": [
           "Guild"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
         ]
       }
     }
   },
   "definitions": {
-    "GuildServiceDeleteGuildBody": {
-      "type": "object"
-    },
-    "GuildServiceGetGuildByIdBody": {
-      "type": "object"
-    },
-    "GuildServiceGetPublicGuildsBody": {
-      "type": "object"
-    },
     "GuildServiceUpdateGuildBody": {
       "type": "object",
       "properties": {
@@ -346,6 +343,14 @@
           "$ref": "#/definitions/v1Guild"
         }
       }
+    }
+  },
+  "securityDefinitions": {
+    "BearerAuth": {
+      "type": "apiKey",
+      "description": "JWT Bearer token",
+      "name": "Authorization",
+      "in": "header"
     }
   }
 }
