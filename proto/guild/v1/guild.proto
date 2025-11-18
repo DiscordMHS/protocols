@@ -34,8 +34,7 @@ option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
 service GuildService {
   rpc GetGuildById(GetGuildByIdRequest) returns (Guild) {
     option (google.api.http) = {
-      post : "/api/v1/guild/{id}"
-      body : "*"
+      get : "/api/v1/guild/{id}"
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags : "Guild"
@@ -50,8 +49,7 @@ service GuildService {
 
   rpc GetPublicGuilds(GetPublicGuildsPageRequest) returns (GetPublicGuildsPageResponse) {
     option (google.api.http) = {
-        post : "/api/v1/guild/page/{page}"
-        body : "*"
+        get : "/api/v1/guild/page/{page}"
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags : "Guild"
@@ -82,7 +80,7 @@ service GuildService {
 
   rpc UpdateGuild(UpdateGuildRequest) returns (UpdateGuildResponse) {
     option (google.api.http) = {
-      post : "/api/v1/guild/{id}/update"
+      put : "/api/v1/guild/{id}/update"
       body : "*"
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
@@ -98,8 +96,7 @@ service GuildService {
 
   rpc DeleteGuild(DeleteGuildRequest) returns (DeleteGuildResponse) {
     option (google.api.http) = {
-      post : "/api/v1/guild/{id}/delete"
-      body : "*"
+      delete : "/api/v1/guild/{id}/delete"
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags : "Guild"
