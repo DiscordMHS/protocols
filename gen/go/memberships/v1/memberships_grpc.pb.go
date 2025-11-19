@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.5.1
 // - protoc             (unknown)
-// source: memberships/v1/memberships.proto
+// source: proto/memberships/v1/memberships.proto
 
 package membershipsv1
 
@@ -30,11 +30,13 @@ const (
 	MembershipService_ListMembers_FullMethodName         = "/memberships.v1.MembershipService/ListMembers"
 	MembershipService_UpdateMemberRoles_FullMethodName   = "/memberships.v1.MembershipService/UpdateMemberRoles"
 	MembershipService_DeleteMember_FullMethodName        = "/memberships.v1.MembershipService/DeleteMember"
+	MembershipService_GetUserGuilds_FullMethodName       = "/memberships.v1.MembershipService/GetUserGuilds"
 	MembershipService_CreateInvite_FullMethodName        = "/memberships.v1.MembershipService/CreateInvite"
 	MembershipService_AcceptInvite_FullMethodName        = "/memberships.v1.MembershipService/AcceptInvite"
 	MembershipService_UpdateRoleOverrides_FullMethodName = "/memberships.v1.MembershipService/UpdateRoleOverrides"
 	MembershipService_UpdateUserOverrides_FullMethodName = "/memberships.v1.MembershipService/UpdateUserOverrides"
 	MembershipService_CheckPermission_FullMethodName     = "/memberships.v1.MembershipService/CheckPermission"
+	MembershipService_GetPermissions_FullMethodName      = "/memberships.v1.MembershipService/GetPermissions"
 )
 
 // MembershipServiceClient is the client API for MembershipService service.
@@ -63,6 +65,8 @@ type MembershipServiceClient interface {
 	UpdateMemberRoles(ctx context.Context, in *UpdateMemberRolesRequest, opts ...grpc.CallOption) (*UpdateMemberRolesResponse, error)
 	// DeleteMember removes a user from the guild and all associated overrides.
 	DeleteMember(ctx context.Context, in *DeleteMemberRequest, opts ...grpc.CallOption) (*DeleteMemberResponse, error)
+	// GetUserGuilds retrieves all guilds a user is a member of.
+	GetUserGuilds(ctx context.Context, in *GetUserGuildsRequest, opts ...grpc.CallOption) (*GetUserGuildsResponse, error)
 	// CreateInvite generates an invite link for the guild or specific channel.
 	CreateInvite(ctx context.Context, in *CreateInviteRequest, opts ...grpc.CallOption) (*CreateInviteResponse, error)
 	// AcceptInvite accepts an invite using the provided token and adds the user to the guild.
@@ -73,6 +77,8 @@ type MembershipServiceClient interface {
 	UpdateUserOverrides(ctx context.Context, in *UpdateUserOverridesRequest, opts ...grpc.CallOption) (*UpdateUserOverridesResponse, error)
 	// CheckPermission verifies if a user has the specified permission for a resource.
 	CheckPermission(ctx context.Context, in *CheckPermissionRequest, opts ...grpc.CallOption) (*CheckPermissionResponse, error)
+	// GetPermissions retrieves all available permission names in the system.
+	GetPermissions(ctx context.Context, in *GetPermissionsRequest, opts ...grpc.CallOption) (*GetPermissionsResponse, error)
 }
 
 type membershipServiceClient struct {
@@ -193,6 +199,16 @@ func (c *membershipServiceClient) DeleteMember(ctx context.Context, in *DeleteMe
 	return out, nil
 }
 
+func (c *membershipServiceClient) GetUserGuilds(ctx context.Context, in *GetUserGuildsRequest, opts ...grpc.CallOption) (*GetUserGuildsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetUserGuildsResponse)
+	err := c.cc.Invoke(ctx, MembershipService_GetUserGuilds_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *membershipServiceClient) CreateInvite(ctx context.Context, in *CreateInviteRequest, opts ...grpc.CallOption) (*CreateInviteResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(CreateInviteResponse)
@@ -243,6 +259,16 @@ func (c *membershipServiceClient) CheckPermission(ctx context.Context, in *Check
 	return out, nil
 }
 
+func (c *membershipServiceClient) GetPermissions(ctx context.Context, in *GetPermissionsRequest, opts ...grpc.CallOption) (*GetPermissionsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetPermissionsResponse)
+	err := c.cc.Invoke(ctx, MembershipService_GetPermissions_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // MembershipServiceServer is the server API for MembershipService service.
 // All implementations must embed UnimplementedMembershipServiceServer
 // for forward compatibility.
@@ -269,6 +295,8 @@ type MembershipServiceServer interface {
 	UpdateMemberRoles(context.Context, *UpdateMemberRolesRequest) (*UpdateMemberRolesResponse, error)
 	// DeleteMember removes a user from the guild and all associated overrides.
 	DeleteMember(context.Context, *DeleteMemberRequest) (*DeleteMemberResponse, error)
+	// GetUserGuilds retrieves all guilds a user is a member of.
+	GetUserGuilds(context.Context, *GetUserGuildsRequest) (*GetUserGuildsResponse, error)
 	// CreateInvite generates an invite link for the guild or specific channel.
 	CreateInvite(context.Context, *CreateInviteRequest) (*CreateInviteResponse, error)
 	// AcceptInvite accepts an invite using the provided token and adds the user to the guild.
@@ -279,6 +307,8 @@ type MembershipServiceServer interface {
 	UpdateUserOverrides(context.Context, *UpdateUserOverridesRequest) (*UpdateUserOverridesResponse, error)
 	// CheckPermission verifies if a user has the specified permission for a resource.
 	CheckPermission(context.Context, *CheckPermissionRequest) (*CheckPermissionResponse, error)
+	// GetPermissions retrieves all available permission names in the system.
+	GetPermissions(context.Context, *GetPermissionsRequest) (*GetPermissionsResponse, error)
 	mustEmbedUnimplementedMembershipServiceServer()
 }
 
@@ -322,6 +352,9 @@ func (UnimplementedMembershipServiceServer) UpdateMemberRoles(context.Context, *
 func (UnimplementedMembershipServiceServer) DeleteMember(context.Context, *DeleteMemberRequest) (*DeleteMemberResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteMember not implemented")
 }
+func (UnimplementedMembershipServiceServer) GetUserGuilds(context.Context, *GetUserGuildsRequest) (*GetUserGuildsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetUserGuilds not implemented")
+}
 func (UnimplementedMembershipServiceServer) CreateInvite(context.Context, *CreateInviteRequest) (*CreateInviteResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateInvite not implemented")
 }
@@ -336,6 +369,9 @@ func (UnimplementedMembershipServiceServer) UpdateUserOverrides(context.Context,
 }
 func (UnimplementedMembershipServiceServer) CheckPermission(context.Context, *CheckPermissionRequest) (*CheckPermissionResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CheckPermission not implemented")
+}
+func (UnimplementedMembershipServiceServer) GetPermissions(context.Context, *GetPermissionsRequest) (*GetPermissionsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetPermissions not implemented")
 }
 func (UnimplementedMembershipServiceServer) mustEmbedUnimplementedMembershipServiceServer() {}
 func (UnimplementedMembershipServiceServer) testEmbeddedByValue()                           {}
@@ -556,6 +592,24 @@ func _MembershipService_DeleteMember_Handler(srv interface{}, ctx context.Contex
 	return interceptor(ctx, in, info, handler)
 }
 
+func _MembershipService_GetUserGuilds_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetUserGuildsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MembershipServiceServer).GetUserGuilds(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: MembershipService_GetUserGuilds_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MembershipServiceServer).GetUserGuilds(ctx, req.(*GetUserGuildsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _MembershipService_CreateInvite_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(CreateInviteRequest)
 	if err := dec(in); err != nil {
@@ -646,6 +700,24 @@ func _MembershipService_CheckPermission_Handler(srv interface{}, ctx context.Con
 	return interceptor(ctx, in, info, handler)
 }
 
+func _MembershipService_GetPermissions_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetPermissionsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MembershipServiceServer).GetPermissions(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: MembershipService_GetPermissions_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MembershipServiceServer).GetPermissions(ctx, req.(*GetPermissionsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // MembershipService_ServiceDesc is the grpc.ServiceDesc for MembershipService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -698,6 +770,10 @@ var MembershipService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _MembershipService_DeleteMember_Handler,
 		},
 		{
+			MethodName: "GetUserGuilds",
+			Handler:    _MembershipService_GetUserGuilds_Handler,
+		},
+		{
 			MethodName: "CreateInvite",
 			Handler:    _MembershipService_CreateInvite_Handler,
 		},
@@ -717,7 +793,11 @@ var MembershipService_ServiceDesc = grpc.ServiceDesc{
 			MethodName: "CheckPermission",
 			Handler:    _MembershipService_CheckPermission_Handler,
 		},
+		{
+			MethodName: "GetPermissions",
+			Handler:    _MembershipService_GetPermissions_Handler,
+		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "memberships/v1/memberships.proto",
+	Metadata: "proto/memberships/v1/memberships.proto",
 }

@@ -251,6 +251,24 @@ service MembershipService {
     };
   }
 
+  // GetUserGuilds retrieves all guilds a user is a member of.
+  rpc GetUserGuilds(GetUserGuildsRequest) returns (GetUserGuildsResponse) {
+    option (google.api.http) = {
+      get : "/memberships/users/{user_id}/guilds"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags : "Members"
+      summary : "Get user guilds"
+      description : "Returns a list of all guilds the user is a member of, including pagination support."
+      security: {
+        security_requirement: {
+          key: "BearerAuth";
+          value: {}
+        }
+      }
+    };
+  }
+
   // =====================
   // === INVITES =========
   // =====================
@@ -351,16 +369,15 @@ service MembershipService {
     };
   }
 
-  // GetPermissions retrieves all permissions a user has for a specific resource.
+  // GetPermissions retrieves all available permission names in the system.
   rpc GetPermissions(GetPermissionsRequest) returns (GetPermissionsResponse) {
     option (google.api.http) = {
-      post : "/memberships/permissions"
-      body : "*"
+      get : "/memberships/permissions"
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags : "Permissions"
-      summary : "Get all permissions"
-      description : "Returns all permissions (both allowed and denied) that a user has for the given resource. Includes permissions from roles and overrides."
+      summary : "Get all available permissions"
+      description : "Returns a list of all available permission names in the system. Useful for displaying permission options when creating or editing roles."
       security: {
         security_requirement: {
           key: "BearerAuth";
@@ -402,9 +419,9 @@ message Permission {
 // Role represents a role in a guild with associated permissions.
 message Role {
   // Unique role identifier.
-  string id = 1;
+  uint64 id = 1;
   // Guild identifier this role belongs to.
-  string guild_id = 2;
+  uint64 guild_id = 2;
   // Role display title.
   string title = 3;
   // Optional icon URL for the role.
@@ -418,11 +435,11 @@ message Role {
 // Member represents a user's membership in a guild.
 message Member {
   // User identifier.
-  string user_id = 1;
+  uint64 user_id = 1;
   // Guild identifier.
-  string guild_id = 2;
+  uint64 guild_id = 2;
   // List of role IDs assigned to this member.
-  repeated string role_ids = 3;
+  repeated uint64 role_ids = 3;
   // Timestamp when the user joined the guild.
   google.protobuf.Timestamp joined_at = 4;
 }
@@ -430,7 +447,7 @@ message Member {
 // RoleOverride represents a channel-specific permission override for a role.
 message RoleOverride {
   // Role identifier.
-  string role_id = 1 [ (buf.validate.field).required = true ];
+  uint64 role_id = 1 [ (buf.validate.field).required = true ];
   // Permission name.
   string permission = 2 [ (buf.validate.field).required = true ];
   // Resource path (typically the channel path).
@@ -442,7 +459,7 @@ message RoleOverride {
 // UserOverride represents a channel-specific permission override for a user.
 message UserOverride {
   // User identifier.
-  string user_id = 1 [ (buf.validate.field).required = true ];
+  uint64 user_id = 1 [ (buf.validate.field).required = true ];
   // Permission name.
   string permission = 2 [ (buf.validate.field).required = true ];
   // Resource path (typically the channel path).
@@ -457,7 +474,7 @@ message UserOverride {
 
 message CreateRoleRequest {
   // Guild identifier where the role will be created.
-  string guild_id = 1 [ (buf.validate.field).required = true ];
+  uint64 guild_id = 1 [ (buf.validate.field).required = true ];
   // Role display title.
   string title = 2 [ (buf.validate.field).required = true ];
   // Optional icon URL.
@@ -475,7 +492,7 @@ message CreateRoleResponse {
 
 message ListRolesRequest {
   // Guild identifier.
-  string guild_id = 1 [ (buf.validate.field).required = true ];
+  uint64 guild_id = 1 [ (buf.validate.field).required = true ];
   // Maximum number of roles to return (default: 20).
   int32 limit = 2;
   // Number of roles to skip for pagination (default: 0).
@@ -493,9 +510,9 @@ message ListRolesResponse {
 
 message GetRoleRequest {
   // Guild identifier.
-  string guild_id = 1 [ (buf.validate.field).required = true ];
+  uint64 guild_id = 1 [ (buf.validate.field).required = true ];
   // Role identifier.
-  string role_id = 2 [ (buf.validate.field).required = true ];
+  uint64 role_id = 2 [ (buf.validate.field).required = true ];
 }
 
 message GetRoleResponse {
@@ -505,9 +522,9 @@ message GetRoleResponse {
 
 message UpdateRoleRequest {
   // Guild identifier.
-  string guild_id = 1 [ (buf.validate.field).required = true ];
+  uint64 guild_id = 1 [ (buf.validate.field).required = true ];
   // Role identifier to update.
-  string role_id = 2 [ (buf.validate.field).required = true ];
+  uint64 role_id = 2 [ (buf.validate.field).required = true ];
   // New role title (optional).
   optional string title = 3;
   // New icon URL (optional).
@@ -525,9 +542,9 @@ message UpdateRoleResponse {
 
 message DeleteRoleRequest {
   // Guild identifier.
-  string guild_id = 1 [ (buf.validate.field).required = true ];
+  uint64 guild_id = 1 [ (buf.validate.field).required = true ];
   // Role identifier to delete.
-  string role_id = 2 [ (buf.validate.field).required = true ];
+  uint64 role_id = 2 [ (buf.validate.field).required = true ];
 }
 
 message DeleteRoleResponse {}
@@ -538,11 +555,11 @@ message DeleteRoleResponse {}
 
 message CreateMemberRequest {
   // Guild identifier.
-  string guild_id = 1 [ (buf.validate.field).required = true ];
+  uint64 guild_id = 1 [ (buf.validate.field).required = true ];
   // User identifier to add to the guild.
-  string user_id = 2 [ (buf.validate.field).required = true ];
+  uint64 user_id = 2 [ (buf.validate.field).required = true ];
   // Initial roles to assign to the member.
-  repeated string role_ids = 3;
+  repeated uint64 role_ids = 3;
 }
 
 message CreateMemberResponse {
@@ -552,7 +569,7 @@ message CreateMemberResponse {
 
 message JoinGuildRequest {
   // Guild identifier to join.
-  string guild_id = 1 [ (buf.validate.field).required = true ];
+  uint64 guild_id = 1 [ (buf.validate.field).required = true ];
 }
 
 message JoinGuildResponse {
@@ -562,9 +579,9 @@ message JoinGuildResponse {
 
 message GetMemberRequest {
   // Guild identifier.
-  string guild_id = 1 [ (buf.validate.field).required = true ];
+  uint64 guild_id = 1 [ (buf.validate.field).required = true ];
   // User identifier.
-  string user_id = 2 [ (buf.validate.field).required = true ];
+  uint64 user_id = 2 [ (buf.validate.field).required = true ];
 }
 
 message GetMemberResponse {
@@ -574,7 +591,7 @@ message GetMemberResponse {
 
 message ListMembersRequest {
   // Guild identifier.
-  string guild_id = 1 [ (buf.validate.field).required = true ];
+  uint64 guild_id = 1 [ (buf.validate.field).required = true ];
   // Maximum number of members to return (default: 20).
   int32 limit = 2;
   // Number of members to skip for pagination (default: 0).
@@ -592,11 +609,11 @@ message ListMembersResponse {
 
 message UpdateMemberRolesRequest {
   // Guild identifier.
-  string guild_id = 1 [ (buf.validate.field).required = true ];
+  uint64 guild_id = 1 [ (buf.validate.field).required = true ];
   // User identifier.
-  string user_id = 2 [ (buf.validate.field).required = true ];
+  uint64 user_id = 2 [ (buf.validate.field).required = true ];
   // New list of role IDs (completely replaces existing roles).
-  repeated string role_ids = 3;
+  repeated uint64 role_ids = 3;
 }
 
 message UpdateMemberRolesResponse {
@@ -606,12 +623,28 @@ message UpdateMemberRolesResponse {
 
 message DeleteMemberRequest {
   // Guild identifier.
-  string guild_id = 1 [ (buf.validate.field).required = true ];
+  uint64 guild_id = 1 [ (buf.validate.field).required = true ];
   // User identifier to remove from the guild.
-  string user_id = 2 [ (buf.validate.field).required = true ];
+  uint64 user_id = 2 [ (buf.validate.field).required = true ];
 }
 
 message DeleteMemberResponse {}
+
+message GetUserGuildsRequest {
+  // User identifier.
+  uint64 user_id = 1 [ (buf.validate.field).required = true ];
+  // Maximum number of guilds to return (default: 20).
+  int32 limit = 2;
+  // Number of guilds to skip for pagination (default: 0).
+  int32 offset = 3;
+}
+
+message GetUserGuildsResponse {
+  // List of guild IDs the user is a member of.
+  repeated uint64 guild_ids = 1;
+  // Total number of guilds the user is a member of.
+  int32 total = 2;
+}
 
 // =====================
 // === INVITES =========
@@ -619,9 +652,9 @@ message DeleteMemberResponse {}
 
 message CreateInviteRequest {
   // Guild identifier.
-  string guild_id = 1 [ (buf.validate.field).required = true ];
+  uint64 guild_id = 1 [ (buf.validate.field).required = true ];
   // Optional channel identifier to scope the invite to a specific channel.
-  optional string channel_id = 2;
+  optional uint64 channel_id = 2;
 }
 
 message CreateInviteResponse {
@@ -630,9 +663,9 @@ message CreateInviteResponse {
   // Full invite URL.
   string invite_url = 2;
   // Guild identifier.
-  string guild_id = 3;
+  uint64 guild_id = 3;
   // Channel identifier if invite is channel-specific.
-  optional string channel_id = 4;
+  optional uint64 channel_id = 4;
   // Timestamp when the invite expires (null if never expires).
   google.protobuf.Timestamp expires_at = 5;
   // Maximum number of uses (0 if unlimited).
@@ -650,11 +683,11 @@ message AcceptInviteRequest {
 
 message AcceptInviteResponse {
   // Guild identifier the user joined.
-  string guild_id = 1;
+  uint64 guild_id = 1;
   // Channel identifier if invite was channel-specific.
-  optional string channel_id = 2;
+  optional uint64 channel_id = 2;
   // User identifier who accepted the invite.
-  string user_id = 3;
+  uint64 user_id = 3;
   // Timestamp when the user joined.
   google.protobuf.Timestamp joined_at = 4;
 }
@@ -665,32 +698,32 @@ message AcceptInviteResponse {
 
 message UpdateRoleOverridesRequest {
   // Guild identifier.
-  string guild_id = 1 [ (buf.validate.field).required = true ];
+  uint64 guild_id = 1 [ (buf.validate.field).required = true ];
   // Channel identifier.
-  string channel_id = 2 [ (buf.validate.field).required = true ];
+  uint64 channel_id = 2 [ (buf.validate.field).required = true ];
   // List of role overrides (completely replaces existing overrides).
   repeated RoleOverride overrides = 3;
 }
 
 message UpdateRoleOverridesResponse {
   // Channel identifier.
-  string channel_id = 1;
+  uint64 channel_id = 1;
   // Updated list of role overrides.
   repeated RoleOverride overrides = 2;
 }
 
 message UpdateUserOverridesRequest {
   // Guild identifier.
-  string guild_id = 1 [ (buf.validate.field).required = true ];
+  uint64 guild_id = 1 [ (buf.validate.field).required = true ];
   // Channel identifier.
-  string channel_id = 2 [ (buf.validate.field).required = true ];
+  uint64 channel_id = 2 [ (buf.validate.field).required = true ];
   // List of user overrides (completely replaces existing overrides).
   repeated UserOverride overrides = 3;
 }
 
 message UpdateUserOverridesResponse {
   // Channel identifier.
-  string channel_id = 1;
+  uint64 channel_id = 1;
   // Updated list of user overrides.
   repeated UserOverride overrides = 2;
 }
@@ -701,7 +734,7 @@ message UpdateUserOverridesResponse {
 
 message CheckPermissionRequest {
   // User identifier to check permissions for.
-  string user_id = 1 [ (buf.validate.field).required = true ];
+  uint64 user_id = 1 [ (buf.validate.field).required = true ];
   // Resource path to check (e.g., "guild/{guild_id}/channel/{channel_id}").
   string resource = 2 [ (buf.validate.field).required = true ];
   // Permission name to check (e.g., "send_messages", "view_channel").
@@ -714,14 +747,11 @@ message CheckPermissionResponse {
 }
 
 message GetPermissionsRequest {
-  // User identifier to get permissions for.
-  string user_id = 1 [ (buf.validate.field).required = true ];
-  // Resource path to get permissions for (e.g., "guild/{guild_id}/channel/{channel_id}").
-  string resource = 2 [ (buf.validate.field).required = true ];
+  // Empty request - no parameters needed to get all available permissions.
 }
 
 message GetPermissionsResponse {
-  // List of all permissions for the user on the specified resource.
-  repeated Permission permissions = 1;
+  // List of all available permission names in the system.
+  repeated string permissions = 1;
 }
 
