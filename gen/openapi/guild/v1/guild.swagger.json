@@ -21,8 +21,9 @@
     "application/json"
   ],
   "paths": {
-    "/api/v1/guild/create": {
+    "/api/v1/guild": {
       "post": {
+        "summary": "Create guild",
         "operationId": "GuildService_CreateGuild",
         "responses": {
           "200": {
@@ -49,7 +50,7 @@
           }
         ],
         "tags": [
-          "Guild"
+          "GuildService"
         ],
         "security": [
           {
@@ -60,6 +61,7 @@
     },
     "/api/v1/guild/page/{page}": {
       "get": {
+        "summary": "Get public guilds (limit 20 on page)",
         "operationId": "GuildService_GetPublicGuilds",
         "responses": {
           "200": {
@@ -85,7 +87,7 @@
           }
         ],
         "tags": [
-          "Guild"
+          "GuildService"
         ],
         "security": [
           {
@@ -96,6 +98,7 @@
     },
     "/api/v1/guild/{id}": {
       "get": {
+        "summary": "Get guild by Id",
         "operationId": "GuildService_GetGuildById",
         "responses": {
           "200": {
@@ -121,17 +124,16 @@
           }
         ],
         "tags": [
-          "Guild"
+          "GuildService"
         ],
         "security": [
           {
             "BearerAuth": []
           }
         ]
-      }
-    },
-    "/api/v1/guild/{id}/delete": {
+      },
       "delete": {
+        "summary": "Delete guild",
         "operationId": "GuildService_DeleteGuild",
         "responses": {
           "200": {
@@ -157,17 +159,16 @@
           }
         ],
         "tags": [
-          "Guild"
+          "GuildService"
         ],
         "security": [
           {
             "BearerAuth": []
           }
         ]
-      }
-    },
-    "/api/v1/guild/{id}/update": {
+      },
       "put": {
+        "summary": "Update guild",
         "operationId": "GuildService_UpdateGuild",
         "responses": {
           "200": {
@@ -201,7 +202,7 @@
           }
         ],
         "tags": [
-          "Guild"
+          "GuildService"
         ],
         "security": [
           {
