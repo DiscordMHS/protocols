@@ -46,14 +46,16 @@
             "description": "Guild identifier.",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "format": "uint64"
           },
           {
             "name": "channelId",
             "description": "Channel identifier.",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "format": "uint64"
           },
           {
             "name": "body",
@@ -99,14 +101,16 @@
             "description": "Guild identifier.",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "format": "uint64"
           },
           {
             "name": "channelId",
             "description": "Channel identifier.",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "format": "uint64"
           },
           {
             "name": "body",
@@ -152,7 +156,8 @@
             "description": "Guild identifier.",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "format": "uint64"
           },
           {
             "name": "body",
@@ -198,7 +203,8 @@
             "description": "Guild identifier to join.",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "format": "uint64"
           },
           {
             "name": "body",
@@ -244,7 +250,8 @@
             "description": "Guild identifier.",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "format": "uint64"
           },
           {
             "name": "limit",
@@ -268,50 +275,6 @@
             "in": "query",
             "required": false,
             "type": "string"
-          }
-        ],
-        "tags": [
-          "Members"
-        ],
-        "security": [
-          {
-            "BearerAuth": []
-          }
-        ]
-      },
-      "post": {
-        "summary": "Add member to guild",
-        "description": "Adds a user to the guild with the specified roles. The user must exist in the system.",
-        "operationId": "MembershipService_CreateMember",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1CreateMemberResponse"
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "guildId",
-            "description": "Guild identifier.",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/MembershipServiceCreateMemberBody"
-            }
           }
         ],
         "tags": [
@@ -349,14 +312,16 @@
             "description": "Guild identifier.",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "format": "uint64"
           },
           {
             "name": "userId",
             "description": "User identifier.",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "format": "uint64"
           }
         ],
         "tags": [
@@ -392,14 +357,16 @@
             "description": "Guild identifier.",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "format": "uint64"
           },
           {
             "name": "userId",
             "description": "User identifier to remove from the guild.",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "format": "uint64"
           }
         ],
         "tags": [
@@ -437,14 +404,16 @@
             "description": "Guild identifier.",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "format": "uint64"
           },
           {
             "name": "userId",
             "description": "User identifier.",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "format": "uint64"
           },
           {
             "name": "body",
@@ -490,7 +459,8 @@
             "description": "Guild identifier.",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "format": "uint64"
           },
           {
             "name": "limit",
@@ -549,7 +519,8 @@
             "description": "Guild identifier where the role will be created.",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "format": "uint64"
           },
           {
             "name": "body",
@@ -595,14 +566,16 @@
             "description": "Guild identifier.",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "format": "uint64"
           },
           {
             "name": "roleId",
             "description": "Role identifier.",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "format": "uint64"
           }
         ],
         "tags": [
@@ -638,14 +611,16 @@
             "description": "Guild identifier.",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "format": "uint64"
           },
           {
             "name": "roleId",
             "description": "Role identifier to delete.",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "format": "uint64"
           }
         ],
         "tags": [
@@ -681,14 +656,16 @@
             "description": "Guild identifier.",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "format": "uint64"
           },
           {
             "name": "roleId",
             "description": "Role identifier to update.",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "format": "uint64"
           },
           {
             "name": "body",
@@ -742,6 +719,45 @@
         ]
       }
     },
+    "/memberships/permissions": {
+      "post": {
+        "summary": "Get all permissions",
+        "description": "Returns all permissions (both allowed and denied) that a user has for the given resource. Includes permissions from roles and overrides.",
+        "operationId": "MembershipService_GetPermissions",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1GetPermissionsResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1GetPermissionsRequest"
+            }
+          }
+        ],
+        "tags": [
+          "Permissions"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
     "/memberships/permissions/check": {
       "post": {
         "summary": "Check permission",
@@ -780,6 +796,53 @@
           }
         ]
       }
+    },
+    "/membershissps/guilds/{guildId}/members": {
+      "post": {
+        "summary": "Add member to guild",
+        "description": "Adds a user to the guild with the specified roles. The user must exist in the system.",
+        "operationId": "MembershipService_CreateMember",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1CreateMemberResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "guildId",
+            "description": "Guild identifier.",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uint64"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/MembershipServiceCreateMemberBody"
+            }
+          }
+        ],
+        "tags": [
+          "Members"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
     }
   },
   "definitions": {
@@ -788,6 +851,7 @@
       "properties": {
         "channelId": {
           "type": "string",
+          "format": "uint64",
           "description": "Optional channel identifier to scope the invite to a specific channel."
         }
       }
@@ -797,14 +861,30 @@
       "properties": {
         "userId": {
           "type": "string",
+          "format": "uint64",
           "description": "User identifier to add to the guild."
         },
         "roleIds": {
           "type": "array",
           "items": {
-            "type": "string"
+            "type": "string",
+            "format": "uint64"
           },
           "description": "Initial roles to assign to the member."
+        },
+        "roleIds2": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "uint64"
+          }
+        },
+        "roleIds3": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "uint64"
+          }
         }
       }
     },
@@ -842,7 +922,8 @@
         "roleIds": {
           "type": "array",
           "items": {
-            "type": "string"
+            "type": "string",
+            "format": "uint64"
           },
           "description": "New list of role IDs (completely replaces existing roles)."
         }
@@ -932,14 +1013,17 @@
       "properties": {
         "guildId": {
           "type": "string",
+          "format": "uint64",
           "description": "Guild identifier the user joined."
         },
         "channelId": {
           "type": "string",
+          "format": "uint64",
           "description": "Channel identifier if invite was channel-specific."
         },
         "userId": {
           "type": "string",
+          "format": "uint64",
           "description": "User identifier who accepted the invite."
         },
         "joinedAt": {
@@ -954,6 +1038,7 @@
       "properties": {
         "userId": {
           "type": "string",
+          "format": "uint64",
           "description": "User identifier to check permissions for."
         },
         "resource": {
@@ -988,10 +1073,12 @@
         },
         "guildId": {
           "type": "string",
+          "format": "uint64",
           "description": "Guild identifier."
         },
         "channelId": {
           "type": "string",
+          "format": "uint64",
           "description": "Channel identifier if invite is channel-specific."
         },
         "expiresAt": {
@@ -1046,6 +1133,33 @@
         "member": {
           "$ref": "#/definitions/v1Member",
           "description": "Member information."
+        }
+      }
+    },
+    "v1GetPermissionsRequest": {
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "format": "uint64",
+          "description": "User identifier to get permissions for."
+        },
+        "resource": {
+          "type": "string",
+          "description": "Resource path to get permissions for (e.g., \"guild/{guild_id}/channel/{channel_id}\")."
+        }
+      }
+    },
+    "v1GetPermissionsResponse": {
+      "type": "object",
+      "properties": {
+        "permissions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1Permission"
+          },
+          "description": "List of all permissions for the user on the specified resource."
         }
       }
     },
@@ -1108,16 +1222,19 @@
       "properties": {
         "userId": {
           "type": "string",
+          "format": "uint64",
           "description": "User identifier."
         },
         "guildId": {
           "type": "string",
+          "format": "uint64",
           "description": "Guild identifier."
         },
         "roleIds": {
           "type": "array",
           "items": {
-            "type": "string"
+            "type": "string",
+            "format": "uint64"
           },
           "description": "List of role IDs assigned to this member."
         },
@@ -1162,10 +1279,12 @@
       "properties": {
         "id": {
           "type": "string",
+          "format": "uint64",
           "description": "Unique role identifier."
         },
         "guildId": {
           "type": "string",
+          "format": "uint64",
           "description": "Guild identifier this role belongs to."
         },
         "title": {
@@ -1196,6 +1315,7 @@
       "properties": {
         "roleId": {
           "type": "string",
+          "format": "uint64",
           "description": "Role identifier."
         },
         "permission": {
@@ -1227,6 +1347,7 @@
       "properties": {
         "channelId": {
           "type": "string",
+          "format": "uint64",
           "description": "Channel identifier."
         },
         "overrides": {
@@ -1253,6 +1374,7 @@
       "properties": {
         "channelId": {
           "type": "string",
+          "format": "uint64",
           "description": "Channel identifier."
         },
         "overrides": {
@@ -1270,6 +1392,7 @@
       "properties": {
         "userId": {
           "type": "string",
+          "format": "uint64",
           "description": "User identifier."
         },
         "permission": {

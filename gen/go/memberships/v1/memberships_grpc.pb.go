@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.5.1
 // - protoc             (unknown)
-// source: memberships/v1/memberships.proto
+// source: proto/memberships/v1/memberships.proto
 
 package membershipsv1
 
@@ -35,6 +35,7 @@ const (
 	MembershipService_UpdateRoleOverrides_FullMethodName = "/memberships.v1.MembershipService/UpdateRoleOverrides"
 	MembershipService_UpdateUserOverrides_FullMethodName = "/memberships.v1.MembershipService/UpdateUserOverrides"
 	MembershipService_CheckPermission_FullMethodName     = "/memberships.v1.MembershipService/CheckPermission"
+	MembershipService_GetPermissions_FullMethodName      = "/memberships.v1.MembershipService/GetPermissions"
 )
 
 // MembershipServiceClient is the client API for MembershipService service.
@@ -73,6 +74,8 @@ type MembershipServiceClient interface {
 	UpdateUserOverrides(ctx context.Context, in *UpdateUserOverridesRequest, opts ...grpc.CallOption) (*UpdateUserOverridesResponse, error)
 	// CheckPermission verifies if a user has the specified permission for a resource.
 	CheckPermission(ctx context.Context, in *CheckPermissionRequest, opts ...grpc.CallOption) (*CheckPermissionResponse, error)
+	// GetPermissions retrieves all permissions a user has for a specific resource.
+	GetPermissions(ctx context.Context, in *GetPermissionsRequest, opts ...grpc.CallOption) (*GetPermissionsResponse, error)
 }
 
 type membershipServiceClient struct {
@@ -243,6 +246,16 @@ func (c *membershipServiceClient) CheckPermission(ctx context.Context, in *Check
 	return out, nil
 }
 
+func (c *membershipServiceClient) GetPermissions(ctx context.Context, in *GetPermissionsRequest, opts ...grpc.CallOption) (*GetPermissionsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetPermissionsResponse)
+	err := c.cc.Invoke(ctx, MembershipService_GetPermissions_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // MembershipServiceServer is the server API for MembershipService service.
 // All implementations must embed UnimplementedMembershipServiceServer
 // for forward compatibility.
@@ -279,6 +292,8 @@ type MembershipServiceServer interface {
 	UpdateUserOverrides(context.Context, *UpdateUserOverridesRequest) (*UpdateUserOverridesResponse, error)
 	// CheckPermission verifies if a user has the specified permission for a resource.
 	CheckPermission(context.Context, *CheckPermissionRequest) (*CheckPermissionResponse, error)
+	// GetPermissions retrieves all permissions a user has for a specific resource.
+	GetPermissions(context.Context, *GetPermissionsRequest) (*GetPermissionsResponse, error)
 	mustEmbedUnimplementedMembershipServiceServer()
 }
 
@@ -336,6 +351,9 @@ func (UnimplementedMembershipServiceServer) UpdateUserOverrides(context.Context,
 }
 func (UnimplementedMembershipServiceServer) CheckPermission(context.Context, *CheckPermissionRequest) (*CheckPermissionResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CheckPermission not implemented")
+}
+func (UnimplementedMembershipServiceServer) GetPermissions(context.Context, *GetPermissionsRequest) (*GetPermissionsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetPermissions not implemented")
 }
 func (UnimplementedMembershipServiceServer) mustEmbedUnimplementedMembershipServiceServer() {}
 func (UnimplementedMembershipServiceServer) testEmbeddedByValue()                           {}
@@ -646,6 +664,24 @@ func _MembershipService_CheckPermission_Handler(srv interface{}, ctx context.Con
 	return interceptor(ctx, in, info, handler)
 }
 
+func _MembershipService_GetPermissions_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetPermissionsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MembershipServiceServer).GetPermissions(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: MembershipService_GetPermissions_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MembershipServiceServer).GetPermissions(ctx, req.(*GetPermissionsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // MembershipService_ServiceDesc is the grpc.ServiceDesc for MembershipService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -717,7 +753,11 @@ var MembershipService_ServiceDesc = grpc.ServiceDesc{
 			MethodName: "CheckPermission",
 			Handler:    _MembershipService_CheckPermission_Handler,
 		},
+		{
+			MethodName: "GetPermissions",
+			Handler:    _MembershipService_GetPermissions_Handler,
+		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "memberships/v1/memberships.proto",
+	Metadata: "proto/memberships/v1/memberships.proto",
 }

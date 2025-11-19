@@ -1,0 +1,63 @@
+version: v1
+name: ""
+lint:
+    use:
+        # From 'minimal' category.
+        - DIRECTORY_SAME_PACKAGE
+        - PACKAGE_DEFINED
+        # From 'basic' category.
+        - ENUM_PASCAL_CASE
+        - ENUM_VALUE_UPPER_SNAKE_CASE
+        - FIELD_LOWER_SNAKE_CASE
+        - MESSAGE_PASCAL_CASE
+        - ONEOF_LOWER_SNAKE_CASE
+        - PACKAGE_LOWER_SNAKE_CASE
+        - RPC_PASCAL_CASE
+        - SERVICE_PASCAL_CASE
+        - PACKAGE_SAME_GO_PACKAGE
+        - ENUM_FIRST_VALUE_ZERO
+        - ENUM_NO_ALLOW_ALIAS
+        - IMPORT_NO_WEAK
+        - IMPORT_NO_PUBLIC
+        # From 'basic' category.
+        - ENUM_VALUE_PREFIX
+        - FILE_LOWER_SNAKE_CASE
+        - PACKAGE_VERSION_SUFFIX
+        # From 'comments' category.
+        - COMMENT_ENUM
+        - COMMENT_ENUM_VALUE
+    ignore:
+        - easyp_vendor
+    enum_zero_value_suffix: _UNSPECIFIED
+    allow_comment_ignores: true
+    rpc_allow_same_request_response: false
+    rpc_allow_google_protobuf_empty_requests: false
+    rpc_allow_google_protobuf_empty_responses: false
+    service_suffix: Service
+breaking:
+    use:
+        - FILE
+deps:
+    - github.com/grpc-ecosystem/grpc-gateway@v2.26.0
+    - github.com/googleapis/googleapis
+    - github.com/bufbuild/protovalidate@v0.10.0
+
+generate:
+    inputs:
+        - directory: ./proto
+    plugins:
+        - name: go
+          out: gen/go
+          opts:
+              paths: source_relative
+        - name: go-grpc
+          out: gen/go
+          opts:
+              paths: source_relative
+        - name: grpc-gateway
+          out: gen/go
+          opts:
+              paths: source_relative
+              generate_unbound_methods: true
+        - name: openapiv2
+          out: gen/openapi
