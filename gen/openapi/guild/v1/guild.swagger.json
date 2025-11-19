@@ -21,7 +21,7 @@
     "application/json"
   ],
   "paths": {
-    "/api/v1/guild/create": {
+    "/api/v1/guild": {
       "post": {
         "operationId": "GuildService_CreateGuild",
         "responses": {
@@ -128,9 +128,7 @@
             "BearerAuth": []
           }
         ]
-      }
-    },
-    "/api/v1/guild/{id}/delete": {
+      },
       "delete": {
         "operationId": "GuildService_DeleteGuild",
         "responses": {
@@ -164,9 +162,7 @@
             "BearerAuth": []
           }
         ]
-      }
-    },
-    "/api/v1/guild/{id}/update": {
+      },
       "put": {
         "operationId": "GuildService_UpdateGuild",
         "responses": {
