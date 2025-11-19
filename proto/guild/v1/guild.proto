@@ -37,7 +37,8 @@ service GuildService {
       get : "/api/v1/guild/{id}"
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags : "Guild"
+      tags : "GuildService"
+      summary : "Get guild by Id"
       security: {
         security_requirement: {
           key: "BearerAuth";
@@ -52,7 +53,8 @@ service GuildService {
         get : "/api/v1/guild/page/{page}"
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags : "Guild"
+      tags : "GuildService"
+      summary : "Get public guilds (limit 20 on page)"
       security: {
         security_requirement: {
           key: "BearerAuth";
@@ -68,7 +70,8 @@ service GuildService {
       body : "*"
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags : "Guild"
+      tags : "GuildService"
+      summary : "Create guild"
       security: {
         security_requirement: {
           key: "BearerAuth";
@@ -84,7 +87,8 @@ service GuildService {
       body : "*"
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags : "Guild"
+      tags : "GuildService"
+      summary : "Update guild"
       security: {
         security_requirement: {
           key: "BearerAuth";
@@ -99,7 +103,8 @@ service GuildService {
       delete : "/api/v1/guild/{id}"
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags : "Guild"
+      tags : "GuildService"
+      summary : "Delete guild"
       security: {
         security_requirement: {
           key: "BearerAuth";
