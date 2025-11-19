@@ -1,0 +1,1299 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Membership Service API",
+    "description": "Guild memberships, roles, and permissions management service",
+    "version": "1.0.0"
+  },
+  "tags": [
+    {
+      "name": "MembershipService"
+    }
+  ],
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/memberships/guilds/{guildId}/channels/{channelId}/role-overrides": {
+      "put": {
+        "summary": "Update role overrides",
+        "description": "Completely replaces all role-based permission overrides for the channel. Empty list removes all overrides.",
+        "operationId": "MembershipService_UpdateRoleOverrides",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1UpdateRoleOverridesResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "guildId",
+            "description": "Guild identifier.",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "channelId",
+            "description": "Channel identifier.",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/MembershipServiceUpdateRoleOverridesBody"
+            }
+          }
+        ],
+        "tags": [
+          "Overrides"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/memberships/guilds/{guildId}/channels/{channelId}/user-overrides": {
+      "put": {
+        "summary": "Update user overrides",
+        "description": "Completely replaces all user-specific permission overrides for the channel. Empty list removes all overrides.",
+        "operationId": "MembershipService_UpdateUserOverrides",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1UpdateUserOverridesResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "guildId",
+            "description": "Guild identifier.",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "channelId",
+            "description": "Channel identifier.",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/MembershipServiceUpdateUserOverridesBody"
+            }
+          }
+        ],
+        "tags": [
+          "Overrides"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/memberships/guilds/{guildId}/invites": {
+      "post": {
+        "summary": "Create invite link",
+        "description": "Generates a new invite token and URL for the guild. Optionally can be scoped to a specific channel.",
+        "operationId": "MembershipService_CreateInvite",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1CreateInviteResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "guildId",
+            "description": "Guild identifier.",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/MembershipServiceCreateInviteBody"
+            }
+          }
+        ],
+        "tags": [
+          "Invites"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/memberships/guilds/{guildId}/join": {
+      "post": {
+        "summary": "Join guild",
+        "description": "Allows the authenticated user to join a guild. The user will be assigned default roles if available.",
+        "operationId": "MembershipService_JoinGuild",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1JoinGuildResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "guildId",
+            "description": "Guild identifier to join.",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/MembershipServiceJoinGuildBody"
+            }
+          }
+        ],
+        "tags": [
+          "Members"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/memberships/guilds/{guildId}/members": {
+      "get": {
+        "summary": "List guild members",
+        "description": "Returns a paginated list of all members in the guild. Supports filtering by username query and pagination with limit and offset.",
+        "operationId": "MembershipService_ListMembers",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ListMembersResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "guildId",
+            "description": "Guild identifier.",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "limit",
+            "description": "Maximum number of members to return (default: 20).",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "offset",
+            "description": "Number of members to skip for pagination (default: 0).",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "query",
+            "description": "Optional search query to filter members by username.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Members"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      },
+      "post": {
+        "summary": "Add member to guild",
+        "description": "Adds a user to the guild with the specified roles. The user must exist in the system.",
+        "operationId": "MembershipService_CreateMember",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1CreateMemberResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "guildId",
+            "description": "Guild identifier.",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/MembershipServiceCreateMemberBody"
+            }
+          }
+        ],
+        "tags": [
+          "Members"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/memberships/guilds/{guildId}/members/{userId}": {
+      "get": {
+        "summary": "Get guild member",
+        "description": "Returns membership information for a specific user, including their roles and join date.",
+        "operationId": "MembershipService_GetMember",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1GetMemberResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "guildId",
+            "description": "Guild identifier.",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "userId",
+            "description": "User identifier.",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Members"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "summary": "Remove member from guild",
+        "description": "Permanently removes a user from the guild. All their roles and channel overrides are deleted.",
+        "operationId": "MembershipService_DeleteMember",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1DeleteMemberResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "guildId",
+            "description": "Guild identifier.",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "userId",
+            "description": "User identifier to remove from the guild.",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Members"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/memberships/guilds/{guildId}/members/{userId}/roles": {
+      "put": {
+        "summary": "Update member roles",
+        "description": "Completely replaces the member's role set with the provided list. Empty list removes all roles.",
+        "operationId": "MembershipService_UpdateMemberRoles",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1UpdateMemberRolesResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "guildId",
+            "description": "Guild identifier.",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "userId",
+            "description": "User identifier.",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/MembershipServiceUpdateMemberRolesBody"
+            }
+          }
+        ],
+        "tags": [
+          "Members"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/memberships/guilds/{guildId}/roles": {
+      "get": {
+        "summary": "List guild roles",
+        "description": "Returns a paginated list of all roles in the guild. Supports filtering by query string and pagination with limit and offset.",
+        "operationId": "MembershipService_ListRoles",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ListRolesResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "guildId",
+            "description": "Guild identifier.",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "limit",
+            "description": "Maximum number of roles to return (default: 20).",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "offset",
+            "description": "Number of roles to skip for pagination (default: 0).",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "query",
+            "description": "Optional search query to filter roles by title.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Roles"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      },
+      "post": {
+        "summary": "Create a new role",
+        "description": "Creates a new role in the guild with specified title, icon, and permissions. The role can be marked as default for new members.",
+        "operationId": "MembershipService_CreateRole",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1CreateRoleResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "guildId",
+            "description": "Guild identifier where the role will be created.",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/MembershipServiceCreateRoleBody"
+            }
+          }
+        ],
+        "tags": [
+          "Roles"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/memberships/guilds/{guildId}/roles/{roleId}": {
+      "get": {
+        "summary": "Get role",
+        "description": "Returns detailed information about a specific role, including all its permissions.",
+        "operationId": "MembershipService_GetRole",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1GetRoleResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "guildId",
+            "description": "Guild identifier.",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "roleId",
+            "description": "Role identifier.",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Roles"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "summary": "Delete role",
+        "description": "Permanently deletes a role from the guild. All members with this role will lose it.",
+        "operationId": "MembershipService_DeleteRole",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1DeleteRoleResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "guildId",
+            "description": "Guild identifier.",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "roleId",
+            "description": "Role identifier to delete.",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Roles"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      },
+      "patch": {
+        "summary": "Update role",
+        "description": "Updates role metadata (title, icon, is_default) and completely replaces the list of permissions. All fields are optional, but provided permissions will replace existing ones.",
+        "operationId": "MembershipService_UpdateRole",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1UpdateRoleResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "guildId",
+            "description": "Guild identifier.",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "roleId",
+            "description": "Role identifier to update.",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/MembershipServiceUpdateRoleBody"
+            }
+          }
+        ],
+        "tags": [
+          "Roles"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/memberships/invites/{token}/accept": {
+      "post": {
+        "summary": "Accept invite",
+        "description": "Accepts an invite by token. The authenticated user is added to the guild/channel specified in the invite.",
+        "operationId": "MembershipService_AcceptInvite",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1AcceptInviteResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "token",
+            "description": "Invite token from the invite URL.",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Invites"
+        ]
+      }
+    },
+    "/memberships/permissions/check": {
+      "post": {
+        "summary": "Check permission",
+        "description": "Checks if a user has the specified permission for the given resource. Considers roles, overrides, and inheritance.",
+        "operationId": "MembershipService_CheckPermission",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1CheckPermissionResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1CheckPermissionRequest"
+            }
+          }
+        ],
+        "tags": [
+          "Permissions"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "MembershipServiceCreateInviteBody": {
+      "type": "object",
+      "properties": {
+        "channelId": {
+          "type": "string",
+          "description": "Optional channel identifier to scope the invite to a specific channel."
+        }
+      }
+    },
+    "MembershipServiceCreateMemberBody": {
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "User identifier to add to the guild."
+        },
+        "roleIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Initial roles to assign to the member."
+        }
+      }
+    },
+    "MembershipServiceCreateRoleBody": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "Role display title."
+        },
+        "icon": {
+          "type": "string",
+          "description": "Optional icon URL."
+        },
+        "isDefault": {
+          "type": "boolean",
+          "description": "Whether this role should be assigned to new members by default."
+        },
+        "permissions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1Permission"
+          },
+          "description": "Initial list of permissions for this role."
+        }
+      }
+    },
+    "MembershipServiceJoinGuildBody": {
+      "type": "object"
+    },
+    "MembershipServiceUpdateMemberRolesBody": {
+      "type": "object",
+      "properties": {
+        "roleIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "New list of role IDs (completely replaces existing roles)."
+        }
+      }
+    },
+    "MembershipServiceUpdateRoleBody": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "New role title (optional)."
+        },
+        "icon": {
+          "type": "string",
+          "description": "New icon URL (optional)."
+        },
+        "isDefault": {
+          "type": "boolean",
+          "description": "Whether role should be default (optional)."
+        },
+        "permissions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1Permission"
+          },
+          "description": "New permissions list (completely replaces existing permissions)."
+        }
+      }
+    },
+    "MembershipServiceUpdateRoleOverridesBody": {
+      "type": "object",
+      "properties": {
+        "overrides": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1RoleOverride"
+          },
+          "description": "List of role overrides (completely replaces existing overrides)."
+        }
+      }
+    },
+    "MembershipServiceUpdateUserOverridesBody": {
+      "type": "object",
+      "properties": {
+        "overrides": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1UserOverride"
+          },
+          "description": "List of user overrides (completely replaces existing overrides)."
+        }
+      }
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "v1AcceptInviteResponse": {
+      "type": "object",
+      "properties": {
+        "guildId": {
+          "type": "string",
+          "description": "Guild identifier the user joined."
+        },
+        "channelId": {
+          "type": "string",
+          "description": "Channel identifier if invite was channel-specific."
+        },
+        "userId": {
+          "type": "string",
+          "description": "User identifier who accepted the invite."
+        },
+        "joinedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp when the user joined."
+        }
+      }
+    },
+    "v1CheckPermissionRequest": {
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "User identifier to check permissions for."
+        },
+        "resource": {
+          "type": "string",
+          "description": "Resource path to check (e.g., \"guild/{guild_id}/channel/{channel_id}\")."
+        },
+        "permission": {
+          "type": "string",
+          "description": "Permission name to check (e.g., \"send_messages\", \"view_channel\")."
+        }
+      }
+    },
+    "v1CheckPermissionResponse": {
+      "type": "object",
+      "properties": {
+        "allowed": {
+          "type": "boolean",
+          "description": "Whether the user has the requested permission."
+        }
+      }
+    },
+    "v1CreateInviteResponse": {
+      "type": "object",
+      "properties": {
+        "token": {
+          "type": "string",
+          "description": "Invite token (can be used in invite URL)."
+        },
+        "inviteUrl": {
+          "type": "string",
+          "description": "Full invite URL."
+        },
+        "guildId": {
+          "type": "string",
+          "description": "Guild identifier."
+        },
+        "channelId": {
+          "type": "string",
+          "description": "Channel identifier if invite is channel-specific."
+        },
+        "expiresAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp when the invite expires (null if never expires)."
+        },
+        "maxUses": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Maximum number of uses (0 if unlimited)."
+        },
+        "uses": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Current number of uses."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp when the invite was created."
+        }
+      }
+    },
+    "v1CreateMemberResponse": {
+      "type": "object",
+      "properties": {
+        "member": {
+          "$ref": "#/definitions/v1Member",
+          "description": "Created membership information."
+        }
+      }
+    },
+    "v1CreateRoleResponse": {
+      "type": "object",
+      "properties": {
+        "role": {
+          "$ref": "#/definitions/v1Role",
+          "description": "Created role with generated ID."
+        }
+      }
+    },
+    "v1DeleteMemberResponse": {
+      "type": "object"
+    },
+    "v1DeleteRoleResponse": {
+      "type": "object"
+    },
+    "v1GetMemberResponse": {
+      "type": "object",
+      "properties": {
+        "member": {
+          "$ref": "#/definitions/v1Member",
+          "description": "Member information."
+        }
+      }
+    },
+    "v1GetRoleResponse": {
+      "type": "object",
+      "properties": {
+        "role": {
+          "$ref": "#/definitions/v1Role",
+          "description": "Role information."
+        }
+      }
+    },
+    "v1JoinGuildResponse": {
+      "type": "object",
+      "properties": {
+        "member": {
+          "$ref": "#/definitions/v1Member",
+          "description": "Membership information after joining."
+        }
+      }
+    },
+    "v1ListMembersResponse": {
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1Member"
+          },
+          "description": "List of members."
+        },
+        "total": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Total number of members matching the query."
+        }
+      }
+    },
+    "v1ListRolesResponse": {
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1Role"
+          },
+          "description": "List of roles."
+        },
+        "total": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Total number of roles matching the query."
+        }
+      }
+    },
+    "v1Member": {
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "User identifier."
+        },
+        "guildId": {
+          "type": "string",
+          "description": "Guild identifier."
+        },
+        "roleIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "List of role IDs assigned to this member."
+        },
+        "joinedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp when the user joined the guild."
+        }
+      },
+      "description": "Member represents a user's membership in a guild."
+    },
+    "v1Permission": {
+      "type": "object",
+      "properties": {
+        "permission": {
+          "type": "string",
+          "description": "Permission name (e.g., \"view_channel\", \"send_messages\", \"manage_guild\")."
+        },
+        "resource": {
+          "type": "string",
+          "description": "Resource path (e.g., \"guild/{guild_id}/channel/{channel_id}\")."
+        },
+        "action": {
+          "$ref": "#/definitions/v1PermissionAction",
+          "description": "Action type: allow or deny."
+        }
+      },
+      "description": "Permission represents a single permission rule for a resource."
+    },
+    "v1PermissionAction": {
+      "type": "string",
+      "enum": [
+        "PERMISSION_ACTION_UNSPECIFIED",
+        "PERMISSION_ACTION_ALLOW",
+        "PERMISSION_ACTION_DENY"
+      ],
+      "default": "PERMISSION_ACTION_UNSPECIFIED",
+      "description": "PermissionAction defines whether a permission is allowed or denied.\n\n - PERMISSION_ACTION_UNSPECIFIED: Unspecified action (should not be used).\n - PERMISSION_ACTION_ALLOW: Permission is allowed.\n - PERMISSION_ACTION_DENY: Permission is denied."
+    },
+    "v1Role": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique role identifier."
+        },
+        "guildId": {
+          "type": "string",
+          "description": "Guild identifier this role belongs to."
+        },
+        "title": {
+          "type": "string",
+          "description": "Role display title."
+        },
+        "icon": {
+          "type": "string",
+          "description": "Optional icon URL for the role."
+        },
+        "isDefault": {
+          "type": "boolean",
+          "description": "Whether this role is assigned to new members by default."
+        },
+        "permissions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1Permission"
+          },
+          "description": "List of permissions associated with this role."
+        }
+      },
+      "description": "Role represents a role in a guild with associated permissions."
+    },
+    "v1RoleOverride": {
+      "type": "object",
+      "properties": {
+        "roleId": {
+          "type": "string",
+          "description": "Role identifier."
+        },
+        "permission": {
+          "type": "string",
+          "description": "Permission name."
+        },
+        "resource": {
+          "type": "string",
+          "description": "Resource path (typically the channel path)."
+        },
+        "action": {
+          "$ref": "#/definitions/v1PermissionAction",
+          "description": "Action type: allow or deny."
+        }
+      },
+      "description": "RoleOverride represents a channel-specific permission override for a role."
+    },
+    "v1UpdateMemberRolesResponse": {
+      "type": "object",
+      "properties": {
+        "member": {
+          "$ref": "#/definitions/v1Member",
+          "description": "Updated member information."
+        }
+      }
+    },
+    "v1UpdateRoleOverridesResponse": {
+      "type": "object",
+      "properties": {
+        "channelId": {
+          "type": "string",
+          "description": "Channel identifier."
+        },
+        "overrides": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1RoleOverride"
+          },
+          "description": "Updated list of role overrides."
+        }
+      }
+    },
+    "v1UpdateRoleResponse": {
+      "type": "object",
+      "properties": {
+        "role": {
+          "$ref": "#/definitions/v1Role",
+          "description": "Updated role."
+        }
+      }
+    },
+    "v1UpdateUserOverridesResponse": {
+      "type": "object",
+      "properties": {
+        "channelId": {
+          "type": "string",
+          "description": "Channel identifier."
+        },
+        "overrides": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1UserOverride"
+          },
+          "description": "Updated list of user overrides."
+        }
+      }
+    },
+    "v1UserOverride": {
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "User identifier."
+        },
+        "permission": {
+          "type": "string",
+          "description": "Permission name."
+        },
+        "resource": {
+          "type": "string",
+          "description": "Resource path (typically the channel path)."
+        },
+        "action": {
+          "$ref": "#/definitions/v1PermissionAction",
+          "description": "Action type: allow or deny."
+        }
+      },
+      "description": "UserOverride represents a channel-specific permission override for a user."
+    }
+  },
+  "securityDefinitions": {
+    "BearerAuth": {
+      "type": "apiKey",
+      "description": "JWT Bearer token",
+      "name": "Authorization",
+      "in": "header"
+    }
+  }
+}
