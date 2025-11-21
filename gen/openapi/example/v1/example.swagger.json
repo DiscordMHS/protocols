@@ -9,6 +9,11 @@
       "name": "ExampleService"
     }
   ],
+  "host": "example.agoraproject.ru",
+  "schemes": [
+    "http",
+    "https"
+  ],
   "consumes": [
     "application/json"
   ],
