@@ -883,7 +883,7 @@ func RegisterMembershipServiceHandlerServer(ctx context.Context, mux *runtime.Se
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/memberships.v1.MembershipService/CreateRole", runtime.WithHTTPPathPattern("/memberships/guilds/{guild_id}/roles"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/memberships.v1.MembershipService/CreateRole", runtime.WithHTTPPathPattern("/api/v1/guilds/{guild_id}/roles"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -903,7 +903,7 @@ func RegisterMembershipServiceHandlerServer(ctx context.Context, mux *runtime.Se
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/memberships.v1.MembershipService/ListRoles", runtime.WithHTTPPathPattern("/memberships/guilds/{guild_id}/roles"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/memberships.v1.MembershipService/ListRoles", runtime.WithHTTPPathPattern("/api/v1/guilds/{guild_id}/roles"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -923,7 +923,7 @@ func RegisterMembershipServiceHandlerServer(ctx context.Context, mux *runtime.Se
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/memberships.v1.MembershipService/GetRole", runtime.WithHTTPPathPattern("/memberships/guilds/{guild_id}/roles/{role_id}"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/memberships.v1.MembershipService/GetRole", runtime.WithHTTPPathPattern("/api/v1/guilds/{guild_id}/roles/{role_id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -943,7 +943,7 @@ func RegisterMembershipServiceHandlerServer(ctx context.Context, mux *runtime.Se
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/memberships.v1.MembershipService/UpdateRole", runtime.WithHTTPPathPattern("/memberships/guilds/{guild_id}/roles/{role_id}"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/memberships.v1.MembershipService/UpdateRole", runtime.WithHTTPPathPattern("/api/v1/guilds/{guild_id}/roles/{role_id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -963,7 +963,7 @@ func RegisterMembershipServiceHandlerServer(ctx context.Context, mux *runtime.Se
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/memberships.v1.MembershipService/DeleteRole", runtime.WithHTTPPathPattern("/memberships/guilds/{guild_id}/roles/{role_id}"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/memberships.v1.MembershipService/DeleteRole", runtime.WithHTTPPathPattern("/api/v1/guilds/{guild_id}/roles/{role_id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -983,7 +983,7 @@ func RegisterMembershipServiceHandlerServer(ctx context.Context, mux *runtime.Se
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/memberships.v1.MembershipService/CreateMember", runtime.WithHTTPPathPattern("/memberships/guilds/{guild_id}/members"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/memberships.v1.MembershipService/CreateMember", runtime.WithHTTPPathPattern("/api/v1/guilds/{guild_id}/members"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1003,7 +1003,7 @@ func RegisterMembershipServiceHandlerServer(ctx context.Context, mux *runtime.Se
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/memberships.v1.MembershipService/JoinGuild", runtime.WithHTTPPathPattern("/memberships/guilds/{guild_id}/join"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/memberships.v1.MembershipService/JoinGuild", runtime.WithHTTPPathPattern("/api/v1/guilds/{guild_id}/join"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1023,7 +1023,7 @@ func RegisterMembershipServiceHandlerServer(ctx context.Context, mux *runtime.Se
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/memberships.v1.MembershipService/GetMember", runtime.WithHTTPPathPattern("/memberships/guilds/{guild_id}/members/{user_id}"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/memberships.v1.MembershipService/GetMember", runtime.WithHTTPPathPattern("/api/v1/guilds/{guild_id}/members/{user_id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1043,7 +1043,7 @@ func RegisterMembershipServiceHandlerServer(ctx context.Context, mux *runtime.Se
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/memberships.v1.MembershipService/ListMembers", runtime.WithHTTPPathPattern("/memberships/guilds/{guild_id}/members"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/memberships.v1.MembershipService/ListMembers", runtime.WithHTTPPathPattern("/api/v1/guilds/{guild_id}/members"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1063,7 +1063,7 @@ func RegisterMembershipServiceHandlerServer(ctx context.Context, mux *runtime.Se
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/memberships.v1.MembershipService/UpdateMemberRoles", runtime.WithHTTPPathPattern("/memberships/guilds/{guild_id}/members/{user_id}/roles"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/memberships.v1.MembershipService/UpdateMemberRoles", runtime.WithHTTPPathPattern("/api/v1/guilds/{guild_id}/members/{user_id}/roles"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1083,7 +1083,7 @@ func RegisterMembershipServiceHandlerServer(ctx context.Context, mux *runtime.Se
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/memberships.v1.MembershipService/DeleteMember", runtime.WithHTTPPathPattern("/memberships/guilds/{guild_id}/members/{user_id}"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/memberships.v1.MembershipService/DeleteMember", runtime.WithHTTPPathPattern("/api/v1/guilds/{guild_id}/members/{user_id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1103,7 +1103,7 @@ func RegisterMembershipServiceHandlerServer(ctx context.Context, mux *runtime.Se
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/memberships.v1.MembershipService/GetUserGuilds", runtime.WithHTTPPathPattern("/memberships/users/{user_id}/guilds"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/memberships.v1.MembershipService/GetUserGuilds", runtime.WithHTTPPathPattern("/api/v1/users/{user_id}/guilds"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1123,7 +1123,7 @@ func RegisterMembershipServiceHandlerServer(ctx context.Context, mux *runtime.Se
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/memberships.v1.MembershipService/CreateInvite", runtime.WithHTTPPathPattern("/memberships/guilds/{guild_id}/invites"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/memberships.v1.MembershipService/CreateInvite", runtime.WithHTTPPathPattern("/api/v1/guilds/{guild_id}/invites"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1143,7 +1143,7 @@ func RegisterMembershipServiceHandlerServer(ctx context.Context, mux *runtime.Se
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/memberships.v1.MembershipService/AcceptInvite", runtime.WithHTTPPathPattern("/memberships/invites/{token}/accept"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/memberships.v1.MembershipService/AcceptInvite", runtime.WithHTTPPathPattern("/api/v1/invites/{token}/accept"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1163,7 +1163,7 @@ func RegisterMembershipServiceHandlerServer(ctx context.Context, mux *runtime.Se
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/memberships.v1.MembershipService/UpdateRoleOverrides", runtime.WithHTTPPathPattern("/memberships/guilds/{guild_id}/channels/{channel_id}/role-overrides"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/memberships.v1.MembershipService/UpdateRoleOverrides", runtime.WithHTTPPathPattern("/api/v1/guilds/{guild_id}/channels/{channel_id}/role-overrides"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1183,7 +1183,7 @@ func RegisterMembershipServiceHandlerServer(ctx context.Context, mux *runtime.Se
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/memberships.v1.MembershipService/UpdateUserOverrides", runtime.WithHTTPPathPattern("/memberships/guilds/{guild_id}/channels/{channel_id}/user-overrides"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/memberships.v1.MembershipService/UpdateUserOverrides", runtime.WithHTTPPathPattern("/api/v1/guilds/{guild_id}/channels/{channel_id}/user-overrides"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1203,7 +1203,7 @@ func RegisterMembershipServiceHandlerServer(ctx context.Context, mux *runtime.Se
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/memberships.v1.MembershipService/CheckPermission", runtime.WithHTTPPathPattern("/memberships/permissions/check"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/memberships.v1.MembershipService/CheckPermission", runtime.WithHTTPPathPattern("/api/v1/permissions/check"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1223,7 +1223,7 @@ func RegisterMembershipServiceHandlerServer(ctx context.Context, mux *runtime.Se
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/memberships.v1.MembershipService/GetPermissions", runtime.WithHTTPPathPattern("/memberships/permissions"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/memberships.v1.MembershipService/GetPermissions", runtime.WithHTTPPathPattern("/api/v1/permissions"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1281,7 +1281,7 @@ func RegisterMembershipServiceHandlerClient(ctx context.Context, mux *runtime.Se
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/memberships.v1.MembershipService/CreateRole", runtime.WithHTTPPathPattern("/memberships/guilds/{guild_id}/roles"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/memberships.v1.MembershipService/CreateRole", runtime.WithHTTPPathPattern("/api/v1/guilds/{guild_id}/roles"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1298,7 +1298,7 @@ func RegisterMembershipServiceHandlerClient(ctx context.Context, mux *runtime.Se
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/memberships.v1.MembershipService/ListRoles", runtime.WithHTTPPathPattern("/memberships/guilds/{guild_id}/roles"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/memberships.v1.MembershipService/ListRoles", runtime.WithHTTPPathPattern("/api/v1/guilds/{guild_id}/roles"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1315,7 +1315,7 @@ func RegisterMembershipServiceHandlerClient(ctx context.Context, mux *runtime.Se
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/memberships.v1.MembershipService/GetRole", runtime.WithHTTPPathPattern("/memberships/guilds/{guild_id}/roles/{role_id}"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/memberships.v1.MembershipService/GetRole", runtime.WithHTTPPathPattern("/api/v1/guilds/{guild_id}/roles/{role_id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1332,7 +1332,7 @@ func RegisterMembershipServiceHandlerClient(ctx context.Context, mux *runtime.Se
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/memberships.v1.MembershipService/UpdateRole", runtime.WithHTTPPathPattern("/memberships/guilds/{guild_id}/roles/{role_id}"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/memberships.v1.MembershipService/UpdateRole", runtime.WithHTTPPathPattern("/api/v1/guilds/{guild_id}/roles/{role_id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1349,7 +1349,7 @@ func RegisterMembershipServiceHandlerClient(ctx context.Context, mux *runtime.Se
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/memberships.v1.MembershipService/DeleteRole", runtime.WithHTTPPathPattern("/memberships/guilds/{guild_id}/roles/{role_id}"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/memberships.v1.MembershipService/DeleteRole", runtime.WithHTTPPathPattern("/api/v1/guilds/{guild_id}/roles/{role_id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1366,7 +1366,7 @@ func RegisterMembershipServiceHandlerClient(ctx context.Context, mux *runtime.Se
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/memberships.v1.MembershipService/CreateMember", runtime.WithHTTPPathPattern("/memberships/guilds/{guild_id}/members"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/memberships.v1.MembershipService/CreateMember", runtime.WithHTTPPathPattern("/api/v1/guilds/{guild_id}/members"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1383,7 +1383,7 @@ func RegisterMembershipServiceHandlerClient(ctx context.Context, mux *runtime.Se
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/memberships.v1.MembershipService/JoinGuild", runtime.WithHTTPPathPattern("/memberships/guilds/{guild_id}/join"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/memberships.v1.MembershipService/JoinGuild", runtime.WithHTTPPathPattern("/api/v1/guilds/{guild_id}/join"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1400,7 +1400,7 @@ func RegisterMembershipServiceHandlerClient(ctx context.Context, mux *runtime.Se
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/memberships.v1.MembershipService/GetMember", runtime.WithHTTPPathPattern("/memberships/guilds/{guild_id}/members/{user_id}"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/memberships.v1.MembershipService/GetMember", runtime.WithHTTPPathPattern("/api/v1/guilds/{guild_id}/members/{user_id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1417,7 +1417,7 @@ func RegisterMembershipServiceHandlerClient(ctx context.Context, mux *runtime.Se
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/memberships.v1.MembershipService/ListMembers", runtime.WithHTTPPathPattern("/memberships/guilds/{guild_id}/members"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/memberships.v1.MembershipService/ListMembers", runtime.WithHTTPPathPattern("/api/v1/guilds/{guild_id}/members"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1434,7 +1434,7 @@ func RegisterMembershipServiceHandlerClient(ctx context.Context, mux *runtime.Se
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/memberships.v1.MembershipService/UpdateMemberRoles", runtime.WithHTTPPathPattern("/memberships/guilds/{guild_id}/members/{user_id}/roles"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/memberships.v1.MembershipService/UpdateMemberRoles", runtime.WithHTTPPathPattern("/api/v1/guilds/{guild_id}/members/{user_id}/roles"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1451,7 +1451,7 @@ func RegisterMembershipServiceHandlerClient(ctx context.Context, mux *runtime.Se
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/memberships.v1.MembershipService/DeleteMember", runtime.WithHTTPPathPattern("/memberships/guilds/{guild_id}/members/{user_id}"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/memberships.v1.MembershipService/DeleteMember", runtime.WithHTTPPathPattern("/api/v1/guilds/{guild_id}/members/{user_id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1468,7 +1468,7 @@ func RegisterMembershipServiceHandlerClient(ctx context.Context, mux *runtime.Se
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/memberships.v1.MembershipService/GetUserGuilds", runtime.WithHTTPPathPattern("/memberships/users/{user_id}/guilds"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/memberships.v1.MembershipService/GetUserGuilds", runtime.WithHTTPPathPattern("/api/v1/users/{user_id}/guilds"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1485,7 +1485,7 @@ func RegisterMembershipServiceHandlerClient(ctx context.Context, mux *runtime.Se
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/memberships.v1.MembershipService/CreateInvite", runtime.WithHTTPPathPattern("/memberships/guilds/{guild_id}/invites"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/memberships.v1.MembershipService/CreateInvite", runtime.WithHTTPPathPattern("/api/v1/guilds/{guild_id}/invites"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1502,7 +1502,7 @@ func RegisterMembershipServiceHandlerClient(ctx context.Context, mux *runtime.Se
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/memberships.v1.MembershipService/AcceptInvite", runtime.WithHTTPPathPattern("/memberships/invites/{token}/accept"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/memberships.v1.MembershipService/AcceptInvite", runtime.WithHTTPPathPattern("/api/v1/invites/{token}/accept"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1519,7 +1519,7 @@ func RegisterMembershipServiceHandlerClient(ctx context.Context, mux *runtime.Se
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/memberships.v1.MembershipService/UpdateRoleOverrides", runtime.WithHTTPPathPattern("/memberships/guilds/{guild_id}/channels/{channel_id}/role-overrides"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/memberships.v1.MembershipService/UpdateRoleOverrides", runtime.WithHTTPPathPattern("/api/v1/guilds/{guild_id}/channels/{channel_id}/role-overrides"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1536,7 +1536,7 @@ func RegisterMembershipServiceHandlerClient(ctx context.Context, mux *runtime.Se
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/memberships.v1.MembershipService/UpdateUserOverrides", runtime.WithHTTPPathPattern("/memberships/guilds/{guild_id}/channels/{channel_id}/user-overrides"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/memberships.v1.MembershipService/UpdateUserOverrides", runtime.WithHTTPPathPattern("/api/v1/guilds/{guild_id}/channels/{channel_id}/user-overrides"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1553,7 +1553,7 @@ func RegisterMembershipServiceHandlerClient(ctx context.Context, mux *runtime.Se
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/memberships.v1.MembershipService/CheckPermission", runtime.WithHTTPPathPattern("/memberships/permissions/check"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/memberships.v1.MembershipService/CheckPermission", runtime.WithHTTPPathPattern("/api/v1/permissions/check"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1570,7 +1570,7 @@ func RegisterMembershipServiceHandlerClient(ctx context.Context, mux *runtime.Se
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/memberships.v1.MembershipService/GetPermissions", runtime.WithHTTPPathPattern("/memberships/permissions"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/memberships.v1.MembershipService/GetPermissions", runtime.WithHTTPPathPattern("/api/v1/permissions"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1587,24 +1587,24 @@ func RegisterMembershipServiceHandlerClient(ctx context.Context, mux *runtime.Se
 }
 
 var (
-	pattern_MembershipService_CreateRole_0          = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3}, []string{"memberships", "guilds", "guild_id", "roles"}, ""))
-	pattern_MembershipService_ListRoles_0           = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3}, []string{"memberships", "guilds", "guild_id", "roles"}, ""))
-	pattern_MembershipService_GetRole_0             = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"memberships", "guilds", "guild_id", "roles", "role_id"}, ""))
-	pattern_MembershipService_UpdateRole_0          = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"memberships", "guilds", "guild_id", "roles", "role_id"}, ""))
-	pattern_MembershipService_DeleteRole_0          = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"memberships", "guilds", "guild_id", "roles", "role_id"}, ""))
-	pattern_MembershipService_CreateMember_0        = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3}, []string{"memberships", "guilds", "guild_id", "members"}, ""))
-	pattern_MembershipService_JoinGuild_0           = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3}, []string{"memberships", "guilds", "guild_id", "join"}, ""))
-	pattern_MembershipService_GetMember_0           = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"memberships", "guilds", "guild_id", "members", "user_id"}, ""))
-	pattern_MembershipService_ListMembers_0         = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3}, []string{"memberships", "guilds", "guild_id", "members"}, ""))
-	pattern_MembershipService_UpdateMemberRoles_0   = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"memberships", "guilds", "guild_id", "members", "user_id", "roles"}, ""))
-	pattern_MembershipService_DeleteMember_0        = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"memberships", "guilds", "guild_id", "members", "user_id"}, ""))
-	pattern_MembershipService_GetUserGuilds_0       = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3}, []string{"memberships", "users", "user_id", "guilds"}, ""))
-	pattern_MembershipService_CreateInvite_0        = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3}, []string{"memberships", "guilds", "guild_id", "invites"}, ""))
-	pattern_MembershipService_AcceptInvite_0        = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3}, []string{"memberships", "invites", "token", "accept"}, ""))
-	pattern_MembershipService_UpdateRoleOverrides_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"memberships", "guilds", "guild_id", "channels", "channel_id", "role-overrides"}, ""))
-	pattern_MembershipService_UpdateUserOverrides_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"memberships", "guilds", "guild_id", "channels", "channel_id", "user-overrides"}, ""))
-	pattern_MembershipService_CheckPermission_0     = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"memberships", "permissions", "check"}, ""))
-	pattern_MembershipService_GetPermissions_0      = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"memberships", "permissions"}, ""))
+	pattern_MembershipService_CreateRole_0          = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "guilds", "guild_id", "roles"}, ""))
+	pattern_MembershipService_ListRoles_0           = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "guilds", "guild_id", "roles"}, ""))
+	pattern_MembershipService_GetRole_0             = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "guilds", "guild_id", "roles", "role_id"}, ""))
+	pattern_MembershipService_UpdateRole_0          = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "guilds", "guild_id", "roles", "role_id"}, ""))
+	pattern_MembershipService_DeleteRole_0          = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "guilds", "guild_id", "roles", "role_id"}, ""))
+	pattern_MembershipService_CreateMember_0        = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "guilds", "guild_id", "members"}, ""))
+	pattern_MembershipService_JoinGuild_0           = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "guilds", "guild_id", "join"}, ""))
+	pattern_MembershipService_GetMember_0           = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "guilds", "guild_id", "members", "user_id"}, ""))
+	pattern_MembershipService_ListMembers_0         = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "guilds", "guild_id", "members"}, ""))
+	pattern_MembershipService_UpdateMemberRoles_0   = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6}, []string{"api", "v1", "guilds", "guild_id", "members", "user_id", "roles"}, ""))
+	pattern_MembershipService_DeleteMember_0        = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "guilds", "guild_id", "members", "user_id"}, ""))
+	pattern_MembershipService_GetUserGuilds_0       = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "users", "user_id", "guilds"}, ""))
+	pattern_MembershipService_CreateInvite_0        = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "guilds", "guild_id", "invites"}, ""))
+	pattern_MembershipService_AcceptInvite_0        = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "invites", "token", "accept"}, ""))
+	pattern_MembershipService_UpdateRoleOverrides_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6}, []string{"api", "v1", "guilds", "guild_id", "channels", "channel_id", "role-overrides"}, ""))
+	pattern_MembershipService_UpdateUserOverrides_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6}, []string{"api", "v1", "guilds", "guild_id", "channels", "channel_id", "user-overrides"}, ""))
+	pattern_MembershipService_CheckPermission_0     = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"api", "v1", "permissions", "check"}, ""))
+	pattern_MembershipService_GetPermissions_0      = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"api", "v1", "permissions"}, ""))
 )
 
 var (

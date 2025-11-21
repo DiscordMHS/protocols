@@ -48,7 +48,7 @@ service MembershipService {
   // CreateRole creates a new role in the specified guild with the given permissions.
   rpc CreateRole(CreateRoleRequest) returns (CreateRoleResponse) {
     option (google.api.http) = {
-      post : "/memberships/guilds/{guild_id}/roles"
+      post : "/api/v1/guilds/{guild_id}/roles"
       body : "*"
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
@@ -67,7 +67,7 @@ service MembershipService {
   // ListRoles retrieves a paginated list of roles for the specified guild.
   rpc ListRoles(ListRolesRequest) returns (ListRolesResponse) {
     option (google.api.http) = {
-      get : "/memberships/guilds/{guild_id}/roles"
+      get : "/api/v1/guilds/{guild_id}/roles"
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags : "Roles"
@@ -85,7 +85,7 @@ service MembershipService {
   // GetRole retrieves a specific role by its ID.
   rpc GetRole(GetRoleRequest) returns (GetRoleResponse) {
     option (google.api.http) = {
-      get : "/memberships/guilds/{guild_id}/roles/{role_id}"
+      get : "/api/v1/guilds/{guild_id}/roles/{role_id}"
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags : "Roles"
@@ -103,7 +103,7 @@ service MembershipService {
   // UpdateRole updates role metadata and completely replaces its permissions list.
   rpc UpdateRole(UpdateRoleRequest) returns (UpdateRoleResponse) {
     option (google.api.http) = {
-      patch : "/memberships/guilds/{guild_id}/roles/{role_id}"
+      patch : "/api/v1/guilds/{guild_id}/roles/{role_id}"
       body : "*"
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
@@ -122,7 +122,7 @@ service MembershipService {
   // DeleteRole removes a role from the guild. Members with this role will lose it.
   rpc DeleteRole(DeleteRoleRequest) returns (DeleteRoleResponse) {
     option (google.api.http) = {
-      delete : "/memberships/guilds/{guild_id}/roles/{role_id}"
+      delete : "/api/v1/guilds/{guild_id}/roles/{role_id}"
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags : "Roles"
@@ -144,7 +144,7 @@ service MembershipService {
   // CreateMember adds a user to the guild with the specified roles.
   rpc CreateMember(CreateMemberRequest) returns (CreateMemberResponse) {
     option (google.api.http) = {
-      post : "/memberships/guilds/{guild_id}/members"
+      post : "/api/v1/guilds/{guild_id}/members"
       body : "*"
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
@@ -163,7 +163,7 @@ service MembershipService {
   // JoinGuild allows the authenticated user to join a guild on their own.
   rpc JoinGuild(JoinGuildRequest) returns (JoinGuildResponse) {
     option (google.api.http) = {
-      post : "/memberships/guilds/{guild_id}/join"
+      post : "/api/v1/guilds/{guild_id}/join"
       body : "*"
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
@@ -182,7 +182,7 @@ service MembershipService {
   // GetMember retrieves membership information for a specific user in the guild.
   rpc GetMember(GetMemberRequest) returns (GetMemberResponse) {
     option (google.api.http) = {
-      get : "/memberships/guilds/{guild_id}/members/{user_id}"
+      get : "/api/v1/guilds/{guild_id}/members/{user_id}"
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags : "Members"
@@ -200,7 +200,7 @@ service MembershipService {
   // ListMembers retrieves a paginated list of guild members.
   rpc ListMembers(ListMembersRequest) returns (ListMembersResponse) {
     option (google.api.http) = {
-      get : "/memberships/guilds/{guild_id}/members"
+      get : "/api/v1/guilds/{guild_id}/members"
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags : "Members"
@@ -218,7 +218,7 @@ service MembershipService {
   // UpdateMemberRoles completely replaces the set of roles assigned to a member.
   rpc UpdateMemberRoles(UpdateMemberRolesRequest) returns (UpdateMemberRolesResponse) {
     option (google.api.http) = {
-      put : "/memberships/guilds/{guild_id}/members/{user_id}/roles"
+      put : "/api/v1/guilds/{guild_id}/members/{user_id}/roles"
       body : "*"
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
@@ -237,7 +237,7 @@ service MembershipService {
   // DeleteMember removes a user from the guild and all associated overrides.
   rpc DeleteMember(DeleteMemberRequest) returns (DeleteMemberResponse) {
     option (google.api.http) = {
-      delete : "/memberships/guilds/{guild_id}/members/{user_id}"
+      delete : "/api/v1/guilds/{guild_id}/members/{user_id}"
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags : "Members"
@@ -255,7 +255,7 @@ service MembershipService {
   // GetUserGuilds retrieves all guilds a user is a member of.
   rpc GetUserGuilds(GetUserGuildsRequest) returns (GetUserGuildsResponse) {
     option (google.api.http) = {
-      get : "/memberships/users/{user_id}/guilds"
+      get : "/api/v1/users/{user_id}/guilds"
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags : "Members"
@@ -277,7 +277,7 @@ service MembershipService {
   // CreateInvite generates an invite link for the guild or specific channel.
   rpc CreateInvite(CreateInviteRequest) returns (CreateInviteResponse) {
     option (google.api.http) = {
-      post : "/memberships/guilds/{guild_id}/invites"
+      post : "/api/v1/guilds/{guild_id}/invites"
       body : "*"
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
@@ -296,7 +296,7 @@ service MembershipService {
   // AcceptInvite accepts an invite using the provided token and adds the user to the guild.
   rpc AcceptInvite(AcceptInviteRequest) returns (AcceptInviteResponse) {
     option (google.api.http) = {
-      post : "/memberships/invites/{token}/accept"
+      post : "/api/v1/invites/{token}/accept"
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags : "Invites"
@@ -312,7 +312,7 @@ service MembershipService {
   // UpdateRoleOverrides completely replaces role-based permission overrides for a channel.
   rpc UpdateRoleOverrides(UpdateRoleOverridesRequest) returns (UpdateRoleOverridesResponse) {
     option (google.api.http) = {
-      put : "/memberships/guilds/{guild_id}/channels/{channel_id}/role-overrides"
+      put : "/api/v1/guilds/{guild_id}/channels/{channel_id}/role-overrides"
       body : "*"
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
@@ -331,7 +331,7 @@ service MembershipService {
   // UpdateUserOverrides completely replaces user-specific permission overrides for a channel.
   rpc UpdateUserOverrides(UpdateUserOverridesRequest) returns (UpdateUserOverridesResponse) {
     option (google.api.http) = {
-      put : "/memberships/guilds/{guild_id}/channels/{channel_id}/user-overrides"
+      put : "/api/v1/guilds/{guild_id}/channels/{channel_id}/user-overrides"
       body : "*"
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
@@ -354,7 +354,7 @@ service MembershipService {
   // CheckPermission verifies if a user has the specified permission for a resource.
   rpc CheckPermission(CheckPermissionRequest) returns (CheckPermissionResponse) {
     option (google.api.http) = {
-      post : "/memberships/permissions/check"
+      post : "/api/v1/permissions/check"
       body : "*"
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
@@ -373,7 +373,7 @@ service MembershipService {
   // GetPermissions retrieves all available permission names in the system.
   rpc GetPermissions(GetPermissionsRequest) returns (GetPermissionsResponse) {
     option (google.api.http) = {
-      get : "/memberships/permissions"
+      get : "/api/v1/permissions"
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags : "Permissions"
