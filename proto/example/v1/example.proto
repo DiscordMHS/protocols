@@ -10,6 +10,9 @@ import "protoc-gen-openapiv2/options/annotations.proto";
 
 option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
   info : {title : "Example Service API" version : "0.0.1"}
+  schemes : HTTP
+  schemes : HTTPS
+  host: "example.agoraproject.ru"
 };
 
 service ExampleService {
