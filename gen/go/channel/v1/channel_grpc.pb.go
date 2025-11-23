@@ -23,6 +23,12 @@ const (
 	ChannelService_GetTextChannelByGuildId_FullMethodName  = "/channel.v1.ChannelService/GetTextChannelByGuildId"
 	ChannelService_GetVoiceChannelById_FullMethodName      = "/channel.v1.ChannelService/GetVoiceChannelById"
 	ChannelService_GetVoiceChannelByGuildId_FullMethodName = "/channel.v1.ChannelService/GetVoiceChannelByGuildId"
+	ChannelService_CreateTextChannel_FullMethodName        = "/channel.v1.ChannelService/CreateTextChannel"
+	ChannelService_UpdateTextChannel_FullMethodName        = "/channel.v1.ChannelService/UpdateTextChannel"
+	ChannelService_DeleteTextChannel_FullMethodName        = "/channel.v1.ChannelService/DeleteTextChannel"
+	ChannelService_CreateVoiceChannel_FullMethodName       = "/channel.v1.ChannelService/CreateVoiceChannel"
+	ChannelService_UpdateVoiceChannel_FullMethodName       = "/channel.v1.ChannelService/UpdateVoiceChannel"
+	ChannelService_DeleteVoiceChannel_FullMethodName       = "/channel.v1.ChannelService/DeleteVoiceChannel"
 )
 
 // ChannelServiceClient is the client API for ChannelService service.
@@ -33,6 +39,12 @@ type ChannelServiceClient interface {
 	GetTextChannelByGuildId(ctx context.Context, in *GetTextChannelByGuildIdRequest, opts ...grpc.CallOption) (*GetTextChannelByGuildIdResponse, error)
 	GetVoiceChannelById(ctx context.Context, in *GetVoiceChannelByIdRequest, opts ...grpc.CallOption) (*GetVoiceChannelByIdResponse, error)
 	GetVoiceChannelByGuildId(ctx context.Context, in *GetVoiceChannelByGuildIdRequest, opts ...grpc.CallOption) (*GetVoiceChannelByGuildIdResponse, error)
+	CreateTextChannel(ctx context.Context, in *CreateTextChannelRequest, opts ...grpc.CallOption) (*CreateTextChannelResponse, error)
+	UpdateTextChannel(ctx context.Context, in *UpdateTextChannelRequest, opts ...grpc.CallOption) (*UpdateTextChannelResponse, error)
+	DeleteTextChannel(ctx context.Context, in *DeleteTextChannelRequest, opts ...grpc.CallOption) (*DeleteTextChannelResponse, error)
+	CreateVoiceChannel(ctx context.Context, in *CreateVoiceChannelRequest, opts ...grpc.CallOption) (*CreateVoiceChannelResponse, error)
+	UpdateVoiceChannel(ctx context.Context, in *UpdateVoiceChannelRequest, opts ...grpc.CallOption) (*UpdateVoiceChannelResponse, error)
+	DeleteVoiceChannel(ctx context.Context, in *DeleteVoiceChannelRequest, opts ...grpc.CallOption) (*DeleteVoiceChannelResponse, error)
 }
 
 type channelServiceClient struct {
@@ -83,6 +95,66 @@ func (c *channelServiceClient) GetVoiceChannelByGuildId(ctx context.Context, in 
 	return out, nil
 }
 
+func (c *channelServiceClient) CreateTextChannel(ctx context.Context, in *CreateTextChannelRequest, opts ...grpc.CallOption) (*CreateTextChannelResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CreateTextChannelResponse)
+	err := c.cc.Invoke(ctx, ChannelService_CreateTextChannel_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *channelServiceClient) UpdateTextChannel(ctx context.Context, in *UpdateTextChannelRequest, opts ...grpc.CallOption) (*UpdateTextChannelResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UpdateTextChannelResponse)
+	err := c.cc.Invoke(ctx, ChannelService_UpdateTextChannel_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *channelServiceClient) DeleteTextChannel(ctx context.Context, in *DeleteTextChannelRequest, opts ...grpc.CallOption) (*DeleteTextChannelResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DeleteTextChannelResponse)
+	err := c.cc.Invoke(ctx, ChannelService_DeleteTextChannel_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *channelServiceClient) CreateVoiceChannel(ctx context.Context, in *CreateVoiceChannelRequest, opts ...grpc.CallOption) (*CreateVoiceChannelResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CreateVoiceChannelResponse)
+	err := c.cc.Invoke(ctx, ChannelService_CreateVoiceChannel_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *channelServiceClient) UpdateVoiceChannel(ctx context.Context, in *UpdateVoiceChannelRequest, opts ...grpc.CallOption) (*UpdateVoiceChannelResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UpdateVoiceChannelResponse)
+	err := c.cc.Invoke(ctx, ChannelService_UpdateVoiceChannel_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *channelServiceClient) DeleteVoiceChannel(ctx context.Context, in *DeleteVoiceChannelRequest, opts ...grpc.CallOption) (*DeleteVoiceChannelResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DeleteVoiceChannelResponse)
+	err := c.cc.Invoke(ctx, ChannelService_DeleteVoiceChannel_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ChannelServiceServer is the server API for ChannelService service.
 // All implementations must embed UnimplementedChannelServiceServer
 // for forward compatibility.
@@ -91,6 +163,12 @@ type ChannelServiceServer interface {
 	GetTextChannelByGuildId(context.Context, *GetTextChannelByGuildIdRequest) (*GetTextChannelByGuildIdResponse, error)
 	GetVoiceChannelById(context.Context, *GetVoiceChannelByIdRequest) (*GetVoiceChannelByIdResponse, error)
 	GetVoiceChannelByGuildId(context.Context, *GetVoiceChannelByGuildIdRequest) (*GetVoiceChannelByGuildIdResponse, error)
+	CreateTextChannel(context.Context, *CreateTextChannelRequest) (*CreateTextChannelResponse, error)
+	UpdateTextChannel(context.Context, *UpdateTextChannelRequest) (*UpdateTextChannelResponse, error)
+	DeleteTextChannel(context.Context, *DeleteTextChannelRequest) (*DeleteTextChannelResponse, error)
+	CreateVoiceChannel(context.Context, *CreateVoiceChannelRequest) (*CreateVoiceChannelResponse, error)
+	UpdateVoiceChannel(context.Context, *UpdateVoiceChannelRequest) (*UpdateVoiceChannelResponse, error)
+	DeleteVoiceChannel(context.Context, *DeleteVoiceChannelRequest) (*DeleteVoiceChannelResponse, error)
 	mustEmbedUnimplementedChannelServiceServer()
 }
 
@@ -112,6 +190,24 @@ func (UnimplementedChannelServiceServer) GetVoiceChannelById(context.Context, *G
 }
 func (UnimplementedChannelServiceServer) GetVoiceChannelByGuildId(context.Context, *GetVoiceChannelByGuildIdRequest) (*GetVoiceChannelByGuildIdResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetVoiceChannelByGuildId not implemented")
+}
+func (UnimplementedChannelServiceServer) CreateTextChannel(context.Context, *CreateTextChannelRequest) (*CreateTextChannelResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateTextChannel not implemented")
+}
+func (UnimplementedChannelServiceServer) UpdateTextChannel(context.Context, *UpdateTextChannelRequest) (*UpdateTextChannelResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateTextChannel not implemented")
+}
+func (UnimplementedChannelServiceServer) DeleteTextChannel(context.Context, *DeleteTextChannelRequest) (*DeleteTextChannelResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteTextChannel not implemented")
+}
+func (UnimplementedChannelServiceServer) CreateVoiceChannel(context.Context, *CreateVoiceChannelRequest) (*CreateVoiceChannelResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateVoiceChannel not implemented")
+}
+func (UnimplementedChannelServiceServer) UpdateVoiceChannel(context.Context, *UpdateVoiceChannelRequest) (*UpdateVoiceChannelResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateVoiceChannel not implemented")
+}
+func (UnimplementedChannelServiceServer) DeleteVoiceChannel(context.Context, *DeleteVoiceChannelRequest) (*DeleteVoiceChannelResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteVoiceChannel not implemented")
 }
 func (UnimplementedChannelServiceServer) mustEmbedUnimplementedChannelServiceServer() {}
 func (UnimplementedChannelServiceServer) testEmbeddedByValue()                        {}
@@ -206,6 +302,114 @@ func _ChannelService_GetVoiceChannelByGuildId_Handler(srv interface{}, ctx conte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ChannelService_CreateTextChannel_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateTextChannelRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ChannelServiceServer).CreateTextChannel(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ChannelService_CreateTextChannel_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ChannelServiceServer).CreateTextChannel(ctx, req.(*CreateTextChannelRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ChannelService_UpdateTextChannel_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateTextChannelRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ChannelServiceServer).UpdateTextChannel(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ChannelService_UpdateTextChannel_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ChannelServiceServer).UpdateTextChannel(ctx, req.(*UpdateTextChannelRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ChannelService_DeleteTextChannel_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteTextChannelRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ChannelServiceServer).DeleteTextChannel(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ChannelService_DeleteTextChannel_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ChannelServiceServer).DeleteTextChannel(ctx, req.(*DeleteTextChannelRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ChannelService_CreateVoiceChannel_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateVoiceChannelRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ChannelServiceServer).CreateVoiceChannel(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ChannelService_CreateVoiceChannel_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ChannelServiceServer).CreateVoiceChannel(ctx, req.(*CreateVoiceChannelRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ChannelService_UpdateVoiceChannel_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateVoiceChannelRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ChannelServiceServer).UpdateVoiceChannel(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ChannelService_UpdateVoiceChannel_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ChannelServiceServer).UpdateVoiceChannel(ctx, req.(*UpdateVoiceChannelRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ChannelService_DeleteVoiceChannel_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteVoiceChannelRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ChannelServiceServer).DeleteVoiceChannel(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ChannelService_DeleteVoiceChannel_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ChannelServiceServer).DeleteVoiceChannel(ctx, req.(*DeleteVoiceChannelRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // ChannelService_ServiceDesc is the grpc.ServiceDesc for ChannelService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -228,6 +432,30 @@ var ChannelService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetVoiceChannelByGuildId",
 			Handler:    _ChannelService_GetVoiceChannelByGuildId_Handler,
+		},
+		{
+			MethodName: "CreateTextChannel",
+			Handler:    _ChannelService_CreateTextChannel_Handler,
+		},
+		{
+			MethodName: "UpdateTextChannel",
+			Handler:    _ChannelService_UpdateTextChannel_Handler,
+		},
+		{
+			MethodName: "DeleteTextChannel",
+			Handler:    _ChannelService_DeleteTextChannel_Handler,
+		},
+		{
+			MethodName: "CreateVoiceChannel",
+			Handler:    _ChannelService_CreateVoiceChannel_Handler,
+		},
+		{
+			MethodName: "UpdateVoiceChannel",
+			Handler:    _ChannelService_UpdateVoiceChannel_Handler,
+		},
+		{
+			MethodName: "DeleteVoiceChannel",
+			Handler:    _ChannelService_DeleteVoiceChannel_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

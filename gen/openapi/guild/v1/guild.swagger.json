@@ -10,7 +10,7 @@
       "name": "GuildService"
     }
   ],
-  "host": "guild.agoraproject.ru",
+  "host": "guilds.agoraproject.ru",
   "schemes": [
     "http",
     "https"

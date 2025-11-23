@@ -21,6 +21,44 @@
     "application/json"
   ],
   "paths": {
+    "/api/v1/textchannel": {
+      "post": {
+        "summary": "Create text channel",
+        "operationId": "ChannelService_CreateTextChannel",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1CreateTextChannelResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1CreateTextChannelRequest"
+            }
+          }
+        ],
+        "tags": [
+          "ChannelService"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
     "/api/v1/textchannel/guild/{id}": {
       "get": {
         "summary": "Get text channel by Guild Id",
@@ -83,6 +121,122 @@
             "required": true,
             "type": "string",
             "format": "uint64"
+          }
+        ],
+        "tags": [
+          "ChannelService"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "summary": "Delete text channel",
+        "operationId": "ChannelService_DeleteTextChannel",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1DeleteTextChannelResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uint64"
+          }
+        ],
+        "tags": [
+          "ChannelService"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      },
+      "put": {
+        "summary": "Update text channel",
+        "operationId": "ChannelService_UpdateTextChannel",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1UpdateTextChannelResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uint64"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ChannelServiceUpdateTextChannelBody"
+            }
+          }
+        ],
+        "tags": [
+          "ChannelService"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/voicechannel": {
+      "post": {
+        "summary": "Create voice channel",
+        "operationId": "ChannelService_CreateVoiceChannel",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1CreateVoiceChannelResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1CreateVoiceChannelRequest"
+            }
           }
         ],
         "tags": [
@@ -167,10 +321,129 @@
             "BearerAuth": []
           }
         ]
+      },
+      "delete": {
+        "summary": "Delete voice channel",
+        "operationId": "ChannelService_DeleteVoiceChannel",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1DeleteVoiceChannelResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uint64"
+          }
+        ],
+        "tags": [
+          "ChannelService"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      },
+      "put": {
+        "summary": "Update voice channel",
+        "operationId": "ChannelService_UpdateVoiceChannel",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1UpdateVoiceChannelResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uint64"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ChannelServiceUpdateVoiceChannelBody"
+            }
+          }
+        ],
+        "tags": [
+          "ChannelService"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
       }
     }
   },
   "definitions": {
+    "ChannelServiceUpdateTextChannelBody": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "nsfw": {
+          "type": "boolean"
+        },
+        "slowmode": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "position": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "isArchived": {
+          "type": "boolean"
+        }
+      }
+    },
+    "ChannelServiceUpdateVoiceChannelBody": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "position": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "userLimit": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    },
     "protobufAny": {
       "type": "object",
       "properties": {
@@ -198,6 +471,74 @@
           }
         }
       }
+    },
+    "v1CreateTextChannelRequest": {
+      "type": "object",
+      "properties": {
+        "guildId": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "title": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "nsfw": {
+          "type": "boolean"
+        },
+        "slowmode": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "position": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "v1CreateTextChannelResponse": {
+      "type": "object",
+      "properties": {
+        "channel": {
+          "$ref": "#/definitions/v1TextChannel"
+        }
+      }
+    },
+    "v1CreateVoiceChannelRequest": {
+      "type": "object",
+      "properties": {
+        "guildId": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "title": {
+          "type": "string"
+        },
+        "position": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "userLimit": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    },
+    "v1CreateVoiceChannelResponse": {
+      "type": "object",
+      "properties": {
+        "channel": {
+          "$ref": "#/definitions/v1VoiceChannel"
+        }
+      }
+    },
+    "v1DeleteTextChannelResponse": {
+      "type": "object"
+    },
+    "v1DeleteVoiceChannelResponse": {
+      "type": "object"
     },
     "v1GetTextChannelByGuildIdResponse": {
       "type": "object",
@@ -269,6 +610,22 @@
         },
         "isArchived": {
           "type": "boolean"
+        }
+      }
+    },
+    "v1UpdateTextChannelResponse": {
+      "type": "object",
+      "properties": {
+        "channel": {
+          "$ref": "#/definitions/v1TextChannel"
+        }
+      }
+    },
+    "v1UpdateVoiceChannelResponse": {
+      "type": "object",
+      "properties": {
+        "channel": {
+          "$ref": "#/definitions/v1VoiceChannel"
         }
       }
     },
