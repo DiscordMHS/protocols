@@ -96,6 +96,106 @@ service ChannelService {
     };
   };
 
+  rpc CreateTextChannel(CreateTextChannelRequest) returns (CreateTextChannelResponse) {
+    option (google.api.http) = {
+      post : "/api/v1/textchannel"
+      body : "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags : "ChannelService"
+      summary : "Create text channel"
+      security: {
+        security_requirement: {
+          key: "BearerAuth";
+          value: {}
+        }
+      }
+    };
+  };
+
+  rpc UpdateTextChannel(UpdateTextChannelRequest) returns (UpdateTextChannelResponse) {
+    option (google.api.http) = {
+      put : "/api/v1/textchannel/{id}"
+      body : "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags : "ChannelService"
+      summary : "Update text channel"
+      security: {
+        security_requirement: {
+          key: "BearerAuth";
+          value: {}
+        }
+      }
+    };
+  };
+
+  rpc DeleteTextChannel(DeleteTextChannelRequest) returns (DeleteTextChannelResponse) {
+    option (google.api.http) = {
+      delete : "/api/v1/textchannel/{id}"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags : "ChannelService"
+      summary : "Delete text channel"
+      security: {
+        security_requirement: {
+          key: "BearerAuth";
+          value: {}
+        }
+      }
+    };
+  };
+
+  rpc CreateVoiceChannel(CreateVoiceChannelRequest) returns (CreateVoiceChannelResponse) {
+    option (google.api.http) = {
+      post : "/api/v1/voicechannel"
+      body : "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags : "ChannelService"
+      summary : "Create voice channel"
+      security: {
+        security_requirement: {
+          key: "BearerAuth";
+          value: {}
+        }
+      }
+    };
+  };
+
+  rpc UpdateVoiceChannel(UpdateVoiceChannelRequest) returns (UpdateVoiceChannelResponse) {
+    option (google.api.http) = {
+      put : "/api/v1/voicechannel/{id}"
+      body : "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags : "ChannelService"
+      summary : "Update voice channel"
+      security: {
+        security_requirement: {
+          key: "BearerAuth";
+          value: {}
+        }
+      }
+    };
+  };
+
+  rpc DeleteVoiceChannel(DeleteVoiceChannelRequest) returns (DeleteVoiceChannelResponse) {
+    option (google.api.http) = {
+      delete : "/api/v1/voicechannel/{id}"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags : "ChannelService"
+      summary : "Delete voice channel"
+      security: {
+        security_requirement: {
+          key: "BearerAuth";
+          value: {}
+        }
+      }
+    };
+  };
+
 }
 
 // region Text Channel
@@ -135,6 +235,47 @@ message TextChannel {
   int32 position = 7;
   bool is_archived = 8;
 }
+
+message CreateTextChannelRequest {
+  uint64 guild_id = 1 [
+    (buf.validate.field).uint64.gt = 0
+  ];
+  string title = 2 [
+    (buf.validate.field).required = true
+  ];
+  optional string description = 3;
+  bool nsfw = 4;
+  optional uint32 slowmode = 5;
+  int32 position = 6;
+}
+
+message CreateTextChannelResponse {
+  TextChannel channel = 1;
+}
+
+message UpdateTextChannelRequest {
+  uint64 id = 1 [
+    (buf.validate.field).uint64.gt = 0
+  ];
+  optional string title = 2;
+  optional string description = 3;
+  optional bool nsfw = 4;
+  optional uint32 slowmode = 5;
+  optional int32 position = 6;
+  optional bool is_archived = 7;
+}
+
+message UpdateTextChannelResponse {
+  TextChannel channel = 1;
+}
+
+message DeleteTextChannelRequest {
+  uint64 id = 1 [
+    (buf.validate.field).uint64.gt = 0
+  ];
+}
+
+message DeleteTextChannelResponse {}
 // endregion
 
 // region Voice Channel
@@ -171,4 +312,40 @@ message VoiceChannel {
   int32 position = 4;
   uint32 user_limit = 5;
 }
+
+message CreateVoiceChannelRequest {
+  uint64 guild_id = 1 [
+    (buf.validate.field).uint64.gt = 0
+  ];
+  string title = 2 [
+    (buf.validate.field).required = true
+  ];
+  int32 position = 3;
+  uint32 user_limit = 4;
+}
+
+message CreateVoiceChannelResponse {
+  VoiceChannel channel = 1;
+}
+
+message UpdateVoiceChannelRequest {
+  uint64 id = 1 [
+    (buf.validate.field).uint64.gt = 0
+  ];
+  optional string title = 2;
+  optional int32 position = 3;
+  optional uint32 user_limit = 4;
+}
+
+message UpdateVoiceChannelResponse {
+  VoiceChannel channel = 1;
+}
+
+message DeleteVoiceChannelRequest {
+  uint64 id = 1 [
+    (buf.validate.field).uint64.gt = 0
+  ];
+}
+
+message DeleteVoiceChannelResponse {}
 // endregion
