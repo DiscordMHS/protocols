@@ -13,6 +13,7 @@
       "name": "UserService"
     }
   ],
+  "host": "auth.agoraproject.ru",
   "schemes": [
     "http",
     "https"
