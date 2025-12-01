@@ -1,0 +1,233 @@
+syntax = "proto3";
+
+package message.v1;
+
+option go_package = "github.com/DiscordMHS/protocols/gen/go/message/v1;message";
+
+import "buf/validate/validate.proto";
+import "google/api/annotations.proto";
+import "protoc-gen-openapiv2/options/annotations.proto";
+
+option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
+  info : {
+    title : "Message Service API"
+    version : "0.0.1"
+    description: "Message Management Service"
+  }
+  schemes : HTTP
+  schemes : HTTPS
+  consumes : "application/json"
+  produces : "application/json"
+  security_definitions: {
+    security: {
+      key: "BearerAuth"
+      value: {
+        type: TYPE_API_KEY
+        name: "Authorization"
+        in: IN_HEADER
+        description: "JWT Bearer token"
+      }
+    }
+  }
+  host: "messages.agoraproject.ru"
+};
+
+service MessageService {
+  rpc GetMessageById(GetMessageByIdRequest) returns (GetMessageByIdResponse) {
+    option (google.api.http) = {
+      get : "/api/v1/message/{id}"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags : "MessageService"
+      summary : "Get message by Id"
+      security: {
+        security_requirement: {
+          key: "BearerAuth";
+          value: {}
+        }
+      }
+    };
+  };
+
+  rpc GetMessagesByChannelId(GetMessagesByChannelIdRequest) returns (GetMessagesByChannelIdResponse) {
+    option (google.api.http) = {
+      get : "/api/v1/message/channel/{channel_id}"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags : "MessageService"
+      summary : "Get messages by channel Id"
+      security: {
+        security_requirement: {
+          key: "BearerAuth";
+          value: {}
+        }
+      }
+    };
+  };
+
+  rpc CreateMessage(CreateMessageRequest) returns (CreateMessageResponse) {
+    option (google.api.http) = {
+      post : "/api/v1/message"
+      body : "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags : "MessageService"
+      summary : "Create message"
+      security: {
+        security_requirement: {
+          key: "BearerAuth";
+          value: {}
+        }
+      }
+    };
+  };
+
+  rpc UpdateMessage(UpdateMessageRequest) returns (UpdateMessageResponse) {
+    option (google.api.http) = {
+      put : "/api/v1/message/{id}"
+      body : "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags : "MessageService"
+      summary : "Update message"
+      security: {
+        security_requirement: {
+          key: "BearerAuth";
+          value: {}
+        }
+      }
+    };
+  };
+
+  rpc DeleteMessage(DeleteMessageRequest) returns (DeleteMessageResponse) {
+    option (google.api.http) = {
+      delete : "/api/v1/message/{id}"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags : "MessageService"
+      summary : "Delete message"
+      security: {
+        security_requirement: {
+          key: "BearerAuth";
+          value: {}
+        }
+      }
+    };
+  };
+}
+
+message GetMessageByIdRequest {
+  uint64 id = 1 [
+    (buf.validate.field).uint64.gt = 0
+  ];
+}
+
+message GetMessageByIdResponse {
+  Message message = 1;
+}
+
+message GetMessagesByChannelIdRequest {
+  uint64 channel_id = 1 [
+    (buf.validate.field).uint64.gt = 0
+  ];
+  optional uint64 limit = 2;
+  optional uint64 offset = 3;
+  optional string search = 4;
+}
+
+message GetMessagesByChannelIdResponse {
+  repeated Message messages = 1;
+}
+
+message CreateMessageRequest {
+  uint64 channel_id = 1 [
+    (buf.validate.field).uint64.gt = 0
+  ];
+  string content = 2 [
+    (buf.validate.field).required = true,
+    (buf.validate.field).string.max_len = 2000
+  ];
+  optional uint64 reply_to_id = 3;
+  repeated AttachmentMetadata attachments = 4;
+}
+
+message CreateMessageResponse {
+  Message message = 1;
+}
+
+message UpdateMessageRequest {
+  uint64 id = 1 [
+    (buf.validate.field).uint64.gt = 0
+  ];
+  string content = 2 [
+    (buf.validate.field).required = true,
+    (buf.validate.field).string.max_len = 2000
+  ];
+}
+
+message UpdateMessageResponse {
+  Message message = 1;
+}
+
+message DeleteMessageRequest {
+  uint64 id = 1 [
+    (buf.validate.field).uint64.gt = 0
+  ];
+}
+
+message DeleteMessageResponse {}
+
+message Message {
+  uint64 id = 1 [
+    (buf.validate.field).uint64.gt = 0
+  ];
+  uint64 tc_id = 2 [
+    (buf.validate.field).uint64.gt = 0
+  ];
+  uint64 user_sent_id = 3 [
+    (buf.validate.field).uint64.gt = 0
+  ];
+  string content = 4 [
+    (buf.validate.field).required = true
+  ];
+  optional uint64 reply_to_id = 5;
+  int64 created_at = 6;
+  int64 updated_at = 7;
+  bool is_deleted = 8;
+  int32 type = 9;
+  bool pinned = 10;
+  repeated Attachment attachments = 11;
+}
+
+message Attachment {
+  uint64 id = 1 [
+    (buf.validate.field).uint64.gt = 0
+  ];
+  uint64 msg_id = 2 [
+    (buf.validate.field).uint64.gt = 0
+  ];
+  string mime_type = 3 [
+    (buf.validate.field).required = true
+  ];
+  string object_name = 4 [
+    (buf.validate.field).required = true
+  ];
+  int32 size = 5 [
+    (buf.validate.field).int32.gt = 0
+  ];
+  int64 created_at = 6;
+  int64 updated_at = 7;
+}
+
+message AttachmentMetadata {
+  string mime_type = 1 [
+    (buf.validate.field).required = true
+  ];
+  string object_name = 2 [
+    (buf.validate.field).required = true
+  ];
+  int32 size = 3 [
+    (buf.validate.field).int32.gt = 0
+  ];
+}
+
