@@ -390,20 +390,6 @@ service MembershipService {
 }
 
 // =====================
-// ==== ENUMS ===========
-// =====================
-
-// PermissionAction defines whether a permission is allowed or denied.
-enum PermissionAction {
-  // Unspecified action (should not be used).
-  PERMISSION_ACTION_UNSPECIFIED = 0;
-  // Permission is allowed.
-  PERMISSION_ACTION_ALLOW = 1;
-  // Permission is denied.
-  PERMISSION_ACTION_DENY = 2;
-}
-
-// =====================
 // ==== MESSAGES =======
 // =====================
 
@@ -413,8 +399,8 @@ message Permission {
   string permission = 1 [ (buf.validate.field).required = true ];
   // Resource path (e.g., "guild/{guild_id}/channel/{channel_id}").
   string resource = 2 [ (buf.validate.field).required = true ];
-  // Action type: allow or deny.
-  PermissionAction action = 3 [ (buf.validate.field).required = true ];
+  // Whether the permission is allowed (true) or denied (false).
+  bool allow = 3 [ (buf.validate.field).required = true ];
 }
 
 // Role represents a role in a guild with associated permissions.
@@ -453,8 +439,8 @@ message RoleOverride {
   string permission = 2 [ (buf.validate.field).required = true ];
   // Resource path (typically the channel path).
   string resource = 3 [ (buf.validate.field).required = true ];
-  // Action type: allow or deny.
-  PermissionAction action = 4 [ (buf.validate.field).required = true ];
+  // Whether the permission is allowed (true) or denied (false).
+  bool allow = 4 [ (buf.validate.field).required = true ];
 }
 
 // UserOverride represents a channel-specific permission override for a user.
@@ -465,8 +451,8 @@ message UserOverride {
   string permission = 2 [ (buf.validate.field).required = true ];
   // Resource path (typically the channel path).
   string resource = 3 [ (buf.validate.field).required = true ];
-  // Action type: allow or deny.
-  PermissionAction action = 4 [ (buf.validate.field).required = true ];
+  // Whether the permission is allowed (true) or denied (false).
+  bool allow = 4 [ (buf.validate.field).required = true ];
 }
 
 // =====================

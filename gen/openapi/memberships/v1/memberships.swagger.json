@@ -1290,22 +1290,12 @@
           "type": "string",
           "description": "Resource path (e.g., \"guild/{guild_id}/channel/{channel_id}\")."
         },
-        "action": {
-          "$ref": "#/definitions/v1PermissionAction",
-          "description": "Action type: allow or deny."
+        "allow": {
+          "type": "boolean",
+          "description": "Whether the permission is allowed (true) or denied (false)."
         }
       },
       "description": "Permission represents a single permission rule for a resource."
-    },
-    "v1PermissionAction": {
-      "type": "string",
-      "enum": [
-        "PERMISSION_ACTION_UNSPECIFIED",
-        "PERMISSION_ACTION_ALLOW",
-        "PERMISSION_ACTION_DENY"
-      ],
-      "default": "PERMISSION_ACTION_UNSPECIFIED",
-      "description": "PermissionAction defines whether a permission is allowed or denied.\n\n - PERMISSION_ACTION_UNSPECIFIED: Unspecified action (should not be used).\n - PERMISSION_ACTION_ALLOW: Permission is allowed.\n - PERMISSION_ACTION_DENY: Permission is denied."
     },
     "v1Role": {
       "type": "object",
@@ -1359,9 +1349,9 @@
           "type": "string",
           "description": "Resource path (typically the channel path)."
         },
-        "action": {
-          "$ref": "#/definitions/v1PermissionAction",
-          "description": "Action type: allow or deny."
+        "allow": {
+          "type": "boolean",
+          "description": "Whether the permission is allowed (true) or denied (false)."
         }
       },
       "description": "RoleOverride represents a channel-specific permission override for a role."
@@ -1436,9 +1426,9 @@
           "type": "string",
           "description": "Resource path (typically the channel path)."
         },
-        "action": {
-          "$ref": "#/definitions/v1PermissionAction",
-          "description": "Action type: allow or deny."
+        "allow": {
+          "type": "boolean",
+          "description": "Whether the permission is allowed (true) or denied (false)."
         }
       },
       "description": "UserOverride represents a channel-specific permission override for a user."
