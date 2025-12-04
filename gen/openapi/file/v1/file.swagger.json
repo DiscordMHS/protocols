@@ -10,6 +10,7 @@
       "name": "FileService"
     }
   ],
+  "host": "filemanager.agoraproject.ru",
   "schemes": [
     "http",
     "https"
