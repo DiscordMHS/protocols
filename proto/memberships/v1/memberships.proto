@@ -103,13 +103,13 @@ service MembershipService {
   // UpdateRole updates role metadata and completely replaces its permissions list.
   rpc UpdateRole(UpdateRoleRequest) returns (UpdateRoleResponse) {
     option (google.api.http) = {
-      patch : "/api/v1/guilds/{guild_id}/roles/{role_id}"
+      put : "/api/v1/guilds/{guild_id}/roles/{role_id}"
       body : "*"
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags : "Roles"
       summary : "Update role"
-      description : "Updates role metadata (title, icon, is_default) and completely replaces the list of permissions. All fields are optional, but provided permissions will replace existing ones."
+      description : "Updates role metadata (title, icon, is_default) and completely replaces the list of permissions. All fields are required."
       security: {
         security_requirement: {
           key: "BearerAuth";
@@ -512,12 +512,12 @@ message UpdateRoleRequest {
   uint64 guild_id = 1 [ (buf.validate.field).required = true ];
   // Role identifier to update.
   uint64 role_id = 2 [ (buf.validate.field).required = true ];
-  // New role title (optional).
-  optional string title = 3;
+  // New role title.
+  string title = 3 [ (buf.validate.field).required = true ];
   // New icon URL (optional).
   optional string icon = 4;
-  // Whether role should be default (optional).
-  optional bool is_default = 5;
+  // Whether role should be default.
+  bool is_default = 5;
   // New permissions list (completely replaces existing permissions).
   repeated Permission permissions = 6;
 }

@@ -678,9 +678,9 @@
           }
         ]
       },
-      "patch": {
+      "put": {
         "summary": "Update role",
-        "description": "Updates role metadata (title, icon, is_default) and completely replaces the list of permissions. All fields are optional, but provided permissions will replace existing ones.",
+        "description": "Updates role metadata (title, icon, is_default) and completely replaces the list of permissions. All fields are required.",
         "operationId": "MembershipService_UpdateRole",
         "responses": {
           "200": {
@@ -964,7 +964,7 @@
       "properties": {
         "title": {
           "type": "string",
-          "description": "New role title (optional)."
+          "description": "New role title."
         },
         "icon": {
           "type": "string",
@@ -972,7 +972,7 @@
         },
         "isDefault": {
           "type": "boolean",
-          "description": "Whether role should be default (optional)."
+          "description": "Whether role should be default."
         },
         "permissions": {
           "type": "array",
