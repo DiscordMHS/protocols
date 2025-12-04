@@ -302,6 +302,12 @@ service MembershipService {
       tags : "Invites"
       summary : "Accept invite"
       description : "Accepts an invite by token. The authenticated user is added to the guild/channel specified in the invite."
+      security: {
+        security_requirement: {
+          key: "BearerAuth";
+          value: {}
+        }
+      }
     };
   }
 

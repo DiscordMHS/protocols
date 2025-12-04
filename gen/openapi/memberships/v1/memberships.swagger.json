@@ -762,6 +762,11 @@
         ],
         "tags": [
           "Invites"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
         ]
       }
     },
