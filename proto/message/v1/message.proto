@@ -114,39 +114,6 @@ service MessageService {
       }
     };
   };
-
-  rpc GenerateUploadURL(GenerateUploadURLRequest) returns (GenerateUploadURLResponse) {
-    option (google.api.http) = {
-      post : "/api/v1/message/upload-url"
-      body : "*"
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags : "MessageService"
-      summary : "Generate MinIO upload URL for attachment"
-      security: {
-        security_requirement: {
-          key: "BearerAuth";
-          value: {}
-        }
-      }
-    };
-  };
-
-  rpc GetAttachmentDownloadURL(GetAttachmentDownloadURLRequest) returns (GetAttachmentDownloadURLResponse) {
-    option (google.api.http) = {
-      get : "/api/v1/message/attachment/{attachment_id}/download-url"
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      tags : "MessageService"
-      summary : "Generate MinIO download URL for attachment"
-      security: {
-        security_requirement: {
-          key: "BearerAuth";
-          value: {}
-        }
-      }
-    };
-  };
 }
 
 message GetMessageByIdRequest {
@@ -209,24 +176,6 @@ message DeleteMessageRequest {
 
 message DeleteMessageResponse {}
 
-message GenerateUploadURLRequest {
-  uint64 channel_id = 1 [
-    (buf.validate.field).uint64.gt = 0
-  ];
-  string mime_type = 2 [
-    (buf.validate.field).required = true
-  ];
-  int32 size = 3 [
-    (buf.validate.field).int32.gt = 0,
-    (buf.validate.field).int32.lt = 10485760  // 10MB
-  ];
-}
-
-message GenerateUploadURLResponse {
-  string upload_url = 1;
-  string object_name = 2;
-}
-
 message Message {
   uint64 id = 1 [
     (buf.validate.field).uint64.gt = 0
@@ -279,16 +228,5 @@ message AttachmentMetadata {
   int32 size = 3 [
     (buf.validate.field).int32.gt = 0
   ];
-}
-
-message GetAttachmentDownloadURLRequest {
-  uint64 attachment_id = 1 [
-    (buf.validate.field).uint64.gt = 0
-  ];
-  optional int64 expiry_seconds = 2;  // Optional expiry in seconds (default: 3600 = 1 hour)
-}
-
-message GetAttachmentDownloadURLResponse {
-  string download_url = 1;
 }
 

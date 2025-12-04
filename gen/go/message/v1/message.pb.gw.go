@@ -223,80 +223,6 @@ func local_request_MessageService_DeleteMessage_0(ctx context.Context, marshaler
 	return msg, metadata, err
 }
 
-func request_MessageService_GenerateUploadURL_0(ctx context.Context, marshaler runtime.Marshaler, client MessageServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var (
-		protoReq GenerateUploadURLRequest
-		metadata runtime.ServerMetadata
-	)
-	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && !errors.Is(err, io.EOF) {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
-	}
-	msg, err := client.GenerateUploadURL(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
-	return msg, metadata, err
-}
-
-func local_request_MessageService_GenerateUploadURL_0(ctx context.Context, marshaler runtime.Marshaler, server MessageServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var (
-		protoReq GenerateUploadURLRequest
-		metadata runtime.ServerMetadata
-	)
-	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && !errors.Is(err, io.EOF) {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
-	}
-	msg, err := server.GenerateUploadURL(ctx, &protoReq)
-	return msg, metadata, err
-}
-
-var filter_MessageService_GetAttachmentDownloadURL_0 = &utilities.DoubleArray{Encoding: map[string]int{"attachment_id": 0}, Base: []int{1, 1, 0}, Check: []int{0, 1, 2}}
-
-func request_MessageService_GetAttachmentDownloadURL_0(ctx context.Context, marshaler runtime.Marshaler, client MessageServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var (
-		protoReq GetAttachmentDownloadURLRequest
-		metadata runtime.ServerMetadata
-		err      error
-	)
-	val, ok := pathParams["attachment_id"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "attachment_id")
-	}
-	protoReq.AttachmentId, err = runtime.Uint64(val)
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "attachment_id", err)
-	}
-	if err := req.ParseForm(); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
-	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_MessageService_GetAttachmentDownloadURL_0); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
-	}
-	msg, err := client.GetAttachmentDownloadURL(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
-	return msg, metadata, err
-}
-
-func local_request_MessageService_GetAttachmentDownloadURL_0(ctx context.Context, marshaler runtime.Marshaler, server MessageServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var (
-		protoReq GetAttachmentDownloadURLRequest
-		metadata runtime.ServerMetadata
-		err      error
-	)
-	val, ok := pathParams["attachment_id"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "attachment_id")
-	}
-	protoReq.AttachmentId, err = runtime.Uint64(val)
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "attachment_id", err)
-	}
-	if err := req.ParseForm(); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
-	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_MessageService_GetAttachmentDownloadURL_0); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
-	}
-	msg, err := server.GetAttachmentDownloadURL(ctx, &protoReq)
-	return msg, metadata, err
-}
-
 // RegisterMessageServiceHandlerServer registers the http handlers for service MessageService to "mux".
 // UnaryRPC     :call MessageServiceServer directly.
 // StreamingRPC :currently unsupported pending https://github.com/grpc/grpc-go/issues/906.
@@ -402,46 +328,6 @@ func RegisterMessageServiceHandlerServer(ctx context.Context, mux *runtime.Serve
 			return
 		}
 		forward_MessageService_DeleteMessage_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
-	})
-	mux.Handle(http.MethodPost, pattern_MessageService_GenerateUploadURL_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
-		ctx, cancel := context.WithCancel(req.Context())
-		defer cancel()
-		var stream runtime.ServerTransportStream
-		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
-		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/message.v1.MessageService/GenerateUploadURL", runtime.WithHTTPPathPattern("/api/v1/message/upload-url"))
-		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
-			return
-		}
-		resp, md, err := local_request_MessageService_GenerateUploadURL_0(annotatedContext, inboundMarshaler, server, req, pathParams)
-		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
-		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
-		if err != nil {
-			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
-			return
-		}
-		forward_MessageService_GenerateUploadURL_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
-	})
-	mux.Handle(http.MethodGet, pattern_MessageService_GetAttachmentDownloadURL_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
-		ctx, cancel := context.WithCancel(req.Context())
-		defer cancel()
-		var stream runtime.ServerTransportStream
-		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
-		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/message.v1.MessageService/GetAttachmentDownloadURL", runtime.WithHTTPPathPattern("/api/v1/message/attachment/{attachment_id}/download-url"))
-		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
-			return
-		}
-		resp, md, err := local_request_MessageService_GetAttachmentDownloadURL_0(annotatedContext, inboundMarshaler, server, req, pathParams)
-		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
-		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
-		if err != nil {
-			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
-			return
-		}
-		forward_MessageService_GetAttachmentDownloadURL_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 	})
 
 	return nil
@@ -568,59 +454,21 @@ func RegisterMessageServiceHandlerClient(ctx context.Context, mux *runtime.Serve
 		}
 		forward_MessageService_DeleteMessage_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 	})
-	mux.Handle(http.MethodPost, pattern_MessageService_GenerateUploadURL_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
-		ctx, cancel := context.WithCancel(req.Context())
-		defer cancel()
-		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/message.v1.MessageService/GenerateUploadURL", runtime.WithHTTPPathPattern("/api/v1/message/upload-url"))
-		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
-			return
-		}
-		resp, md, err := request_MessageService_GenerateUploadURL_0(annotatedContext, inboundMarshaler, client, req, pathParams)
-		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
-		if err != nil {
-			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
-			return
-		}
-		forward_MessageService_GenerateUploadURL_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
-	})
-	mux.Handle(http.MethodGet, pattern_MessageService_GetAttachmentDownloadURL_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
-		ctx, cancel := context.WithCancel(req.Context())
-		defer cancel()
-		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/message.v1.MessageService/GetAttachmentDownloadURL", runtime.WithHTTPPathPattern("/api/v1/message/attachment/{attachment_id}/download-url"))
-		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
-			return
-		}
-		resp, md, err := request_MessageService_GetAttachmentDownloadURL_0(annotatedContext, inboundMarshaler, client, req, pathParams)
-		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
-		if err != nil {
-			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
-			return
-		}
-		forward_MessageService_GetAttachmentDownloadURL_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
-	})
 	return nil
 }
 
 var (
-	pattern_MessageService_GetMessageById_0           = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"api", "v1", "message", "id"}, ""))
-	pattern_MessageService_GetMessagesByChannelId_0   = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"api", "v1", "message", "channel", "channel_id"}, ""))
-	pattern_MessageService_CreateMessage_0            = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"api", "v1", "message"}, ""))
-	pattern_MessageService_UpdateMessage_0            = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"api", "v1", "message", "id"}, ""))
-	pattern_MessageService_DeleteMessage_0            = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"api", "v1", "message", "id"}, ""))
-	pattern_MessageService_GenerateUploadURL_0        = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"api", "v1", "message", "upload-url"}, ""))
-	pattern_MessageService_GetAttachmentDownloadURL_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"api", "v1", "message", "attachment", "attachment_id", "download-url"}, ""))
+	pattern_MessageService_GetMessageById_0         = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"api", "v1", "message", "id"}, ""))
+	pattern_MessageService_GetMessagesByChannelId_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"api", "v1", "message", "channel", "channel_id"}, ""))
+	pattern_MessageService_CreateMessage_0          = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"api", "v1", "message"}, ""))
+	pattern_MessageService_UpdateMessage_0          = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"api", "v1", "message", "id"}, ""))
+	pattern_MessageService_DeleteMessage_0          = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"api", "v1", "message", "id"}, ""))
 )
 
 var (
-	forward_MessageService_GetMessageById_0           = runtime.ForwardResponseMessage
-	forward_MessageService_GetMessagesByChannelId_0   = runtime.ForwardResponseMessage
-	forward_MessageService_CreateMessage_0            = runtime.ForwardResponseMessage
-	forward_MessageService_UpdateMessage_0            = runtime.ForwardResponseMessage
-	forward_MessageService_DeleteMessage_0            = runtime.ForwardResponseMessage
-	forward_MessageService_GenerateUploadURL_0        = runtime.ForwardResponseMessage
-	forward_MessageService_GetAttachmentDownloadURL_0 = runtime.ForwardResponseMessage
+	forward_MessageService_GetMessageById_0         = runtime.ForwardResponseMessage
+	forward_MessageService_GetMessagesByChannelId_0 = runtime.ForwardResponseMessage
+	forward_MessageService_CreateMessage_0          = runtime.ForwardResponseMessage
+	forward_MessageService_UpdateMessage_0          = runtime.ForwardResponseMessage
+	forward_MessageService_DeleteMessage_0          = runtime.ForwardResponseMessage
 )

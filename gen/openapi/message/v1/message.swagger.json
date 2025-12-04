@@ -59,51 +59,6 @@
         ]
       }
     },
-    "/api/v1/message/attachment/{attachmentId}/download-url": {
-      "get": {
-        "summary": "Generate MinIO download URL for attachment",
-        "operationId": "MessageService_GetAttachmentDownloadURL",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1GetAttachmentDownloadURLResponse"
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "attachmentId",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "format": "uint64"
-          },
-          {
-            "name": "expirySeconds",
-            "description": "Optional expiry in seconds (default: 3600 = 1 hour)",
-            "in": "query",
-            "required": false,
-            "type": "string",
-            "format": "int64"
-          }
-        ],
-        "tags": [
-          "MessageService"
-        ],
-        "security": [
-          {
-            "BearerAuth": []
-          }
-        ]
-      }
-    },
     "/api/v1/message/channel/{channelId}": {
       "get": {
         "summary": "Get messages by channel Id",
@@ -143,44 +98,6 @@
             "required": false,
             "type": "string",
             "format": "uint64"
-          }
-        ],
-        "tags": [
-          "MessageService"
-        ],
-        "security": [
-          {
-            "BearerAuth": []
-          }
-        ]
-      }
-    },
-    "/api/v1/message/upload-url": {
-      "post": {
-        "summary": "Generate MinIO upload URL for attachment",
-        "operationId": "MessageService_GenerateUploadURL",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1GenerateUploadURLResponse"
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/v1GenerateUploadURLRequest"
-            }
           }
         ],
         "tags": [
@@ -425,41 +342,6 @@
     },
     "v1DeleteMessageResponse": {
       "type": "object"
-    },
-    "v1GenerateUploadURLRequest": {
-      "type": "object",
-      "properties": {
-        "channelId": {
-          "type": "string",
-          "format": "uint64"
-        },
-        "mimeType": {
-          "type": "string"
-        },
-        "size": {
-          "type": "integer",
-          "format": "int32"
-        }
-      }
-    },
-    "v1GenerateUploadURLResponse": {
-      "type": "object",
-      "properties": {
-        "uploadUrl": {
-          "type": "string"
-        },
-        "objectName": {
-          "type": "string"
-        }
-      }
-    },
-    "v1GetAttachmentDownloadURLResponse": {
-      "type": "object",
-      "properties": {
-        "downloadUrl": {
-          "type": "string"
-        }
-      }
     },
     "v1GetMessageByIdResponse": {
       "type": "object",
