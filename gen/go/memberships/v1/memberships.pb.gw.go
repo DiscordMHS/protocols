@@ -289,6 +289,42 @@ func local_request_MembershipService_DeleteRole_0(ctx context.Context, marshaler
 	return msg, metadata, err
 }
 
+func request_MembershipService_InitRoles_0(ctx context.Context, marshaler runtime.Marshaler, client MembershipServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var (
+		protoReq InitRolesRequest
+		metadata runtime.ServerMetadata
+		err      error
+	)
+	val, ok := pathParams["guild_id"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "guild_id")
+	}
+	protoReq.GuildId, err = runtime.Uint64(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "guild_id", err)
+	}
+	msg, err := client.InitRoles(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	return msg, metadata, err
+}
+
+func local_request_MembershipService_InitRoles_0(ctx context.Context, marshaler runtime.Marshaler, server MembershipServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var (
+		protoReq InitRolesRequest
+		metadata runtime.ServerMetadata
+		err      error
+	)
+	val, ok := pathParams["guild_id"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "guild_id")
+	}
+	protoReq.GuildId, err = runtime.Uint64(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "guild_id", err)
+	}
+	msg, err := server.InitRoles(ctx, &protoReq)
+	return msg, metadata, err
+}
+
 func request_MembershipService_CreateMember_0(ctx context.Context, marshaler runtime.Marshaler, client MembershipServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
 		protoReq CreateMemberRequest
@@ -977,6 +1013,26 @@ func RegisterMembershipServiceHandlerServer(ctx context.Context, mux *runtime.Se
 		}
 		forward_MembershipService_DeleteRole_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 	})
+	mux.Handle(http.MethodPost, pattern_MembershipService_InitRoles_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/memberships.v1.MembershipService/InitRoles", runtime.WithHTTPPathPattern("/api/v1/guilds/{guild_id}/roles/init"))
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := local_request_MembershipService_InitRoles_0(annotatedContext, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
+		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
+		if err != nil {
+			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		forward_MembershipService_InitRoles_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+	})
 	mux.Handle(http.MethodPost, pattern_MembershipService_CreateMember_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
@@ -1362,6 +1418,23 @@ func RegisterMembershipServiceHandlerClient(ctx context.Context, mux *runtime.Se
 		}
 		forward_MembershipService_DeleteRole_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 	})
+	mux.Handle(http.MethodPost, pattern_MembershipService_InitRoles_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/memberships.v1.MembershipService/InitRoles", runtime.WithHTTPPathPattern("/api/v1/guilds/{guild_id}/roles/init"))
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := request_MembershipService_InitRoles_0(annotatedContext, inboundMarshaler, client, req, pathParams)
+		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
+		if err != nil {
+			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		forward_MembershipService_InitRoles_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+	})
 	mux.Handle(http.MethodPost, pattern_MembershipService_CreateMember_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
@@ -1592,6 +1665,7 @@ var (
 	pattern_MembershipService_GetRole_0             = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "guilds", "guild_id", "roles", "role_id"}, ""))
 	pattern_MembershipService_UpdateRole_0          = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "guilds", "guild_id", "roles", "role_id"}, ""))
 	pattern_MembershipService_DeleteRole_0          = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "guilds", "guild_id", "roles", "role_id"}, ""))
+	pattern_MembershipService_InitRoles_0           = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 2, 5}, []string{"api", "v1", "guilds", "guild_id", "roles", "init"}, ""))
 	pattern_MembershipService_CreateMember_0        = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "guilds", "guild_id", "members"}, ""))
 	pattern_MembershipService_JoinGuild_0           = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "guilds", "guild_id", "join"}, ""))
 	pattern_MembershipService_GetMember_0           = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "guilds", "guild_id", "members", "user_id"}, ""))
@@ -1613,6 +1687,7 @@ var (
 	forward_MembershipService_GetRole_0             = runtime.ForwardResponseMessage
 	forward_MembershipService_UpdateRole_0          = runtime.ForwardResponseMessage
 	forward_MembershipService_DeleteRole_0          = runtime.ForwardResponseMessage
+	forward_MembershipService_InitRoles_0           = runtime.ForwardResponseMessage
 	forward_MembershipService_CreateMember_0        = runtime.ForwardResponseMessage
 	forward_MembershipService_JoinGuild_0           = runtime.ForwardResponseMessage
 	forward_MembershipService_GetMember_0           = runtime.ForwardResponseMessage

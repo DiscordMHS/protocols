@@ -137,6 +137,24 @@ service MembershipService {
     };
   }
 
+  // InitRoles initializes default roles (owner and member) for a guild.
+  rpc InitRoles(InitRolesRequest) returns (InitRolesResponse) {
+    option (google.api.http) = {
+      post : "/api/v1/guilds/{guild_id}/roles/init"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags : "Roles"
+      summary : "Initialize default roles"
+      description : "Creates two default roles for the guild: owner (with all permissions) and member (with limited permissions)."
+      security: {
+        security_requirement: {
+          key: "BearerAuth";
+          value: {}
+        }
+      }
+    };
+  }
+
   // =====================
   // === MEMBERS =========
   // =====================
@@ -541,6 +559,18 @@ message DeleteRoleRequest {
 }
 
 message DeleteRoleResponse {}
+
+message InitRolesRequest {
+  // Guild identifier where roles will be initialized.
+  uint64 guild_id = 1 [ (buf.validate.field).required = true ];
+}
+
+message InitRolesResponse {
+  // Created owner role with all permissions.
+  Role owner_role = 1;
+  // Created member role with limited permissions.
+  Role member_role = 2;
+}
 
 // =====================
 // === MEMBERS =========
