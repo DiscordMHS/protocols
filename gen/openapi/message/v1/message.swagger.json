@@ -10,6 +10,7 @@
       "name": "MessageService"
     }
   ],
+  "host": "messages.agoraproject.ru",
   "schemes": [
     "http",
     "https"
