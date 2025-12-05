@@ -24,6 +24,7 @@ const (
 	MembershipService_GetRole_FullMethodName             = "/memberships.v1.MembershipService/GetRole"
 	MembershipService_UpdateRole_FullMethodName          = "/memberships.v1.MembershipService/UpdateRole"
 	MembershipService_DeleteRole_FullMethodName          = "/memberships.v1.MembershipService/DeleteRole"
+	MembershipService_InitRoles_FullMethodName           = "/memberships.v1.MembershipService/InitRoles"
 	MembershipService_CreateMember_FullMethodName        = "/memberships.v1.MembershipService/CreateMember"
 	MembershipService_JoinGuild_FullMethodName           = "/memberships.v1.MembershipService/JoinGuild"
 	MembershipService_GetMember_FullMethodName           = "/memberships.v1.MembershipService/GetMember"
@@ -53,6 +54,8 @@ type MembershipServiceClient interface {
 	UpdateRole(ctx context.Context, in *UpdateRoleRequest, opts ...grpc.CallOption) (*UpdateRoleResponse, error)
 	// DeleteRole removes a role from the guild. Members with this role will lose it.
 	DeleteRole(ctx context.Context, in *DeleteRoleRequest, opts ...grpc.CallOption) (*DeleteRoleResponse, error)
+	// InitRoles initializes default roles (owner and member) for a guild.
+	InitRoles(ctx context.Context, in *InitRolesRequest, opts ...grpc.CallOption) (*InitRolesResponse, error)
 	// CreateMember adds a user to the guild with the specified roles.
 	CreateMember(ctx context.Context, in *CreateMemberRequest, opts ...grpc.CallOption) (*CreateMemberResponse, error)
 	// JoinGuild allows the authenticated user to join a guild on their own.
@@ -133,6 +136,16 @@ func (c *membershipServiceClient) DeleteRole(ctx context.Context, in *DeleteRole
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(DeleteRoleResponse)
 	err := c.cc.Invoke(ctx, MembershipService_DeleteRole_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *membershipServiceClient) InitRoles(ctx context.Context, in *InitRolesRequest, opts ...grpc.CallOption) (*InitRolesResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(InitRolesResponse)
+	err := c.cc.Invoke(ctx, MembershipService_InitRoles_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -283,6 +296,8 @@ type MembershipServiceServer interface {
 	UpdateRole(context.Context, *UpdateRoleRequest) (*UpdateRoleResponse, error)
 	// DeleteRole removes a role from the guild. Members with this role will lose it.
 	DeleteRole(context.Context, *DeleteRoleRequest) (*DeleteRoleResponse, error)
+	// InitRoles initializes default roles (owner and member) for a guild.
+	InitRoles(context.Context, *InitRolesRequest) (*InitRolesResponse, error)
 	// CreateMember adds a user to the guild with the specified roles.
 	CreateMember(context.Context, *CreateMemberRequest) (*CreateMemberResponse, error)
 	// JoinGuild allows the authenticated user to join a guild on their own.
@@ -333,6 +348,9 @@ func (UnimplementedMembershipServiceServer) UpdateRole(context.Context, *UpdateR
 }
 func (UnimplementedMembershipServiceServer) DeleteRole(context.Context, *DeleteRoleRequest) (*DeleteRoleResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteRole not implemented")
+}
+func (UnimplementedMembershipServiceServer) InitRoles(context.Context, *InitRolesRequest) (*InitRolesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method InitRoles not implemented")
 }
 func (UnimplementedMembershipServiceServer) CreateMember(context.Context, *CreateMemberRequest) (*CreateMemberResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateMember not implemented")
@@ -480,6 +498,24 @@ func _MembershipService_DeleteRole_Handler(srv interface{}, ctx context.Context,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(MembershipServiceServer).DeleteRole(ctx, req.(*DeleteRoleRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _MembershipService_InitRoles_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(InitRolesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MembershipServiceServer).InitRoles(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: MembershipService_InitRoles_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MembershipServiceServer).InitRoles(ctx, req.(*InitRolesRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -744,6 +780,10 @@ var MembershipService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteRole",
 			Handler:    _MembershipService_DeleteRole_Handler,
+		},
+		{
+			MethodName: "InitRoles",
+			Handler:    _MembershipService_InitRoles_Handler,
 		},
 		{
 			MethodName: "CreateMember",

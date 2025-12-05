@@ -587,6 +587,45 @@
         ]
       }
     },
+    "/api/v1/guilds/{guildId}/roles/init": {
+      "post": {
+        "summary": "Initialize default roles",
+        "description": "Creates two default roles for the guild: owner (with all permissions) and member (with limited permissions).",
+        "operationId": "MembershipService_InitRoles",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1InitRolesResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "guildId",
+            "description": "Guild identifier where roles will be initialized.",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uint64"
+          }
+        ],
+        "tags": [
+          "Roles"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
     "/api/v1/guilds/{guildId}/roles/{roleId}": {
       "get": {
         "summary": "Get role",
@@ -1207,6 +1246,19 @@
           "type": "integer",
           "format": "int32",
           "description": "Total number of guilds the user is a member of."
+        }
+      }
+    },
+    "v1InitRolesResponse": {
+      "type": "object",
+      "properties": {
+        "ownerRole": {
+          "$ref": "#/definitions/v1Role",
+          "description": "Created owner role with all permissions."
+        },
+        "memberRole": {
+          "$ref": "#/definitions/v1Role",
+          "description": "Created member role with limited permissions."
         }
       }
     },
