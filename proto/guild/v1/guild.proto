@@ -65,6 +65,22 @@ service GuildService {
     };
   };
 
+  rpc GetMyGuilds(GetMyGuildsRequest) returns (GetMyGuildsResponse) {
+    option (google.api.http) = {
+      get : "/api/v1/guild/mine"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags : "GuildService"
+      summary : "Get my guilds"
+      security: {
+        security_requirement: {
+          key: "BearerAuth";
+          value: {}
+        }
+      }
+    };
+  };
+
   rpc CreateGuild(CreateGuildRequest) returns (CreateGuildResponse) {
     option (google.api.http) = {
       post : "/api/v1/guild"
@@ -126,6 +142,12 @@ message GetPublicGuildsPageResponse {
     repeated Guild guilds = 1;
     uint64 total_pages = 2;
     uint64 current_page = 3;
+}
+
+message GetMyGuildsRequest { }
+
+message GetMyGuildsResponse {
+  repeated Guild guilds = 1;
 }
 
 message GetPublicGuildsPageRequest {
