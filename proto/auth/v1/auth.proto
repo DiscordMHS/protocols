@@ -230,7 +230,7 @@ service UserService {
 // =====================
 
 message User {
-  int64 id = 1;
+  uint64 id = 1;
   string username = 2;
   string email = 3;
   bool email_verified = 4;
@@ -331,7 +331,7 @@ message GetMeResponse { User user = 1; }
 // ==========================
 
 message GetUserRequest {
-  int64 id = 1 [ (buf.validate.field).required = true ];
+  uint64 id = 1 [ (buf.validate.field).required = true ];
 }
 
 message GetUserResponse { User user = 1; }
@@ -364,7 +364,7 @@ message CreateUserRequest {
 message CreateUserResponse { User user = 1; }
 
 message UpdateUserRequest {
-  int64 id = 1 [ (buf.validate.field).required = true ];
+  uint64 id = 1 [ (buf.validate.field).required = true ];
   optional string username = 2;
   optional string email = 3 [ (buf.validate.field).string.email = true ];
   optional bool email_verified = 4;
@@ -380,7 +380,7 @@ message UpdateUserRequest {
 message UpdateUserResponse { User user = 1; }
 
 message ChangePasswordRequest {
-  int64 id = 1 [ (buf.validate.field).required = true ];
+  uint64 id = 1 [ (buf.validate.field).required = true ];
   string current_password = 2 [ (buf.validate.field).required = true ];
   string new_password = 3 [ (buf.validate.field).required = true ];
 }
@@ -388,7 +388,7 @@ message ChangePasswordRequest {
 message ChangePasswordResponse {}
 
 message DeleteUserRequest {
-  int64 id = 1 [ (buf.validate.field).required = true ];
+  uint64 id = 1 [ (buf.validate.field).required = true ];
 }
 
 message DeleteUserResponse {}
