@@ -10,6 +10,7 @@
       "name": "FileService"
     }
   ],
+  "host": "filemanager.agoraproject.ru",
   "schemes": [
     "http",
     "https"
@@ -41,12 +42,10 @@
         },
         "parameters": [
           {
-            "name": "body",
-            "in": "body",
+            "name": "file",
+            "in": "formData",
             "required": true,
-            "schema": {
-              "$ref": "#/definitions/v1UploadFileRequest"
-            }
+            "type": "file"
           }
         ],
         "tags": [
