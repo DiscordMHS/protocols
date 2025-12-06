@@ -371,6 +371,42 @@ service MembershipService {
     };
   }
 
+  // GetRoleOverrides retrieves role-based permission overrides for a channel.
+  rpc GetRoleOverrides(GetRoleOverridesRequest) returns (GetRoleOverridesResponse) {
+    option (google.api.http) = {
+      get : "/api/v1/guilds/{guild_id}/channels/{channel_id}/role-overrides"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags : "Overrides"
+      summary : "Get role overrides"
+      description : "Retrieves all role-based permission overrides for the specified channel."
+      security: {
+        security_requirement: {
+          key: "BearerAuth";
+          value: {}
+        }
+      }
+    };
+  }
+
+  // GetUserOverrides retrieves user-specific permission overrides for a channel.
+  rpc GetUserOverrides(GetUserOverridesRequest) returns (GetUserOverridesResponse) {
+    option (google.api.http) = {
+      get : "/api/v1/guilds/{guild_id}/channels/{channel_id}/user-overrides"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags : "Overrides"
+      summary : "Get user overrides"
+      description : "Retrieves all user-specific permission overrides for the specified channel."
+      security: {
+        security_requirement: {
+          key: "BearerAuth";
+          value: {}
+        }
+      }
+    };
+  }
+
   // =====================
   // === PERMISSIONS =====
   // =====================
@@ -748,6 +784,34 @@ message UpdateUserOverridesResponse {
   // Channel identifier.
   uint64 channel_id = 1;
   // Updated list of user overrides.
+  repeated UserOverride overrides = 2;
+}
+
+message GetRoleOverridesRequest {
+  // Guild identifier.
+  uint64 guild_id = 1 [ (buf.validate.field).required = true ];
+  // Channel identifier.
+  uint64 channel_id = 2 [ (buf.validate.field).required = true ];
+}
+
+message GetRoleOverridesResponse {
+  // Channel identifier.
+  uint64 channel_id = 1;
+  // List of role overrides.
+  repeated RoleOverride overrides = 2;
+}
+
+message GetUserOverridesRequest {
+  // Guild identifier.
+  uint64 guild_id = 1 [ (buf.validate.field).required = true ];
+  // Channel identifier.
+  uint64 channel_id = 2 [ (buf.validate.field).required = true ];
+}
+
+message GetUserOverridesResponse {
+  // Channel identifier.
+  uint64 channel_id = 1;
+  // List of user overrides.
   repeated UserOverride overrides = 2;
 }
 

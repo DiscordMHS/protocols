@@ -36,6 +36,8 @@ const (
 	MembershipService_AcceptInvite_FullMethodName        = "/memberships.v1.MembershipService/AcceptInvite"
 	MembershipService_UpdateRoleOverrides_FullMethodName = "/memberships.v1.MembershipService/UpdateRoleOverrides"
 	MembershipService_UpdateUserOverrides_FullMethodName = "/memberships.v1.MembershipService/UpdateUserOverrides"
+	MembershipService_GetRoleOverrides_FullMethodName    = "/memberships.v1.MembershipService/GetRoleOverrides"
+	MembershipService_GetUserOverrides_FullMethodName    = "/memberships.v1.MembershipService/GetUserOverrides"
 	MembershipService_CheckPermission_FullMethodName     = "/memberships.v1.MembershipService/CheckPermission"
 	MembershipService_GetPermissions_FullMethodName      = "/memberships.v1.MembershipService/GetPermissions"
 )
@@ -78,6 +80,10 @@ type MembershipServiceClient interface {
 	UpdateRoleOverrides(ctx context.Context, in *UpdateRoleOverridesRequest, opts ...grpc.CallOption) (*UpdateRoleOverridesResponse, error)
 	// UpdateUserOverrides completely replaces user-specific permission overrides for a channel.
 	UpdateUserOverrides(ctx context.Context, in *UpdateUserOverridesRequest, opts ...grpc.CallOption) (*UpdateUserOverridesResponse, error)
+	// GetRoleOverrides retrieves role-based permission overrides for a channel.
+	GetRoleOverrides(ctx context.Context, in *GetRoleOverridesRequest, opts ...grpc.CallOption) (*GetRoleOverridesResponse, error)
+	// GetUserOverrides retrieves user-specific permission overrides for a channel.
+	GetUserOverrides(ctx context.Context, in *GetUserOverridesRequest, opts ...grpc.CallOption) (*GetUserOverridesResponse, error)
 	// CheckPermission verifies if a user has the specified permission for a resource.
 	CheckPermission(ctx context.Context, in *CheckPermissionRequest, opts ...grpc.CallOption) (*CheckPermissionResponse, error)
 	// GetPermissions retrieves all available permission names in the system.
@@ -262,6 +268,26 @@ func (c *membershipServiceClient) UpdateUserOverrides(ctx context.Context, in *U
 	return out, nil
 }
 
+func (c *membershipServiceClient) GetRoleOverrides(ctx context.Context, in *GetRoleOverridesRequest, opts ...grpc.CallOption) (*GetRoleOverridesResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetRoleOverridesResponse)
+	err := c.cc.Invoke(ctx, MembershipService_GetRoleOverrides_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *membershipServiceClient) GetUserOverrides(ctx context.Context, in *GetUserOverridesRequest, opts ...grpc.CallOption) (*GetUserOverridesResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetUserOverridesResponse)
+	err := c.cc.Invoke(ctx, MembershipService_GetUserOverrides_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *membershipServiceClient) CheckPermission(ctx context.Context, in *CheckPermissionRequest, opts ...grpc.CallOption) (*CheckPermissionResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(CheckPermissionResponse)
@@ -320,6 +346,10 @@ type MembershipServiceServer interface {
 	UpdateRoleOverrides(context.Context, *UpdateRoleOverridesRequest) (*UpdateRoleOverridesResponse, error)
 	// UpdateUserOverrides completely replaces user-specific permission overrides for a channel.
 	UpdateUserOverrides(context.Context, *UpdateUserOverridesRequest) (*UpdateUserOverridesResponse, error)
+	// GetRoleOverrides retrieves role-based permission overrides for a channel.
+	GetRoleOverrides(context.Context, *GetRoleOverridesRequest) (*GetRoleOverridesResponse, error)
+	// GetUserOverrides retrieves user-specific permission overrides for a channel.
+	GetUserOverrides(context.Context, *GetUserOverridesRequest) (*GetUserOverridesResponse, error)
 	// CheckPermission verifies if a user has the specified permission for a resource.
 	CheckPermission(context.Context, *CheckPermissionRequest) (*CheckPermissionResponse, error)
 	// GetPermissions retrieves all available permission names in the system.
@@ -384,6 +414,12 @@ func (UnimplementedMembershipServiceServer) UpdateRoleOverrides(context.Context,
 }
 func (UnimplementedMembershipServiceServer) UpdateUserOverrides(context.Context, *UpdateUserOverridesRequest) (*UpdateUserOverridesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateUserOverrides not implemented")
+}
+func (UnimplementedMembershipServiceServer) GetRoleOverrides(context.Context, *GetRoleOverridesRequest) (*GetRoleOverridesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetRoleOverrides not implemented")
+}
+func (UnimplementedMembershipServiceServer) GetUserOverrides(context.Context, *GetUserOverridesRequest) (*GetUserOverridesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetUserOverrides not implemented")
 }
 func (UnimplementedMembershipServiceServer) CheckPermission(context.Context, *CheckPermissionRequest) (*CheckPermissionResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CheckPermission not implemented")
@@ -718,6 +754,42 @@ func _MembershipService_UpdateUserOverrides_Handler(srv interface{}, ctx context
 	return interceptor(ctx, in, info, handler)
 }
 
+func _MembershipService_GetRoleOverrides_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetRoleOverridesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MembershipServiceServer).GetRoleOverrides(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: MembershipService_GetRoleOverrides_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MembershipServiceServer).GetRoleOverrides(ctx, req.(*GetRoleOverridesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _MembershipService_GetUserOverrides_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetUserOverridesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MembershipServiceServer).GetUserOverrides(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: MembershipService_GetUserOverrides_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MembershipServiceServer).GetUserOverrides(ctx, req.(*GetUserOverridesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _MembershipService_CheckPermission_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(CheckPermissionRequest)
 	if err := dec(in); err != nil {
@@ -828,6 +900,14 @@ var MembershipService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdateUserOverrides",
 			Handler:    _MembershipService_UpdateUserOverrides_Handler,
+		},
+		{
+			MethodName: "GetRoleOverrides",
+			Handler:    _MembershipService_GetRoleOverrides_Handler,
+		},
+		{
+			MethodName: "GetUserOverrides",
+			Handler:    _MembershipService_GetUserOverrides_Handler,
 		},
 		{
 			MethodName: "CheckPermission",

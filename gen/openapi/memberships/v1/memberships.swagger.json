@@ -23,6 +23,51 @@
   ],
   "paths": {
     "/api/v1/guilds/{guildId}/channels/{channelId}/role-overrides": {
+      "get": {
+        "summary": "Get role overrides",
+        "description": "Retrieves all role-based permission overrides for the specified channel.",
+        "operationId": "MembershipService_GetRoleOverrides",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1GetRoleOverridesResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "guildId",
+            "description": "Guild identifier.",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uint64"
+          },
+          {
+            "name": "channelId",
+            "description": "Channel identifier.",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uint64"
+          }
+        ],
+        "tags": [
+          "Overrides"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      },
       "put": {
         "summary": "Update role overrides",
         "description": "Completely replaces all role-based permission overrides for the channel. Empty list removes all overrides.",
@@ -78,6 +123,51 @@
       }
     },
     "/api/v1/guilds/{guildId}/channels/{channelId}/user-overrides": {
+      "get": {
+        "summary": "Get user overrides",
+        "description": "Retrieves all user-specific permission overrides for the specified channel.",
+        "operationId": "MembershipService_GetUserOverrides",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1GetUserOverridesResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "guildId",
+            "description": "Guild identifier.",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uint64"
+          },
+          {
+            "name": "channelId",
+            "description": "Channel identifier.",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uint64"
+          }
+        ],
+        "tags": [
+          "Overrides"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      },
       "put": {
         "summary": "Update user overrides",
         "description": "Completely replaces all user-specific permission overrides for the channel. Empty list removes all overrides.",
@@ -1222,6 +1312,24 @@
         }
       }
     },
+    "v1GetRoleOverridesResponse": {
+      "type": "object",
+      "properties": {
+        "channelId": {
+          "type": "string",
+          "format": "uint64",
+          "description": "Channel identifier."
+        },
+        "overrides": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1RoleOverride"
+          },
+          "description": "List of role overrides."
+        }
+      }
+    },
     "v1GetRoleResponse": {
       "type": "object",
       "properties": {
@@ -1246,6 +1354,24 @@
           "type": "integer",
           "format": "int32",
           "description": "Total number of guilds the user is a member of."
+        }
+      }
+    },
+    "v1GetUserOverridesResponse": {
+      "type": "object",
+      "properties": {
+        "channelId": {
+          "type": "string",
+          "format": "uint64",
+          "description": "Channel identifier."
+        },
+        "overrides": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1UserOverride"
+          },
+          "description": "List of user overrides."
         }
       }
     },
