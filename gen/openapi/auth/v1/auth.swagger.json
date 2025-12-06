@@ -359,7 +359,7 @@
             "in": "path",
             "required": true,
             "type": "string",
-            "format": "int64"
+            "format": "uint64"
           }
         ],
         "tags": [
@@ -394,7 +394,7 @@
             "in": "path",
             "required": true,
             "type": "string",
-            "format": "int64"
+            "format": "uint64"
           }
         ],
         "tags": [
@@ -429,7 +429,7 @@
             "in": "path",
             "required": true,
             "type": "string",
-            "format": "int64"
+            "format": "uint64"
           },
           {
             "name": "body",
@@ -474,7 +474,7 @@
             "in": "path",
             "required": true,
             "type": "string",
-            "format": "int64"
+            "format": "uint64"
           },
           {
             "name": "body",
@@ -755,7 +755,7 @@
       "properties": {
         "id": {
           "type": "string",
-          "format": "int64"
+          "format": "uint64"
         },
         "username": {
           "type": "string"
