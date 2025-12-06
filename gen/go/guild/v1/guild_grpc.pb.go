@@ -21,6 +21,7 @@ const _ = grpc.SupportPackageIsVersion9
 const (
 	GuildService_GetGuildById_FullMethodName    = "/guild.v1.GuildService/GetGuildById"
 	GuildService_GetPublicGuilds_FullMethodName = "/guild.v1.GuildService/GetPublicGuilds"
+	GuildService_GetMyGuilds_FullMethodName     = "/guild.v1.GuildService/GetMyGuilds"
 	GuildService_CreateGuild_FullMethodName     = "/guild.v1.GuildService/CreateGuild"
 	GuildService_UpdateGuild_FullMethodName     = "/guild.v1.GuildService/UpdateGuild"
 	GuildService_DeleteGuild_FullMethodName     = "/guild.v1.GuildService/DeleteGuild"
@@ -32,6 +33,7 @@ const (
 type GuildServiceClient interface {
 	GetGuildById(ctx context.Context, in *GetGuildByIdRequest, opts ...grpc.CallOption) (*Guild, error)
 	GetPublicGuilds(ctx context.Context, in *GetPublicGuildsPageRequest, opts ...grpc.CallOption) (*GetPublicGuildsPageResponse, error)
+	GetMyGuilds(ctx context.Context, in *GetMyGuildsRequest, opts ...grpc.CallOption) (*GetMyGuildsResponse, error)
 	CreateGuild(ctx context.Context, in *CreateGuildRequest, opts ...grpc.CallOption) (*CreateGuildResponse, error)
 	UpdateGuild(ctx context.Context, in *UpdateGuildRequest, opts ...grpc.CallOption) (*UpdateGuildResponse, error)
 	DeleteGuild(ctx context.Context, in *DeleteGuildRequest, opts ...grpc.CallOption) (*DeleteGuildResponse, error)
@@ -59,6 +61,16 @@ func (c *guildServiceClient) GetPublicGuilds(ctx context.Context, in *GetPublicG
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(GetPublicGuildsPageResponse)
 	err := c.cc.Invoke(ctx, GuildService_GetPublicGuilds_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *guildServiceClient) GetMyGuilds(ctx context.Context, in *GetMyGuildsRequest, opts ...grpc.CallOption) (*GetMyGuildsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetMyGuildsResponse)
+	err := c.cc.Invoke(ctx, GuildService_GetMyGuilds_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -101,6 +113,7 @@ func (c *guildServiceClient) DeleteGuild(ctx context.Context, in *DeleteGuildReq
 type GuildServiceServer interface {
 	GetGuildById(context.Context, *GetGuildByIdRequest) (*Guild, error)
 	GetPublicGuilds(context.Context, *GetPublicGuildsPageRequest) (*GetPublicGuildsPageResponse, error)
+	GetMyGuilds(context.Context, *GetMyGuildsRequest) (*GetMyGuildsResponse, error)
 	CreateGuild(context.Context, *CreateGuildRequest) (*CreateGuildResponse, error)
 	UpdateGuild(context.Context, *UpdateGuildRequest) (*UpdateGuildResponse, error)
 	DeleteGuild(context.Context, *DeleteGuildRequest) (*DeleteGuildResponse, error)
@@ -119,6 +132,9 @@ func (UnimplementedGuildServiceServer) GetGuildById(context.Context, *GetGuildBy
 }
 func (UnimplementedGuildServiceServer) GetPublicGuilds(context.Context, *GetPublicGuildsPageRequest) (*GetPublicGuildsPageResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetPublicGuilds not implemented")
+}
+func (UnimplementedGuildServiceServer) GetMyGuilds(context.Context, *GetMyGuildsRequest) (*GetMyGuildsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetMyGuilds not implemented")
 }
 func (UnimplementedGuildServiceServer) CreateGuild(context.Context, *CreateGuildRequest) (*CreateGuildResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateGuild not implemented")
@@ -182,6 +198,24 @@ func _GuildService_GetPublicGuilds_Handler(srv interface{}, ctx context.Context,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(GuildServiceServer).GetPublicGuilds(ctx, req.(*GetPublicGuildsPageRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _GuildService_GetMyGuilds_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetMyGuildsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GuildServiceServer).GetMyGuilds(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: GuildService_GetMyGuilds_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GuildServiceServer).GetMyGuilds(ctx, req.(*GetMyGuildsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -254,6 +288,10 @@ var GuildService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetPublicGuilds",
 			Handler:    _GuildService_GetPublicGuilds_Handler,
+		},
+		{
+			MethodName: "GetMyGuilds",
+			Handler:    _GuildService_GetMyGuilds_Handler,
 		},
 		{
 			MethodName: "CreateGuild",

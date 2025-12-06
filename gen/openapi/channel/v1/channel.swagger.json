@@ -10,7 +10,6 @@
       "name": "ChannelService"
     }
   ],
-  "host": "channels.agoraproject.ru",
   "schemes": [
     "http",
     "https"

@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.5.1
 // - protoc             (unknown)
-// source: proto/memberships/v1/memberships.proto
+// source: memberships/v1/memberships.proto
 
 package membershipsv1
 
@@ -919,5 +919,5 @@ var MembershipService_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "proto/memberships/v1/memberships.proto",
+	Metadata: "memberships/v1/memberships.proto",
 }

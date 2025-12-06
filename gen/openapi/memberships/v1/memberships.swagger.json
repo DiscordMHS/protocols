@@ -10,7 +10,6 @@
       "name": "MembershipService"
     }
   ],
-  "host": "memberships.agoraproject.ru",
   "schemes": [
     "http",
     "https"

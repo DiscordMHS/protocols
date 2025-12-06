@@ -10,7 +10,6 @@
       "name": "GuildService"
     }
   ],
-  "host": "guilds.agoraproject.ru",
   "schemes": [
     "http",
     "https"
@@ -48,6 +47,56 @@
             "schema": {
               "$ref": "#/definitions/v1CreateGuildRequest"
             }
+          }
+        ],
+        "tags": [
+          "GuildService"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/guild/mine": {
+      "get": {
+        "summary": "Get my guilds",
+        "operationId": "GuildService_GetMyGuilds",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1GetMyGuildsResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "uint64"
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "uint64"
+          },
+          {
+            "name": "search",
+            "in": "query",
+            "required": false,
+            "type": "string"
           }
         ],
         "tags": [
@@ -288,6 +337,18 @@
     },
     "v1DeleteGuildResponse": {
       "type": "object"
+    },
+    "v1GetMyGuildsResponse": {
+      "type": "object",
+      "properties": {
+        "guilds": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1Guild"
+          }
+        }
+      }
     },
     "v1GetPublicGuildsPageResponse": {
       "type": "object",

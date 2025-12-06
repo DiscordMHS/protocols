@@ -144,7 +144,11 @@ message GetPublicGuildsPageResponse {
     uint64 current_page = 3;
 }
 
-message GetMyGuildsRequest { }
+message GetMyGuildsRequest {
+  optional uint64 limit = 1;
+  optional uint64 offset = 2;
+  optional string search = 3;
+}
 
 message GetMyGuildsResponse {
   repeated Guild guilds = 1;
