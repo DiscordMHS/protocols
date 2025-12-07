@@ -753,26 +753,9 @@ func request_MembershipService_UpdateRoleOverrides_0(ctx context.Context, marsha
 	var (
 		protoReq UpdateRoleOverridesRequest
 		metadata runtime.ServerMetadata
-		err      error
 	)
 	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && !errors.Is(err, io.EOF) {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
-	}
-	val, ok := pathParams["guild_id"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "guild_id")
-	}
-	protoReq.GuildId, err = runtime.Uint64(val)
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "guild_id", err)
-	}
-	val, ok = pathParams["channel_id"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "channel_id")
-	}
-	protoReq.ChannelId, err = runtime.Uint64(val)
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "channel_id", err)
 	}
 	msg, err := client.UpdateRoleOverrides(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
@@ -782,26 +765,9 @@ func local_request_MembershipService_UpdateRoleOverrides_0(ctx context.Context, 
 	var (
 		protoReq UpdateRoleOverridesRequest
 		metadata runtime.ServerMetadata
-		err      error
 	)
 	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && !errors.Is(err, io.EOF) {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
-	}
-	val, ok := pathParams["guild_id"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "guild_id")
-	}
-	protoReq.GuildId, err = runtime.Uint64(val)
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "guild_id", err)
-	}
-	val, ok = pathParams["channel_id"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "channel_id")
-	}
-	protoReq.ChannelId, err = runtime.Uint64(val)
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "channel_id", err)
 	}
 	msg, err := server.UpdateRoleOverrides(ctx, &protoReq)
 	return msg, metadata, err
@@ -811,26 +777,9 @@ func request_MembershipService_UpdateUserOverrides_0(ctx context.Context, marsha
 	var (
 		protoReq UpdateUserOverridesRequest
 		metadata runtime.ServerMetadata
-		err      error
 	)
 	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && !errors.Is(err, io.EOF) {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
-	}
-	val, ok := pathParams["guild_id"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "guild_id")
-	}
-	protoReq.GuildId, err = runtime.Uint64(val)
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "guild_id", err)
-	}
-	val, ok = pathParams["channel_id"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "channel_id")
-	}
-	protoReq.ChannelId, err = runtime.Uint64(val)
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "channel_id", err)
 	}
 	msg, err := client.UpdateUserOverrides(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
@@ -840,52 +789,26 @@ func local_request_MembershipService_UpdateUserOverrides_0(ctx context.Context, 
 	var (
 		protoReq UpdateUserOverridesRequest
 		metadata runtime.ServerMetadata
-		err      error
 	)
 	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && !errors.Is(err, io.EOF) {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
-	}
-	val, ok := pathParams["guild_id"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "guild_id")
-	}
-	protoReq.GuildId, err = runtime.Uint64(val)
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "guild_id", err)
-	}
-	val, ok = pathParams["channel_id"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "channel_id")
-	}
-	protoReq.ChannelId, err = runtime.Uint64(val)
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "channel_id", err)
 	}
 	msg, err := server.UpdateUserOverrides(ctx, &protoReq)
 	return msg, metadata, err
 }
 
+var filter_MembershipService_GetRoleOverrides_0 = &utilities.DoubleArray{Encoding: map[string]int{}, Base: []int(nil), Check: []int(nil)}
+
 func request_MembershipService_GetRoleOverrides_0(ctx context.Context, marshaler runtime.Marshaler, client MembershipServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
 		protoReq GetRoleOverridesRequest
 		metadata runtime.ServerMetadata
-		err      error
 	)
-	val, ok := pathParams["guild_id"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "guild_id")
+	if err := req.ParseForm(); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
-	protoReq.GuildId, err = runtime.Uint64(val)
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "guild_id", err)
-	}
-	val, ok = pathParams["channel_id"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "channel_id")
-	}
-	protoReq.ChannelId, err = runtime.Uint64(val)
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "channel_id", err)
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_MembershipService_GetRoleOverrides_0); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 	msg, err := client.GetRoleOverrides(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
@@ -895,49 +818,29 @@ func local_request_MembershipService_GetRoleOverrides_0(ctx context.Context, mar
 	var (
 		protoReq GetRoleOverridesRequest
 		metadata runtime.ServerMetadata
-		err      error
 	)
-	val, ok := pathParams["guild_id"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "guild_id")
+	if err := req.ParseForm(); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
-	protoReq.GuildId, err = runtime.Uint64(val)
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "guild_id", err)
-	}
-	val, ok = pathParams["channel_id"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "channel_id")
-	}
-	protoReq.ChannelId, err = runtime.Uint64(val)
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "channel_id", err)
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_MembershipService_GetRoleOverrides_0); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 	msg, err := server.GetRoleOverrides(ctx, &protoReq)
 	return msg, metadata, err
 }
 
+var filter_MembershipService_GetUserOverrides_0 = &utilities.DoubleArray{Encoding: map[string]int{}, Base: []int(nil), Check: []int(nil)}
+
 func request_MembershipService_GetUserOverrides_0(ctx context.Context, marshaler runtime.Marshaler, client MembershipServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
 		protoReq GetUserOverridesRequest
 		metadata runtime.ServerMetadata
-		err      error
 	)
-	val, ok := pathParams["guild_id"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "guild_id")
+	if err := req.ParseForm(); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
-	protoReq.GuildId, err = runtime.Uint64(val)
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "guild_id", err)
-	}
-	val, ok = pathParams["channel_id"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "channel_id")
-	}
-	protoReq.ChannelId, err = runtime.Uint64(val)
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "channel_id", err)
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_MembershipService_GetUserOverrides_0); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 	msg, err := client.GetUserOverrides(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
@@ -947,23 +850,12 @@ func local_request_MembershipService_GetUserOverrides_0(ctx context.Context, mar
 	var (
 		protoReq GetUserOverridesRequest
 		metadata runtime.ServerMetadata
-		err      error
 	)
-	val, ok := pathParams["guild_id"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "guild_id")
+	if err := req.ParseForm(); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
-	protoReq.GuildId, err = runtime.Uint64(val)
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "guild_id", err)
-	}
-	val, ok = pathParams["channel_id"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "channel_id")
-	}
-	protoReq.ChannelId, err = runtime.Uint64(val)
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "channel_id", err)
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_MembershipService_GetUserOverrides_0); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 	msg, err := server.GetUserOverrides(ctx, &protoReq)
 	return msg, metadata, err
@@ -1323,7 +1215,7 @@ func RegisterMembershipServiceHandlerServer(ctx context.Context, mux *runtime.Se
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/memberships.v1.MembershipService/UpdateRoleOverrides", runtime.WithHTTPPathPattern("/api/v1/guilds/{guild_id}/channels/{channel_id}/role-overrides"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/memberships.v1.MembershipService/UpdateRoleOverrides", runtime.WithHTTPPathPattern("/api/v1/overrides/roles"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1343,7 +1235,7 @@ func RegisterMembershipServiceHandlerServer(ctx context.Context, mux *runtime.Se
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/memberships.v1.MembershipService/UpdateUserOverrides", runtime.WithHTTPPathPattern("/api/v1/guilds/{guild_id}/channels/{channel_id}/user-overrides"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/memberships.v1.MembershipService/UpdateUserOverrides", runtime.WithHTTPPathPattern("/api/v1/overrides/users"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1363,7 +1255,7 @@ func RegisterMembershipServiceHandlerServer(ctx context.Context, mux *runtime.Se
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/memberships.v1.MembershipService/GetRoleOverrides", runtime.WithHTTPPathPattern("/api/v1/guilds/{guild_id}/channels/{channel_id}/role-overrides"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/memberships.v1.MembershipService/GetRoleOverrides", runtime.WithHTTPPathPattern("/api/v1/overrides/roles"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1383,7 +1275,7 @@ func RegisterMembershipServiceHandlerServer(ctx context.Context, mux *runtime.Se
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/memberships.v1.MembershipService/GetUserOverrides", runtime.WithHTTPPathPattern("/api/v1/guilds/{guild_id}/channels/{channel_id}/user-overrides"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/memberships.v1.MembershipService/GetUserOverrides", runtime.WithHTTPPathPattern("/api/v1/overrides/users"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1736,7 +1628,7 @@ func RegisterMembershipServiceHandlerClient(ctx context.Context, mux *runtime.Se
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/memberships.v1.MembershipService/UpdateRoleOverrides", runtime.WithHTTPPathPattern("/api/v1/guilds/{guild_id}/channels/{channel_id}/role-overrides"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/memberships.v1.MembershipService/UpdateRoleOverrides", runtime.WithHTTPPathPattern("/api/v1/overrides/roles"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1753,7 +1645,7 @@ func RegisterMembershipServiceHandlerClient(ctx context.Context, mux *runtime.Se
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/memberships.v1.MembershipService/UpdateUserOverrides", runtime.WithHTTPPathPattern("/api/v1/guilds/{guild_id}/channels/{channel_id}/user-overrides"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/memberships.v1.MembershipService/UpdateUserOverrides", runtime.WithHTTPPathPattern("/api/v1/overrides/users"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1770,7 +1662,7 @@ func RegisterMembershipServiceHandlerClient(ctx context.Context, mux *runtime.Se
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/memberships.v1.MembershipService/GetRoleOverrides", runtime.WithHTTPPathPattern("/api/v1/guilds/{guild_id}/channels/{channel_id}/role-overrides"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/memberships.v1.MembershipService/GetRoleOverrides", runtime.WithHTTPPathPattern("/api/v1/overrides/roles"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1787,7 +1679,7 @@ func RegisterMembershipServiceHandlerClient(ctx context.Context, mux *runtime.Se
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/memberships.v1.MembershipService/GetUserOverrides", runtime.WithHTTPPathPattern("/api/v1/guilds/{guild_id}/channels/{channel_id}/user-overrides"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/memberships.v1.MembershipService/GetUserOverrides", runtime.WithHTTPPathPattern("/api/v1/overrides/users"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1853,10 +1745,10 @@ var (
 	pattern_MembershipService_GetUserGuilds_0       = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "users", "user_id", "guilds"}, ""))
 	pattern_MembershipService_CreateInvite_0        = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "guilds", "guild_id", "invites"}, ""))
 	pattern_MembershipService_AcceptInvite_0        = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "invites", "token", "accept"}, ""))
-	pattern_MembershipService_UpdateRoleOverrides_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6}, []string{"api", "v1", "guilds", "guild_id", "channels", "channel_id", "role-overrides"}, ""))
-	pattern_MembershipService_UpdateUserOverrides_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6}, []string{"api", "v1", "guilds", "guild_id", "channels", "channel_id", "user-overrides"}, ""))
-	pattern_MembershipService_GetRoleOverrides_0    = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6}, []string{"api", "v1", "guilds", "guild_id", "channels", "channel_id", "role-overrides"}, ""))
-	pattern_MembershipService_GetUserOverrides_0    = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6}, []string{"api", "v1", "guilds", "guild_id", "channels", "channel_id", "user-overrides"}, ""))
+	pattern_MembershipService_UpdateRoleOverrides_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"api", "v1", "overrides", "roles"}, ""))
+	pattern_MembershipService_UpdateUserOverrides_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"api", "v1", "overrides", "users"}, ""))
+	pattern_MembershipService_GetRoleOverrides_0    = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"api", "v1", "overrides", "roles"}, ""))
+	pattern_MembershipService_GetUserOverrides_0    = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"api", "v1", "overrides", "users"}, ""))
 	pattern_MembershipService_CheckPermission_0     = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"api", "v1", "permissions", "check"}, ""))
 	pattern_MembershipService_GetPermissions_0      = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"api", "v1", "permissions"}, ""))
 )

@@ -333,16 +333,16 @@ service MembershipService {
   // === OVERRIDES =======
   // =====================
 
-  // UpdateRoleOverrides completely replaces role-based permission overrides for a channel.
+  // UpdateRoleOverrides completely replaces role-based permission overrides for a resource.
   rpc UpdateRoleOverrides(UpdateRoleOverridesRequest) returns (UpdateRoleOverridesResponse) {
     option (google.api.http) = {
-      put : "/api/v1/guilds/{guild_id}/channels/{channel_id}/role-overrides"
+      put : "/api/v1/overrides/roles"
       body : "*"
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags : "Overrides"
       summary : "Update role overrides"
-      description : "Completely replaces all role-based permission overrides for the channel. Empty list removes all overrides."
+      description : "Completely replaces all role-based permission overrides for the resource. Empty list removes all overrides."
       security: {
         security_requirement: {
           key: "BearerAuth";
@@ -352,16 +352,16 @@ service MembershipService {
     };
   }
 
-  // UpdateUserOverrides completely replaces user-specific permission overrides for a channel.
+  // UpdateUserOverrides completely replaces user-specific permission overrides for a resource.
   rpc UpdateUserOverrides(UpdateUserOverridesRequest) returns (UpdateUserOverridesResponse) {
     option (google.api.http) = {
-      put : "/api/v1/guilds/{guild_id}/channels/{channel_id}/user-overrides"
+      put : "/api/v1/overrides/users"
       body : "*"
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags : "Overrides"
       summary : "Update user overrides"
-      description : "Completely replaces all user-specific permission overrides for the channel. Empty list removes all overrides."
+      description : "Completely replaces all user-specific permission overrides for the resource. Empty list removes all overrides."
       security: {
         security_requirement: {
           key: "BearerAuth";
@@ -371,15 +371,15 @@ service MembershipService {
     };
   }
 
-  // GetRoleOverrides retrieves role-based permission overrides for a channel.
+  // GetRoleOverrides retrieves role-based permission overrides for a resource.
   rpc GetRoleOverrides(GetRoleOverridesRequest) returns (GetRoleOverridesResponse) {
     option (google.api.http) = {
-      get : "/api/v1/guilds/{guild_id}/channels/{channel_id}/role-overrides"
+      get : "/api/v1/overrides/roles"
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags : "Overrides"
       summary : "Get role overrides"
-      description : "Retrieves all role-based permission overrides for the specified channel."
+      description : "Retrieves all role-based permission overrides for the specified resource."
       security: {
         security_requirement: {
           key: "BearerAuth";
@@ -389,15 +389,15 @@ service MembershipService {
     };
   }
 
-  // GetUserOverrides retrieves user-specific permission overrides for a channel.
+  // GetUserOverrides retrieves user-specific permission overrides for a resource.
   rpc GetUserOverrides(GetUserOverridesRequest) returns (GetUserOverridesResponse) {
     option (google.api.http) = {
-      get : "/api/v1/guilds/{guild_id}/channels/{channel_id}/user-overrides"
+      get : "/api/v1/overrides/users"
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       tags : "Overrides"
       summary : "Get user overrides"
-      description : "Retrieves all user-specific permission overrides for the specified channel."
+      description : "Retrieves all user-specific permission overrides for the specified resource."
       security: {
         security_requirement: {
           key: "BearerAuth";
@@ -491,25 +491,25 @@ message Member {
   google.protobuf.Timestamp joined_at = 4;
 }
 
-// RoleOverride represents a channel-specific permission override for a role.
+// RoleOverride represents a resource-specific permission override for a role.
 message RoleOverride {
   // Role identifier.
   uint64 role_id = 1 [ (buf.validate.field).required = true ];
   // Permission name.
   string permission = 2 [ (buf.validate.field).required = true ];
-  // Resource path (typically the channel path).
+  // Resource path.
   string resource = 3 [ (buf.validate.field).required = true ];
   // Whether the permission is allowed (true) or denied (false).
   bool allow = 4 [ (buf.validate.field).required = true ];
 }
 
-// UserOverride represents a channel-specific permission override for a user.
+// UserOverride represents a resource-specific permission override for a user.
 message UserOverride {
   // User identifier.
   uint64 user_id = 1 [ (buf.validate.field).required = true ];
   // Permission name.
   string permission = 2 [ (buf.validate.field).required = true ];
-  // Resource path (typically the channel path).
+  // Resource path.
   string resource = 3 [ (buf.validate.field).required = true ];
   // Whether the permission is allowed (true) or denied (false).
   bool allow = 4 [ (buf.validate.field).required = true ];
@@ -756,61 +756,53 @@ message AcceptInviteResponse {
 // =====================
 
 message UpdateRoleOverridesRequest {
-  // Guild identifier.
-  uint64 guild_id = 1 [ (buf.validate.field).required = true ];
-  // Channel identifier.
-  uint64 channel_id = 2 [ (buf.validate.field).required = true ];
+  // Resource path.
+  string resource = 1 [ (buf.validate.field).required = true ];
   // List of role overrides (completely replaces existing overrides).
-  repeated RoleOverride overrides = 3;
+  repeated RoleOverride overrides = 2;
 }
 
 message UpdateRoleOverridesResponse {
-  // Channel identifier.
-  uint64 channel_id = 1;
+  // Resource path.
+  string resource = 1;
   // Updated list of role overrides.
   repeated RoleOverride overrides = 2;
 }
 
 message UpdateUserOverridesRequest {
-  // Guild identifier.
-  uint64 guild_id = 1 [ (buf.validate.field).required = true ];
-  // Channel identifier.
-  uint64 channel_id = 2 [ (buf.validate.field).required = true ];
+  // Resource path.
+  string resource = 1 [ (buf.validate.field).required = true ];
   // List of user overrides (completely replaces existing overrides).
-  repeated UserOverride overrides = 3;
+  repeated UserOverride overrides = 2;
 }
 
 message UpdateUserOverridesResponse {
-  // Channel identifier.
-  uint64 channel_id = 1;
+  // Resource path.
+  string resource = 1;
   // Updated list of user overrides.
   repeated UserOverride overrides = 2;
 }
 
 message GetRoleOverridesRequest {
-  // Guild identifier.
-  uint64 guild_id = 1 [ (buf.validate.field).required = true ];
-  // Channel identifier.
-  uint64 channel_id = 2 [ (buf.validate.field).required = true ];
+  // Resource path.
+  string resource = 1 [ (buf.validate.field).required = true ];
 }
 
 message GetRoleOverridesResponse {
-  // Channel identifier.
-  uint64 channel_id = 1;
+  // Resource path.
+  string resource = 1;
   // List of role overrides.
   repeated RoleOverride overrides = 2;
 }
 
 message GetUserOverridesRequest {
-  // Guild identifier.
-  uint64 guild_id = 1 [ (buf.validate.field).required = true ];
-  // Channel identifier.
-  uint64 channel_id = 2 [ (buf.validate.field).required = true ];
+  // Resource path.
+  string resource = 1 [ (buf.validate.field).required = true ];
 }
 
 message GetUserOverridesResponse {
-  // Channel identifier.
-  uint64 channel_id = 1;
+  // Resource path.
+  string resource = 1;
   // List of user overrides.
   repeated UserOverride overrides = 2;
 }

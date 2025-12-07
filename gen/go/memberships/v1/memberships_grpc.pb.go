@@ -76,13 +76,13 @@ type MembershipServiceClient interface {
 	CreateInvite(ctx context.Context, in *CreateInviteRequest, opts ...grpc.CallOption) (*CreateInviteResponse, error)
 	// AcceptInvite accepts an invite using the provided token and adds the user to the guild.
 	AcceptInvite(ctx context.Context, in *AcceptInviteRequest, opts ...grpc.CallOption) (*AcceptInviteResponse, error)
-	// UpdateRoleOverrides completely replaces role-based permission overrides for a channel.
+	// UpdateRoleOverrides completely replaces role-based permission overrides for a resource.
 	UpdateRoleOverrides(ctx context.Context, in *UpdateRoleOverridesRequest, opts ...grpc.CallOption) (*UpdateRoleOverridesResponse, error)
-	// UpdateUserOverrides completely replaces user-specific permission overrides for a channel.
+	// UpdateUserOverrides completely replaces user-specific permission overrides for a resource.
 	UpdateUserOverrides(ctx context.Context, in *UpdateUserOverridesRequest, opts ...grpc.CallOption) (*UpdateUserOverridesResponse, error)
-	// GetRoleOverrides retrieves role-based permission overrides for a channel.
+	// GetRoleOverrides retrieves role-based permission overrides for a resource.
 	GetRoleOverrides(ctx context.Context, in *GetRoleOverridesRequest, opts ...grpc.CallOption) (*GetRoleOverridesResponse, error)
-	// GetUserOverrides retrieves user-specific permission overrides for a channel.
+	// GetUserOverrides retrieves user-specific permission overrides for a resource.
 	GetUserOverrides(ctx context.Context, in *GetUserOverridesRequest, opts ...grpc.CallOption) (*GetUserOverridesResponse, error)
 	// CheckPermission verifies if a user has the specified permission for a resource.
 	CheckPermission(ctx context.Context, in *CheckPermissionRequest, opts ...grpc.CallOption) (*CheckPermissionResponse, error)
@@ -342,13 +342,13 @@ type MembershipServiceServer interface {
 	CreateInvite(context.Context, *CreateInviteRequest) (*CreateInviteResponse, error)
 	// AcceptInvite accepts an invite using the provided token and adds the user to the guild.
 	AcceptInvite(context.Context, *AcceptInviteRequest) (*AcceptInviteResponse, error)
-	// UpdateRoleOverrides completely replaces role-based permission overrides for a channel.
+	// UpdateRoleOverrides completely replaces role-based permission overrides for a resource.
 	UpdateRoleOverrides(context.Context, *UpdateRoleOverridesRequest) (*UpdateRoleOverridesResponse, error)
-	// UpdateUserOverrides completely replaces user-specific permission overrides for a channel.
+	// UpdateUserOverrides completely replaces user-specific permission overrides for a resource.
 	UpdateUserOverrides(context.Context, *UpdateUserOverridesRequest) (*UpdateUserOverridesResponse, error)
-	// GetRoleOverrides retrieves role-based permission overrides for a channel.
+	// GetRoleOverrides retrieves role-based permission overrides for a resource.
 	GetRoleOverrides(context.Context, *GetRoleOverridesRequest) (*GetRoleOverridesResponse, error)
-	// GetUserOverrides retrieves user-specific permission overrides for a channel.
+	// GetUserOverrides retrieves user-specific permission overrides for a resource.
 	GetUserOverrides(context.Context, *GetUserOverridesRequest) (*GetUserOverridesResponse, error)
 	// CheckPermission verifies if a user has the specified permission for a resource.
 	CheckPermission(context.Context, *CheckPermissionRequest) (*CheckPermissionResponse, error)
