@@ -22,206 +22,6 @@
     "application/json"
   ],
   "paths": {
-    "/api/v1/guilds/{guildId}/channels/{channelId}/role-overrides": {
-      "get": {
-        "summary": "Get role overrides",
-        "description": "Retrieves all role-based permission overrides for the specified channel.",
-        "operationId": "MembershipService_GetRoleOverrides",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1GetRoleOverridesResponse"
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "guildId",
-            "description": "Guild identifier.",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "format": "uint64"
-          },
-          {
-            "name": "channelId",
-            "description": "Channel identifier.",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "format": "uint64"
-          }
-        ],
-        "tags": [
-          "Overrides"
-        ],
-        "security": [
-          {
-            "BearerAuth": []
-          }
-        ]
-      },
-      "put": {
-        "summary": "Update role overrides",
-        "description": "Completely replaces all role-based permission overrides for the channel. Empty list removes all overrides.",
-        "operationId": "MembershipService_UpdateRoleOverrides",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1UpdateRoleOverridesResponse"
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "guildId",
-            "description": "Guild identifier.",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "format": "uint64"
-          },
-          {
-            "name": "channelId",
-            "description": "Channel identifier.",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "format": "uint64"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/MembershipServiceUpdateRoleOverridesBody"
-            }
-          }
-        ],
-        "tags": [
-          "Overrides"
-        ],
-        "security": [
-          {
-            "BearerAuth": []
-          }
-        ]
-      }
-    },
-    "/api/v1/guilds/{guildId}/channels/{channelId}/user-overrides": {
-      "get": {
-        "summary": "Get user overrides",
-        "description": "Retrieves all user-specific permission overrides for the specified channel.",
-        "operationId": "MembershipService_GetUserOverrides",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1GetUserOverridesResponse"
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "guildId",
-            "description": "Guild identifier.",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "format": "uint64"
-          },
-          {
-            "name": "channelId",
-            "description": "Channel identifier.",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "format": "uint64"
-          }
-        ],
-        "tags": [
-          "Overrides"
-        ],
-        "security": [
-          {
-            "BearerAuth": []
-          }
-        ]
-      },
-      "put": {
-        "summary": "Update user overrides",
-        "description": "Completely replaces all user-specific permission overrides for the channel. Empty list removes all overrides.",
-        "operationId": "MembershipService_UpdateUserOverrides",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1UpdateUserOverridesResponse"
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "guildId",
-            "description": "Guild identifier.",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "format": "uint64"
-          },
-          {
-            "name": "channelId",
-            "description": "Channel identifier.",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "format": "uint64"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/MembershipServiceUpdateUserOverridesBody"
-            }
-          }
-        ],
-        "tags": [
-          "Overrides"
-        ],
-        "security": [
-          {
-            "BearerAuth": []
-          }
-        ]
-      }
-    },
     "/api/v1/guilds/{guildId}/invites": {
       "post": {
         "summary": "Create invite link",
@@ -899,6 +699,156 @@
         ]
       }
     },
+    "/api/v1/overrides/roles": {
+      "get": {
+        "summary": "Get role overrides",
+        "description": "Retrieves all role-based permission overrides for the specified resource.",
+        "operationId": "MembershipService_GetRoleOverrides",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1GetRoleOverridesResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "resource",
+            "description": "Resource path.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Overrides"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      },
+      "put": {
+        "summary": "Update role overrides",
+        "description": "Completely replaces all role-based permission overrides for the resource. Empty list removes all overrides.",
+        "operationId": "MembershipService_UpdateRoleOverrides",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1UpdateRoleOverridesResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1UpdateRoleOverridesRequest"
+            }
+          }
+        ],
+        "tags": [
+          "Overrides"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/overrides/users": {
+      "get": {
+        "summary": "Get user overrides",
+        "description": "Retrieves all user-specific permission overrides for the specified resource.",
+        "operationId": "MembershipService_GetUserOverrides",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1GetUserOverridesResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "resource",
+            "description": "Resource path.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Overrides"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      },
+      "put": {
+        "summary": "Update user overrides",
+        "description": "Completely replaces all user-specific permission overrides for the resource. Empty list removes all overrides.",
+        "operationId": "MembershipService_UpdateUserOverrides",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1UpdateUserOverridesResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1UpdateUserOverridesRequest"
+            }
+          }
+        ],
+        "tags": [
+          "Overrides"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
     "/api/v1/permissions": {
       "get": {
         "summary": "Get all available permissions",
@@ -1118,32 +1068,6 @@
         }
       }
     },
-    "MembershipServiceUpdateRoleOverridesBody": {
-      "type": "object",
-      "properties": {
-        "overrides": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "$ref": "#/definitions/v1RoleOverride"
-          },
-          "description": "List of role overrides (completely replaces existing overrides)."
-        }
-      }
-    },
-    "MembershipServiceUpdateUserOverridesBody": {
-      "type": "object",
-      "properties": {
-        "overrides": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "$ref": "#/definitions/v1UserOverride"
-          },
-          "description": "List of user overrides (completely replaces existing overrides)."
-        }
-      }
-    },
     "protobufAny": {
       "type": "object",
       "properties": {
@@ -1315,10 +1239,9 @@
     "v1GetRoleOverridesResponse": {
       "type": "object",
       "properties": {
-        "channelId": {
+        "resource": {
           "type": "string",
-          "format": "uint64",
-          "description": "Channel identifier."
+          "description": "Resource path."
         },
         "overrides": {
           "type": "array",
@@ -1360,10 +1283,9 @@
     "v1GetUserOverridesResponse": {
       "type": "object",
       "properties": {
-        "channelId": {
+        "resource": {
           "type": "string",
-          "format": "uint64",
-          "description": "Channel identifier."
+          "description": "Resource path."
         },
         "overrides": {
           "type": "array",
@@ -1530,14 +1452,14 @@
         },
         "resource": {
           "type": "string",
-          "description": "Resource path (typically the channel path)."
+          "description": "Resource path."
         },
         "allow": {
           "type": "boolean",
           "description": "Whether the permission is allowed (true) or denied (false)."
         }
       },
-      "description": "RoleOverride represents a channel-specific permission override for a role."
+      "description": "RoleOverride represents a resource-specific permission override for a role."
     },
     "v1UpdateMemberRolesResponse": {
       "type": "object",
@@ -1548,13 +1470,29 @@
         }
       }
     },
+    "v1UpdateRoleOverridesRequest": {
+      "type": "object",
+      "properties": {
+        "resource": {
+          "type": "string",
+          "description": "Resource path."
+        },
+        "overrides": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1RoleOverride"
+          },
+          "description": "List of role overrides (completely replaces existing overrides)."
+        }
+      }
+    },
     "v1UpdateRoleOverridesResponse": {
       "type": "object",
       "properties": {
-        "channelId": {
+        "resource": {
           "type": "string",
-          "format": "uint64",
-          "description": "Channel identifier."
+          "description": "Resource path."
         },
         "overrides": {
           "type": "array",
@@ -1575,13 +1513,29 @@
         }
       }
     },
+    "v1UpdateUserOverridesRequest": {
+      "type": "object",
+      "properties": {
+        "resource": {
+          "type": "string",
+          "description": "Resource path."
+        },
+        "overrides": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1UserOverride"
+          },
+          "description": "List of user overrides (completely replaces existing overrides)."
+        }
+      }
+    },
     "v1UpdateUserOverridesResponse": {
       "type": "object",
       "properties": {
-        "channelId": {
+        "resource": {
           "type": "string",
-          "format": "uint64",
-          "description": "Channel identifier."
+          "description": "Resource path."
         },
         "overrides": {
           "type": "array",
@@ -1607,14 +1561,14 @@
         },
         "resource": {
           "type": "string",
-          "description": "Resource path (typically the channel path)."
+          "description": "Resource path."
         },
         "allow": {
           "type": "boolean",
           "description": "Whether the permission is allowed (true) or denied (false)."
         }
       },
-      "description": "UserOverride represents a channel-specific permission override for a user."
+      "description": "UserOverride represents a resource-specific permission override for a user."
     }
   },
   "securityDefinitions": {
