@@ -1,0 +1,319 @@
+openapi: 3.0.3
+info:
+  title: BFF API
+  description: Backend For Frontend API
+  version: 0.0.1
+servers:
+  - url: https://api.agoraproject.ru
+    description: Production server
+  - url: http://localhost:8080
+    description: Local development server
+tags:
+  - name: GuildService
+    description: Проксирование запросов в Guild Service
+paths:
+  /api/v1/guild/{id}:
+    get:
+      tags:
+        - GuildService
+      summary: Получить гильдию по ID
+      description: Проксирует запрос в guild-service для получения информации о гильдии
+      operationId: getGuildById
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID гильдии
+          schema:
+            type: string
+            format: uint64
+            minimum: 1
+      responses:
+        '200':
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Guild'
+        '400':
+          description: Неверный запрос
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Гильдия не найдена
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    patch:
+      tags:
+        - GuildService
+      summary: Обновить гильдию
+      description: Проксирует запрос в guild-service для обновления информации о гильдии
+      operationId: updateGuild
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID гильдии
+          schema:
+            type: string
+            format: uint64
+            minimum: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateGuildRequest'
+      responses:
+        '200':
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Guild'
+        '400':
+          description: Неверный запрос
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Гильдия не найдена
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    delete:
+      tags:
+        - GuildService
+      summary: Удалить гильдию
+      description: Проксирует запрос в guild-service для удаления гильдии
+      operationId: deleteGuild
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID гильдии
+          schema:
+            type: string
+            format: uint64
+            minimum: 1
+      responses:
+        '200':
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteGuildResponse'
+        '400':
+          description: Неверный запрос
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Гильдия не найдена
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/guild:
+    post:
+      tags:
+        - GuildService
+      summary: Создать гильдию
+      description: Проксирует запрос в guild-service для создания новой гильдии
+      operationId: createGuild
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateGuildRequest'
+      responses:
+        '200':
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Guild'
+        '400':
+          description: Неверный запрос
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/guild/page/{page}:
+    get:
+      tags:
+        - GuildService
+      summary: Получить публичные гильдии
+      description: Проксирует запрос в guild-service для получения списка публичных гильдий (лимит 20 на странице)
+      operationId: getPublicGuilds
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: page
+          in: path
+          required: true
+          description: Номер страницы
+          schema:
+            type: string
+            format: uint64
+            minimum: 1
+      responses:
+        '200':
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetPublicGuildsPageResponse'
+        '400':
+          description: Неверный запрос
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JWT Bearer token для аутентификации
+  schemas:
+    Guild:
+      type: object
+      required:
+        - id
+        - ownerId
+        - title
+        - visibility
+      properties:
+        id:
+          type: string
+          format: uint64
+          description: ID гильдии
+          minimum: 1
+        ownerId:
+          type: string
+          format: uint64
+          description: ID владельца гильдии
+          minimum: 1
+        title:
+          type: string
+          description: Название гильдии
+        description:
+          type: string
+          description: Описание гильдии
+        avatarUrl:
+          type: string
+          format: uri
+          description: URL аватара гильдии
+          nullable: true
+        wallpaperUrl:
+          type: string
+          format: uri
+          description: URL обоев гильдии
+          nullable: true
+        visibility:
+          type: string
+          enum:
+            - PUBLIC
+            - PRIVATE
+          description: Видимость гильдии
+    CreateGuildRequest:
+      type: object
+      required:
+        - title
+      properties:
+        title:
+          type: string
+          description: Название гильдии
+        description:
+          type: string
+          description: Описание гильдии
+          nullable: true
+        visibility:
+          type: string
+          enum:
+            - PUBLIC
+            - PRIVATE
+          description: Видимость гильдии
+          nullable: true
+    UpdateGuildRequest:
+      type: object
+      properties:
+        title:
+          type: string
+          description: Название гильдии
+          nullable: true
+        description:
+          type: string
+          description: Описание гильдии
+          nullable: true
+        avatarUrl:
+          type: string
+          format: uri
+          description: URL аватара гильдии
+          nullable: true
+        wallpaperUrl:
+          type: string
+          format: uri
+          description: URL обоев гильдии
+          nullable: true
+        visibility:
+          type: string
+          enum:
+            - PUBLIC
+            - PRIVATE
+          description: Видимость гильдии
+          nullable: true
+    DeleteGuildResponse:
+      type: object
+      description: Пустой ответ при успешном удалении
+    GetPublicGuildsPageResponse:
+      type: object
+      properties:
+        guilds:
+          type: array
+          items:
+            $ref: '#/components/schemas/Guild'
+          description: Список гильдий
+        totalPages:
+          type: string
+          format: uint64
+          description: Общее количество страниц
+        currentPage:
+          type: string
+          format: uint64
+          description: Текущая страница
+    Error:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: string
+          description: Код ошибки
+        message:
+          type: string
+          description: Сообщение об ошибке
