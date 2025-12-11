@@ -27,7 +27,7 @@ paths:
           required: true
           description: ID гильдии
           schema:
-            type: string
+            type: integer
             format: uint64
             minimum: 1
       responses:
@@ -64,7 +64,7 @@ paths:
           required: true
           description: ID гильдии
           schema:
-            type: string
+            type: integer
             format: uint64
             minimum: 1
       requestBody:
@@ -107,7 +107,7 @@ paths:
           required: true
           description: ID гильдии
           schema:
-            type: string
+            type: integer
             format: uint64
             minimum: 1
       responses:
@@ -174,7 +174,7 @@ paths:
           required: true
           description: Номер страницы
           schema:
-            type: string
+            type: integer
             format: uint64
             minimum: 1
       responses:
@@ -184,6 +184,52 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetPublicGuildsPageResponse'
+        '400':
+          description: Неверный запрос
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/guilds/my:
+    get:
+      tags:
+        - GuildService
+      summary: Получить мои гильдии
+      description: Проксирует запрос в guild-service для получения списка гильдий текущего пользователя
+      operationId: getMyGuilds
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: limit
+          in: query
+          required: false
+          description: Максимальное количество гильдий для возврата
+          schema:
+            type: integer
+            format: uint64
+            minimum: 1
+        - name: offset
+          in: query
+          required: false
+          description: Смещение для пагинации
+          schema:
+            type: integer
+            format: uint64
+            minimum: 0
+        - name: search
+          in: query
+          required: false
+          description: Поисковый запрос для фильтрации гильдий
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetMyGuildsResponse'
         '400':
           description: Неверный запрос
           content:
@@ -208,12 +254,12 @@ components:
         - visibility
       properties:
         id:
-          type: string
+          type: integer
           format: uint64
           description: ID гильдии
           minimum: 1
         ownerId:
-          type: string
+          type: integer
           format: uint64
           description: ID владельца гильдии
           minimum: 1
@@ -292,19 +338,27 @@ components:
     GetPublicGuildsPageResponse:
       type: object
       properties:
-        guilds:
+        items:
           type: array
           items:
             $ref: '#/components/schemas/Guild'
           description: Список гильдий
-        totalPages:
-          type: string
+        total:
+          type: integer
           format: uint64
-          description: Общее количество страниц
-        currentPage:
-          type: string
+          description: Общее количество гильдий
+    GetMyGuildsResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Guild'
+          description: Список гильдий текущего пользователя
+        total:
+          type: integer
           format: uint64
-          description: Текущая страница
+          description: Общее количество гильдий
     Error:
       type: object
       required:
