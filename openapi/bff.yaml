@@ -447,13 +447,13 @@ paths:
           description: Максимальное количество пользователей
           schema:
             type: integer
-            format: int32
+            format: uint64
         - name: offset
           in: query
           description: Смещение для пагинации
           schema:
             type: integer
-            format: int32
+            format: uint64
         - name: search
           in: query
           description: Поисковый запрос
@@ -721,13 +721,13 @@ paths:
           description: Максимальное количество ролей
           schema:
             type: integer
-            format: int32
+            format: uint64
         - name: offset
           in: query
           description: Смещение для пагинации
           schema:
             type: integer
-            format: int32
+            format: uint64
         - name: query
           in: query
           description: Поисковый запрос по названию роли
@@ -949,13 +949,13 @@ paths:
           description: Максимальное количество участников
           schema:
             type: integer
-            format: int32
+            format: uint64
         - name: offset
           in: query
           description: Смещение для пагинации
           schema:
             type: integer
-            format: int32
+            format: uint64
         - name: query
           in: query
           description: Поисковый запрос по имени пользователя
@@ -1173,13 +1173,13 @@ paths:
           description: Максимальное количество гильдий
           schema:
             type: integer
-            format: int32
+            format: uint64
         - name: offset
           in: query
           description: Смещение для пагинации
           schema:
             type: integer
-            format: int32
+            format: uint64
       responses:
         '200':
           description: Успешный ответ
@@ -2033,7 +2033,7 @@ components:
           description: Список ролей
         total:
           type: integer
-          format: int32
+          format: uint64
           description: Общее количество ролей
 
     GetRoleResponse:
@@ -2143,7 +2143,7 @@ components:
           description: Список участников
         total:
           type: integer
-          format: int32
+          format: uint64
           description: Общее количество участников
 
     UpdateMemberRolesRequest:
@@ -2188,7 +2188,7 @@ components:
           description: Список ID гильдий
         total:
           type: integer
-          format: int32
+          format: uint64
           description: Общее количество гильдий
 
     CreateInviteRequest:
@@ -2232,11 +2232,11 @@ components:
           description: Дата истечения приглашения
         max_uses:
           type: integer
-          format: int32
+          format: uint64
           description: Максимальное количество использований (0 - без ограничений)
         uses:
           type: integer
-          format: int32
+          format: uint64
           description: Текущее количество использований
         created_at:
           type: string

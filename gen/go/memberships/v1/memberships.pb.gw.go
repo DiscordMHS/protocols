@@ -289,6 +289,8 @@ func local_request_MembershipService_DeleteRole_0(ctx context.Context, marshaler
 	return msg, metadata, err
 }
 
+var filter_MembershipService_InitRoles_0 = &utilities.DoubleArray{Encoding: map[string]int{"guild_id": 0}, Base: []int{1, 1, 0}, Check: []int{0, 1, 2}}
+
 func request_MembershipService_InitRoles_0(ctx context.Context, marshaler runtime.Marshaler, client MembershipServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
 		protoReq InitRolesRequest
@@ -302,6 +304,12 @@ func request_MembershipService_InitRoles_0(ctx context.Context, marshaler runtim
 	protoReq.GuildId, err = runtime.Uint64(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "guild_id", err)
+	}
+	if err := req.ParseForm(); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_MembershipService_InitRoles_0); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 	msg, err := client.InitRoles(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
@@ -320,6 +328,12 @@ func local_request_MembershipService_InitRoles_0(ctx context.Context, marshaler 
 	protoReq.GuildId, err = runtime.Uint64(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "guild_id", err)
+	}
+	if err := req.ParseForm(); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_MembershipService_InitRoles_0); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 	msg, err := server.InitRoles(ctx, &protoReq)
 	return msg, metadata, err
@@ -713,6 +727,8 @@ func local_request_MembershipService_CreateInvite_0(ctx context.Context, marshal
 	return msg, metadata, err
 }
 
+var filter_MembershipService_AcceptInvite_0 = &utilities.DoubleArray{Encoding: map[string]int{"token": 0}, Base: []int{1, 1, 0}, Check: []int{0, 1, 2}}
+
 func request_MembershipService_AcceptInvite_0(ctx context.Context, marshaler runtime.Marshaler, client MembershipServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
 		protoReq AcceptInviteRequest
@@ -726,6 +742,12 @@ func request_MembershipService_AcceptInvite_0(ctx context.Context, marshaler run
 	protoReq.Token, err = runtime.String(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "token", err)
+	}
+	if err := req.ParseForm(); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_MembershipService_AcceptInvite_0); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 	msg, err := client.AcceptInvite(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
@@ -744,6 +766,12 @@ func local_request_MembershipService_AcceptInvite_0(ctx context.Context, marshal
 	protoReq.Token, err = runtime.String(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "token", err)
+	}
+	if err := req.ParseForm(); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_MembershipService_AcceptInvite_0); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 	msg, err := server.AcceptInvite(ctx, &protoReq)
 	return msg, metadata, err
