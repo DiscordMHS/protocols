@@ -197,6 +197,34 @@ service ChannelService {
     };
   };
 
+  rpc InitDefaultChannels(InitDefaultChannelsRequest)
+  returns (InitDefaultChannelsResponse) {
+    option (google.api.http) = {
+      post : "/api/v1/channels/init"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags : "ChannelService"
+      summary : "Initialize default channels"
+      security: {
+        security_requirement: {
+          key: "BearerAuth";
+          value: {}
+        }
+      }
+    };
+  }
+
+}
+
+message InitDefaultChannelsRequest {
+  uint64 guild_id = 1 [
+    (buf.validate.field).uint64.gt = 0
+  ];
+}
+
+message InitDefaultChannelsResponse {
+  repeated TextChannel text_channels = 1;
+  repeated VoiceChannel voice_channels = 2;
 }
 
 // region Text Channel

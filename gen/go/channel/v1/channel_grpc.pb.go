@@ -29,6 +29,7 @@ const (
 	ChannelService_CreateVoiceChannel_FullMethodName       = "/channel.v1.ChannelService/CreateVoiceChannel"
 	ChannelService_UpdateVoiceChannel_FullMethodName       = "/channel.v1.ChannelService/UpdateVoiceChannel"
 	ChannelService_DeleteVoiceChannel_FullMethodName       = "/channel.v1.ChannelService/DeleteVoiceChannel"
+	ChannelService_InitDefaultChannels_FullMethodName      = "/channel.v1.ChannelService/InitDefaultChannels"
 )
 
 // ChannelServiceClient is the client API for ChannelService service.
@@ -45,6 +46,7 @@ type ChannelServiceClient interface {
 	CreateVoiceChannel(ctx context.Context, in *CreateVoiceChannelRequest, opts ...grpc.CallOption) (*CreateVoiceChannelResponse, error)
 	UpdateVoiceChannel(ctx context.Context, in *UpdateVoiceChannelRequest, opts ...grpc.CallOption) (*UpdateVoiceChannelResponse, error)
 	DeleteVoiceChannel(ctx context.Context, in *DeleteVoiceChannelRequest, opts ...grpc.CallOption) (*DeleteVoiceChannelResponse, error)
+	InitDefaultChannels(ctx context.Context, in *InitDefaultChannelsRequest, opts ...grpc.CallOption) (*InitDefaultChannelsResponse, error)
 }
 
 type channelServiceClient struct {
@@ -155,6 +157,16 @@ func (c *channelServiceClient) DeleteVoiceChannel(ctx context.Context, in *Delet
 	return out, nil
 }
 
+func (c *channelServiceClient) InitDefaultChannels(ctx context.Context, in *InitDefaultChannelsRequest, opts ...grpc.CallOption) (*InitDefaultChannelsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(InitDefaultChannelsResponse)
+	err := c.cc.Invoke(ctx, ChannelService_InitDefaultChannels_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ChannelServiceServer is the server API for ChannelService service.
 // All implementations must embed UnimplementedChannelServiceServer
 // for forward compatibility.
@@ -169,6 +181,7 @@ type ChannelServiceServer interface {
 	CreateVoiceChannel(context.Context, *CreateVoiceChannelRequest) (*CreateVoiceChannelResponse, error)
 	UpdateVoiceChannel(context.Context, *UpdateVoiceChannelRequest) (*UpdateVoiceChannelResponse, error)
 	DeleteVoiceChannel(context.Context, *DeleteVoiceChannelRequest) (*DeleteVoiceChannelResponse, error)
+	InitDefaultChannels(context.Context, *InitDefaultChannelsRequest) (*InitDefaultChannelsResponse, error)
 	mustEmbedUnimplementedChannelServiceServer()
 }
 
@@ -208,6 +221,9 @@ func (UnimplementedChannelServiceServer) UpdateVoiceChannel(context.Context, *Up
 }
 func (UnimplementedChannelServiceServer) DeleteVoiceChannel(context.Context, *DeleteVoiceChannelRequest) (*DeleteVoiceChannelResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteVoiceChannel not implemented")
+}
+func (UnimplementedChannelServiceServer) InitDefaultChannels(context.Context, *InitDefaultChannelsRequest) (*InitDefaultChannelsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method InitDefaultChannels not implemented")
 }
 func (UnimplementedChannelServiceServer) mustEmbedUnimplementedChannelServiceServer() {}
 func (UnimplementedChannelServiceServer) testEmbeddedByValue()                        {}
@@ -410,6 +426,24 @@ func _ChannelService_DeleteVoiceChannel_Handler(srv interface{}, ctx context.Con
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ChannelService_InitDefaultChannels_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(InitDefaultChannelsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ChannelServiceServer).InitDefaultChannels(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ChannelService_InitDefaultChannels_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ChannelServiceServer).InitDefaultChannels(ctx, req.(*InitDefaultChannelsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // ChannelService_ServiceDesc is the grpc.ServiceDesc for ChannelService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -456,6 +490,10 @@ var ChannelService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteVoiceChannel",
 			Handler:    _ChannelService_DeleteVoiceChannel_Handler,
+		},
+		{
+			MethodName: "InitDefaultChannels",
+			Handler:    _ChannelService_InitDefaultChannels_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

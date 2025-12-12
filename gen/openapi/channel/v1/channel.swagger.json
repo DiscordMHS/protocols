@@ -22,6 +22,43 @@
     "application/json"
   ],
   "paths": {
+    "/api/v1/channels/init": {
+      "post": {
+        "summary": "Initialize default channels",
+        "operationId": "ChannelService_InitDefaultChannels",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1InitDefaultChannelsResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "guildId",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "uint64"
+          }
+        ],
+        "tags": [
+          "ChannelService"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
     "/api/v1/textchannel": {
       "post": {
         "summary": "Create text channel",
@@ -578,6 +615,25 @@
       "properties": {
         "channel": {
           "$ref": "#/definitions/v1VoiceChannel"
+        }
+      }
+    },
+    "v1InitDefaultChannelsResponse": {
+      "type": "object",
+      "properties": {
+        "textChannels": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1TextChannel"
+          }
+        },
+        "voiceChannels": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1VoiceChannel"
+          }
         }
       }
     },
