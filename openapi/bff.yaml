@@ -11,6 +11,12 @@ servers:
 tags:
   - name: GuildService
     description: Проксирование запросов в Guild Service
+  - name: AuthService
+    description: Проксирование запросов в Auth Service
+  - name: UserService
+    description: Проксирование запросов в User Service
+  - name: MembershipService
+    description: Проксирование запросов в Membership Service
 paths:
   /api/v1/guild/{id}:
     get:
@@ -191,6 +197,1186 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
 
+  # =====================
+  # Auth Service
+  # =====================
+
+  /api/v1/auth/register:
+    post:
+      tags:
+        - AuthService
+      summary: Регистрация нового пользователя
+      description: Проксирует запрос в auth-service для регистрации нового пользователя
+      operationId: register
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterRequest'
+      responses:
+        '200':
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RegisterResponse'
+        '400':
+          description: Неверный запрос
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/auth/login:
+    post:
+      tags:
+        - AuthService
+      summary: Вход пользователя
+      description: Проксирует запрос в auth-service для входа и получения JWT токенов
+      operationId: login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      responses:
+        '200':
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+        '400':
+          description: Неверный запрос
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/auth/refresh:
+    post:
+      tags:
+        - AuthService
+      summary: Обновить JWT токены
+      description: Проксирует запрос в auth-service для обновления access токена по refresh токену
+      operationId: refresh
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RefreshRequest'
+      responses:
+        '200':
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RefreshResponse'
+        '400':
+          description: Неверный запрос
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/auth/verify-email:
+    get:
+      tags:
+        - AuthService
+      summary: Верификация email
+      description: Проксирует запрос в auth-service для верификации email по токену
+      operationId: verifyEmail
+      parameters:
+        - name: token
+          in: query
+          required: true
+          description: Токен верификации
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VerifyEmailResponse'
+        '400':
+          description: Неверный запрос
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/auth/forgot-password:
+    post:
+      tags:
+        - AuthService
+      summary: Забыли пароль
+      description: Проксирует запрос в auth-service для отправки письма для сброса пароля
+      operationId: forgotPassword
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ForgotPasswordRequest'
+      responses:
+        '200':
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForgotPasswordResponse'
+        '400':
+          description: Неверный запрос
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/auth/reset-password:
+    post:
+      tags:
+        - AuthService
+      summary: Сброс пароля
+      description: Проксирует запрос в auth-service для установки нового пароля по токену
+      operationId: resetPassword
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResetPasswordRequest'
+      responses:
+        '200':
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResetPasswordResponse'
+        '400':
+          description: Неверный запрос
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/auth/me:
+    get:
+      tags:
+        - AuthService
+      summary: Получить текущего пользователя
+      description: Проксирует запрос в auth-service для получения информации о текущем аутентифицированном пользователе
+      operationId: getMe
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetMeResponse'
+
+  # =====================
+  # User Service
+  # =====================
+
+  /api/v1/users:
+    get:
+      tags:
+        - UserService
+      summary: Список пользователей
+      description: Проксирует запрос в auth-service для получения списка всех пользователей с пагинацией
+      operationId: listUsers
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: limit
+          in: query
+          description: Максимальное количество пользователей
+          schema:
+            type: integer
+            format: int32
+        - name: offset
+          in: query
+          description: Смещение для пагинации
+          schema:
+            type: integer
+            format: int32
+        - name: search
+          in: query
+          description: Поисковый запрос
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListUsersResponse'
+        '400':
+          description: Неверный запрос
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    post:
+      tags:
+        - UserService
+      summary: Создать пользователя
+      description: Проксирует запрос в auth-service для создания нового пользователя (только для администраторов)
+      operationId: createUser
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUserRequest'
+      responses:
+        '200':
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateUserResponse'
+        '400':
+          description: Неверный запрос
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/users/{id}:
+    get:
+      tags:
+        - UserService
+      summary: Получить пользователя по ID
+      description: Проксирует запрос в auth-service для получения информации о пользователе по ID
+      operationId: getUser
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID пользователя
+          schema:
+            type: string
+            format: uint64
+            minimum: 1
+      responses:
+        '200':
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetUserResponse'
+        '400':
+          description: Неверный запрос
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Пользователь не найден
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    put:
+      tags:
+        - UserService
+      summary: Обновить пользователя
+      description: Проксирует запрос в auth-service для обновления информации о пользователе
+      operationId: updateUser
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID пользователя
+          schema:
+            type: string
+            format: uint64
+            minimum: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUserRequest'
+      responses:
+        '200':
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateUserResponse'
+        '400':
+          description: Неверный запрос
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Пользователь не найден
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    delete:
+      tags:
+        - UserService
+      summary: Удалить пользователя
+      description: Проксирует запрос в auth-service для мягкого удаления пользователя
+      operationId: deleteUser
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID пользователя
+          schema:
+            type: string
+            format: uint64
+            minimum: 1
+      responses:
+        '200':
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteUserResponse'
+        '400':
+          description: Неверный запрос
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Пользователь не найден
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/users/{id}/change-password:
+    post:
+      tags:
+        - UserService
+      summary: Изменить пароль пользователя
+      description: Проксирует запрос в auth-service для изменения пароля пользователя
+      operationId: changePassword
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID пользователя
+          schema:
+            type: string
+            format: uint64
+            minimum: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChangePasswordRequest'
+      responses:
+        '200':
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChangePasswordResponse'
+        '400':
+          description: Неверный запрос
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  # =====================
+  # Membership Service
+  # =====================
+
+  /api/v1/guilds/{guild_id}/roles:
+    post:
+      tags:
+        - MembershipService
+      summary: Создать роль
+      description: Проксирует запрос в membership-service для создания новой роли в гильдии
+      operationId: createRole
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: guild_id
+          in: path
+          required: true
+          description: ID гильдии
+          schema:
+            type: string
+            format: uint64
+            minimum: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateRoleRequest'
+      responses:
+        '200':
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateRoleResponse'
+        '400':
+          description: Неверный запрос
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    get:
+      tags:
+        - MembershipService
+      summary: Список ролей гильдии
+      description: Проксирует запрос в membership-service для получения списка ролей гильдии с пагинацией
+      operationId: listRoles
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: guild_id
+          in: path
+          required: true
+          description: ID гильдии
+          schema:
+            type: string
+            format: uint64
+            minimum: 1
+        - name: limit
+          in: query
+          description: Максимальное количество ролей
+          schema:
+            type: integer
+            format: int32
+        - name: offset
+          in: query
+          description: Смещение для пагинации
+          schema:
+            type: integer
+            format: int32
+        - name: query
+          in: query
+          description: Поисковый запрос по названию роли
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListRolesResponse'
+        '400':
+          description: Неверный запрос
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/guilds/{guild_id}/roles/{role_id}:
+    get:
+      tags:
+        - MembershipService
+      summary: Получить роль
+      description: Проксирует запрос в membership-service для получения информации о роли
+      operationId: getRole
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: guild_id
+          in: path
+          required: true
+          description: ID гильдии
+          schema:
+            type: string
+            format: uint64
+            minimum: 1
+        - name: role_id
+          in: path
+          required: true
+          description: ID роли
+          schema:
+            type: string
+            format: uint64
+            minimum: 1
+      responses:
+        '200':
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetRoleResponse'
+        '400':
+          description: Неверный запрос
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Роль не найдена
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    put:
+      tags:
+        - MembershipService
+      summary: Обновить роль
+      description: Проксирует запрос в membership-service для обновления роли и замены списка разрешений
+      operationId: updateRole
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: guild_id
+          in: path
+          required: true
+          description: ID гильдии
+          schema:
+            type: string
+            format: uint64
+            minimum: 1
+        - name: role_id
+          in: path
+          required: true
+          description: ID роли
+          schema:
+            type: string
+            format: uint64
+            minimum: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateRoleRequest'
+      responses:
+        '200':
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateRoleResponse'
+        '400':
+          description: Неверный запрос
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Роль не найдена
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    delete:
+      tags:
+        - MembershipService
+      summary: Удалить роль
+      description: Проксирует запрос в membership-service для удаления роли из гильдии
+      operationId: deleteRole
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: guild_id
+          in: path
+          required: true
+          description: ID гильдии
+          schema:
+            type: string
+            format: uint64
+            minimum: 1
+        - name: role_id
+          in: path
+          required: true
+          description: ID роли
+          schema:
+            type: string
+            format: uint64
+            minimum: 1
+      responses:
+        '200':
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteRoleResponse'
+        '400':
+          description: Неверный запрос
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Роль не найдена
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/guilds/{guild_id}/members:
+    post:
+      tags:
+        - MembershipService
+      summary: Добавить участника в гильдию
+      description: Проксирует запрос в membership-service для добавления пользователя в гильдию с указанными ролями
+      operationId: createMember
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: guild_id
+          in: path
+          required: true
+          description: ID гильдии
+          schema:
+            type: string
+            format: uint64
+            minimum: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateMemberRequest'
+      responses:
+        '200':
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateMemberResponse'
+        '400':
+          description: Неверный запрос
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    get:
+      tags:
+        - MembershipService
+      summary: Список участников гильдии
+      description: Проксирует запрос в membership-service для получения списка участников гильдии с пагинацией
+      operationId: listMembers
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: guild_id
+          in: path
+          required: true
+          description: ID гильдии
+          schema:
+            type: string
+            format: uint64
+            minimum: 1
+        - name: limit
+          in: query
+          description: Максимальное количество участников
+          schema:
+            type: integer
+            format: int32
+        - name: offset
+          in: query
+          description: Смещение для пагинации
+          schema:
+            type: integer
+            format: int32
+        - name: query
+          in: query
+          description: Поисковый запрос по имени пользователя
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListMembersResponse'
+        '400':
+          description: Неверный запрос
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/guilds/{guild_id}/join:
+    post:
+      tags:
+        - MembershipService
+      summary: Присоединиться к гильдии
+      description: Проксирует запрос в membership-service для присоединения текущего пользователя к гильдии
+      operationId: joinGuild
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: guild_id
+          in: path
+          required: true
+          description: ID гильдии
+          schema:
+            type: string
+            format: uint64
+            minimum: 1
+      responses:
+        '200':
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JoinGuildResponse'
+        '400':
+          description: Неверный запрос
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/guilds/{guild_id}/members/{user_id}:
+    get:
+      tags:
+        - MembershipService
+      summary: Получить участника гильдии
+      description: Проксирует запрос в membership-service для получения информации об участнике гильдии
+      operationId: getMember
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: guild_id
+          in: path
+          required: true
+          description: ID гильдии
+          schema:
+            type: string
+            format: uint64
+            minimum: 1
+        - name: user_id
+          in: path
+          required: true
+          description: ID пользователя
+          schema:
+            type: string
+            format: uint64
+            minimum: 1
+      responses:
+        '200':
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetMemberResponse'
+        '400':
+          description: Неверный запрос
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Участник не найден
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    delete:
+      tags:
+        - MembershipService
+      summary: Удалить участника из гильдии
+      description: Проксирует запрос в membership-service для удаления участника из гильдии
+      operationId: deleteMember
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: guild_id
+          in: path
+          required: true
+          description: ID гильдии
+          schema:
+            type: string
+            format: uint64
+            minimum: 1
+        - name: user_id
+          in: path
+          required: true
+          description: ID пользователя
+          schema:
+            type: string
+            format: uint64
+            minimum: 1
+      responses:
+        '200':
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteMemberResponse'
+        '400':
+          description: Неверный запрос
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Участник не найден
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/guilds/{guild_id}/members/{user_id}/roles:
+    put:
+      tags:
+        - MembershipService
+      summary: Обновить роли участника
+      description: Проксирует запрос в membership-service для замены списка ролей участника
+      operationId: updateMemberRoles
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: guild_id
+          in: path
+          required: true
+          description: ID гильдии
+          schema:
+            type: string
+            format: uint64
+            minimum: 1
+        - name: user_id
+          in: path
+          required: true
+          description: ID пользователя
+          schema:
+            type: string
+            format: uint64
+            minimum: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateMemberRolesRequest'
+      responses:
+        '200':
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateMemberRolesResponse'
+        '400':
+          description: Неверный запрос
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Участник не найден
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/users/{user_id}/guilds:
+    get:
+      tags:
+        - MembershipService
+      summary: Получить гильдии пользователя
+      description: Проксирует запрос в membership-service для получения списка гильдий, в которых состоит пользователь
+      operationId: getUserGuilds
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          description: ID пользователя
+          schema:
+            type: string
+            format: uint64
+            minimum: 1
+        - name: limit
+          in: query
+          description: Максимальное количество гильдий
+          schema:
+            type: integer
+            format: int32
+        - name: offset
+          in: query
+          description: Смещение для пагинации
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetUserGuildsResponse'
+        '400':
+          description: Неверный запрос
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/guilds/{guild_id}/invites:
+    post:
+      tags:
+        - MembershipService
+      summary: Создать приглашение
+      description: Проксирует запрос в membership-service для создания пригласительной ссылки для гильдии или канала
+      operationId: createInvite
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: guild_id
+          in: path
+          required: true
+          description: ID гильдии
+          schema:
+            type: string
+            format: uint64
+            minimum: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateInviteRequest'
+      responses:
+        '200':
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateInviteResponse'
+        '400':
+          description: Неверный запрос
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/invites/{token}/accept:
+    post:
+      tags:
+        - MembershipService
+      summary: Принять приглашение
+      description: Проксирует запрос в membership-service для принятия приглашения по токену
+      operationId: acceptInvite
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: token
+          in: path
+          required: true
+          description: Токен приглашения
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AcceptInviteResponse'
+        '400':
+          description: Неверный запрос
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/permissions/check:
+    post:
+      tags:
+        - MembershipService
+      summary: Проверить разрешение
+      description: Проксирует запрос в membership-service для проверки наличия разрешения у пользователя для ресурса
+      operationId: checkPermission
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CheckPermissionRequest'
+      responses:
+        '200':
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CheckPermissionResponse'
+        '400':
+          description: Неверный запрос
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/permissions:
+    get:
+      tags:
+        - MembershipService
+      summary: Получить все доступные разрешения
+      description: Проксирует запрос в membership-service для получения списка всех доступных разрешений в системе
+      operationId: getPermissions
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetPermissionsResponse'
+
+  /api/v1/overrides/roles:
+    put:
+      tags:
+        - MembershipService
+      summary: Обновить переопределения ролей
+      description: Проксирует запрос в membership-service для полной замены переопределений разрешений для ролей на ресурсе
+      operationId: updateRoleOverrides
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateRoleOverridesRequest'
+      responses:
+        '200':
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateRoleOverridesResponse'
+        '400':
+          description: Неверный запрос
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    get:
+      tags:
+        - MembershipService
+      summary: Получить переопределения ролей
+      description: Проксирует запрос в membership-service для получения переопределений разрешений для ролей на ресурсе
+      operationId: getRoleOverrides
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: resource
+          in: query
+          required: true
+          description: Путь к ресурсу
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetRoleOverridesResponse'
+        '400':
+          description: Неверный запрос
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/overrides/users:
+    put:
+      tags:
+        - MembershipService
+      summary: Обновить переопределения пользователей
+      description: Проксирует запрос в membership-service для полной замены переопределений разрешений для пользователей на ресурсе
+      operationId: updateUserOverrides
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUserOverridesRequest'
+      responses:
+        '200':
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateUserOverridesResponse'
+        '400':
+          description: Неверный запрос
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    get:
+      tags:
+        - MembershipService
+      summary: Получить переопределения пользователей
+      description: Проксирует запрос в membership-service для получения переопределений разрешений для пользователей на ресурсе
+      operationId: getUserOverrides
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: resource
+          in: query
+          required: true
+          description: Путь к ресурсу
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetUserOverridesResponse'
+        '400':
+          description: Неверный запрос
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
 components:
   securitySchemes:
     BearerAuth:
@@ -317,3 +1503,818 @@ components:
         message:
           type: string
           description: Сообщение об ошибке
+
+    # =====================
+    # Auth Service Schemas
+    # =====================
+
+    RegisterRequest:
+      type: object
+      required:
+        - email
+        - username
+        - password
+      properties:
+        email:
+          type: string
+          format: email
+          description: Email пользователя
+        username:
+          type: string
+          description: Имя пользователя
+        password:
+          type: string
+          minLength: 8
+          maxLength: 64
+          description: Пароль пользователя
+
+    RegisterResponse:
+      type: object
+      description: Пустой ответ при успешной регистрации
+
+    LoginRequest:
+      type: object
+      required:
+        - password
+      properties:
+        email:
+          type: string
+          format: email
+          description: 'Email пользователя (один из email или username)'
+        username:
+          type: string
+          minLength: 3
+          maxLength: 64
+          description: 'Имя пользователя (один из email или username)'
+        password:
+          type: string
+          minLength: 8
+          maxLength: 64
+          description: Пароль пользователя
+
+    LoginResponse:
+      type: object
+      properties:
+        tokens:
+          $ref: '#/components/schemas/Tokens'
+
+    Tokens:
+      type: object
+      properties:
+        access_token:
+          type: string
+          description: Access JWT токен
+        refresh_token:
+          type: string
+          description: Refresh JWT токен
+
+    RefreshRequest:
+      type: object
+      required:
+        - refresh_token
+      properties:
+        refresh_token:
+          type: string
+          description: Refresh токен
+
+    RefreshResponse:
+      type: object
+      properties:
+        tokens:
+          $ref: '#/components/schemas/Tokens'
+
+    VerifyEmailResponse:
+      type: object
+      description: Пустой ответ при успешной верификации
+
+    ForgotPasswordRequest:
+      type: object
+      required:
+        - email
+      properties:
+        email:
+          type: string
+          format: email
+          description: Email пользователя
+
+    ForgotPasswordResponse:
+      type: object
+      description: Пустой ответ при успешной отправке письма
+
+    ResetPasswordRequest:
+      type: object
+      required:
+        - token
+        - new_password
+      properties:
+        token:
+          type: string
+          description: Токен сброса пароля
+        new_password:
+          type: string
+          minLength: 8
+          maxLength: 64
+          description: Новый пароль
+
+    ResetPasswordResponse:
+      type: object
+      description: Пустой ответ при успешном сбросе пароля
+
+    GetMeResponse:
+      type: object
+      properties:
+        user:
+          $ref: '#/components/schemas/User'
+
+    # =====================
+    # User Service Schemas
+    # =====================
+
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uint64
+          description: ID пользователя
+        username:
+          type: string
+          description: Имя пользователя
+        email:
+          type: string
+          format: email
+          description: Email пользователя
+        email_verified:
+          type: boolean
+          description: Статус верификации email
+        first_name:
+          type: string
+          description: Имя
+        last_name:
+          type: string
+          description: Фамилия
+        second_name:
+          type: string
+          description: Отчество
+        about_me:
+          type: string
+          description: О себе
+        status:
+          type: string
+          description: Статус пользователя
+        avatar_url:
+          type: string
+          format: uri
+          description: URL аватара
+        is_deleted:
+          type: boolean
+          description: Удален ли пользователь
+        last_online:
+          type: string
+          format: date-time
+          description: Время последнего онлайна
+        created_at:
+          type: string
+          format: date-time
+          description: Дата создания
+        updated_at:
+          type: string
+          format: date-time
+          description: Дата обновления
+
+    ListUsersResponse:
+      type: object
+      properties:
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/User'
+          description: Список пользователей
+
+    GetUserResponse:
+      type: object
+      properties:
+        user:
+          $ref: '#/components/schemas/User'
+
+    CreateUserRequest:
+      type: object
+      required:
+        - email
+        - username
+        - password
+      properties:
+        email:
+          type: string
+          format: email
+          description: Email пользователя
+        username:
+          type: string
+          description: Имя пользователя
+        password:
+          type: string
+          description: Пароль пользователя
+        email_verified:
+          type: boolean
+          description: Статус верификации email
+        first_name:
+          type: string
+          description: Имя
+        last_name:
+          type: string
+          description: Фамилия
+        second_name:
+          type: string
+          description: Отчество
+        about_me:
+          type: string
+          description: О себе
+        status:
+          type: string
+          description: Статус пользователя
+        avatar_url:
+          type: string
+          format: uri
+          description: URL аватара
+        is_deleted:
+          type: boolean
+          description: Удален ли пользователь
+
+    CreateUserResponse:
+      type: object
+      properties:
+        user:
+          $ref: '#/components/schemas/User'
+
+    UpdateUserRequest:
+      type: object
+      required:
+        - id
+      properties:
+        id:
+          type: string
+          format: uint64
+          description: ID пользователя
+        username:
+          type: string
+          description: Имя пользователя
+        email:
+          type: string
+          format: email
+          description: Email пользователя
+        email_verified:
+          type: boolean
+          description: Статус верификации email
+        first_name:
+          type: string
+          description: Имя
+        last_name:
+          type: string
+          description: Фамилия
+        second_name:
+          type: string
+          description: Отчество
+        about_me:
+          type: string
+          description: О себе
+        status:
+          type: string
+          description: Статус пользователя
+        avatar_url:
+          type: string
+          format: uri
+          description: URL аватара
+        is_deleted:
+          type: boolean
+          description: Удален ли пользователь
+
+    UpdateUserResponse:
+      type: object
+      properties:
+        user:
+          $ref: '#/components/schemas/User'
+
+    ChangePasswordRequest:
+      type: object
+      required:
+        - id
+        - current_password
+        - new_password
+      properties:
+        id:
+          type: string
+          format: uint64
+          description: ID пользователя
+        current_password:
+          type: string
+          description: Текущий пароль
+        new_password:
+          type: string
+          description: Новый пароль
+
+    ChangePasswordResponse:
+      type: object
+      description: Пустой ответ при успешном изменении пароля
+
+    DeleteUserResponse:
+      type: object
+      description: Пустой ответ при успешном удалении
+
+    # =====================
+    # Membership Service Schemas
+    # =====================
+
+    Permission:
+      type: object
+      required:
+        - permission
+        - resource
+        - allow
+      properties:
+        permission:
+          type: string
+          description: Название разрешения (например, "view_channel", "send_messages")
+        resource:
+          type: string
+          description: Путь к ресурсу (например, "guild/{guild_id}/channel/{channel_id}")
+        allow:
+          type: boolean
+          description: Разрешить (true) или запретить (false)
+
+    Role:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uint64
+          description: ID роли
+        guild_id:
+          type: string
+          format: uint64
+          description: ID гильдии
+        title:
+          type: string
+          description: Название роли
+        icon:
+          type: string
+          format: uri
+          nullable: true
+          description: URL иконки роли
+        is_default:
+          type: boolean
+          description: Роль по умолчанию для новых участников
+        permissions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Permission'
+          description: Список разрешений роли
+
+    Member:
+      type: object
+      properties:
+        user_id:
+          type: string
+          format: uint64
+          description: ID пользователя
+        guild_id:
+          type: string
+          format: uint64
+          description: ID гильдии
+        role_ids:
+          type: array
+          items:
+            type: string
+            format: uint64
+          description: Список ID ролей участника
+        joined_at:
+          type: string
+          format: date-time
+          description: Дата присоединения к гильдии
+
+    RoleOverride:
+      type: object
+      required:
+        - role_id
+        - permission
+        - resource
+        - allow
+      properties:
+        role_id:
+          type: string
+          format: uint64
+          description: ID роли
+        permission:
+          type: string
+          description: Название разрешения
+        resource:
+          type: string
+          description: Путь к ресурсу
+        allow:
+          type: boolean
+          description: Разрешить (true) или запретить (false)
+
+    UserOverride:
+      type: object
+      required:
+        - user_id
+        - permission
+        - resource
+        - allow
+      properties:
+        user_id:
+          type: string
+          format: uint64
+          description: ID пользователя
+        permission:
+          type: string
+          description: Название разрешения
+        resource:
+          type: string
+          description: Путь к ресурсу
+        allow:
+          type: boolean
+          description: Разрешить (true) или запретить (false)
+
+    CreateRoleRequest:
+      type: object
+      required:
+        - guild_id
+        - title
+      properties:
+        guild_id:
+          type: string
+          format: uint64
+          description: ID гильдии
+        title:
+          type: string
+          description: Название роли
+        icon:
+          type: string
+          format: uri
+          nullable: true
+          description: URL иконки роли
+        is_default:
+          type: boolean
+          description: Роль по умолчанию для новых участников
+        permissions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Permission'
+          description: Список разрешений роли
+
+    CreateRoleResponse:
+      type: object
+      properties:
+        role:
+          $ref: '#/components/schemas/Role'
+
+    ListRolesResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Role'
+          description: Список ролей
+        total:
+          type: integer
+          format: int32
+          description: Общее количество ролей
+
+    GetRoleResponse:
+      type: object
+      properties:
+        role:
+          $ref: '#/components/schemas/Role'
+
+    UpdateRoleRequest:
+      type: object
+      required:
+        - guild_id
+        - role_id
+        - title
+      properties:
+        guild_id:
+          type: string
+          format: uint64
+          description: ID гильдии
+        role_id:
+          type: string
+          format: uint64
+          description: ID роли
+        title:
+          type: string
+          description: Название роли
+        icon:
+          type: string
+          format: uri
+          nullable: true
+          description: URL иконки роли
+        is_default:
+          type: boolean
+          description: Роль по умолчанию для новых участников
+        permissions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Permission'
+          description: Список разрешений роли (полностью заменяет существующие)
+
+    UpdateRoleResponse:
+      type: object
+      properties:
+        role:
+          $ref: '#/components/schemas/Role'
+
+    DeleteRoleResponse:
+      type: object
+      description: Пустой ответ при успешном удалении
+
+    InitRolesResponse:
+      type: object
+      properties:
+        owner_role:
+          $ref: '#/components/schemas/Role'
+          description: Роль владельца со всеми разрешениями
+        member_role:
+          $ref: '#/components/schemas/Role'
+          description: Роль участника с ограниченными разрешениями
+
+    CreateMemberRequest:
+      type: object
+      required:
+        - guild_id
+        - user_id
+      properties:
+        guild_id:
+          type: string
+          format: uint64
+          description: ID гильдии
+        user_id:
+          type: string
+          format: uint64
+          description: ID пользователя
+        role_ids:
+          type: array
+          items:
+            type: string
+            format: uint64
+          description: Список ID ролей для назначения
+
+    CreateMemberResponse:
+      type: object
+      properties:
+        member:
+          $ref: '#/components/schemas/Member'
+
+    JoinGuildResponse:
+      type: object
+      properties:
+        member:
+          $ref: '#/components/schemas/Member'
+
+    GetMemberResponse:
+      type: object
+      properties:
+        member:
+          $ref: '#/components/schemas/Member'
+
+    ListMembersResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Member'
+          description: Список участников
+        total:
+          type: integer
+          format: int32
+          description: Общее количество участников
+
+    UpdateMemberRolesRequest:
+      type: object
+      required:
+        - guild_id
+        - user_id
+      properties:
+        guild_id:
+          type: string
+          format: uint64
+          description: ID гильдии
+        user_id:
+          type: string
+          format: uint64
+          description: ID пользователя
+        role_ids:
+          type: array
+          items:
+            type: string
+            format: uint64
+          description: Список ID ролей (полностью заменяет существующие)
+
+    UpdateMemberRolesResponse:
+      type: object
+      properties:
+        member:
+          $ref: '#/components/schemas/Member'
+
+    DeleteMemberResponse:
+      type: object
+      description: Пустой ответ при успешном удалении
+
+    GetUserGuildsResponse:
+      type: object
+      properties:
+        guild_ids:
+          type: array
+          items:
+            type: string
+            format: uint64
+          description: Список ID гильдий
+        total:
+          type: integer
+          format: int32
+          description: Общее количество гильдий
+
+    CreateInviteRequest:
+      type: object
+      required:
+        - guild_id
+      properties:
+        guild_id:
+          type: string
+          format: uint64
+          description: ID гильдии
+        channel_id:
+          type: string
+          format: uint64
+          nullable: true
+          description: ID канала (опционально, для привязки к каналу)
+
+    CreateInviteResponse:
+      type: object
+      properties:
+        token:
+          type: string
+          description: Токен приглашения
+        invite_url:
+          type: string
+          format: uri
+          description: Полная URL приглашения
+        guild_id:
+          type: string
+          format: uint64
+          description: ID гильдии
+        channel_id:
+          type: string
+          format: uint64
+          nullable: true
+          description: ID канала
+        expires_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: Дата истечения приглашения
+        max_uses:
+          type: integer
+          format: int32
+          description: Максимальное количество использований (0 - без ограничений)
+        uses:
+          type: integer
+          format: int32
+          description: Текущее количество использований
+        created_at:
+          type: string
+          format: date-time
+          description: Дата создания приглашения
+
+    AcceptInviteResponse:
+      type: object
+      properties:
+        guild_id:
+          type: string
+          format: uint64
+          description: ID гильдии, в которую вступил пользователь
+        channel_id:
+          type: string
+          format: uint64
+          nullable: true
+          description: ID канала
+        user_id:
+          type: string
+          format: uint64
+          description: ID пользователя, принявшего приглашение
+        joined_at:
+          type: string
+          format: date-time
+          description: Дата присоединения
+
+    CheckPermissionRequest:
+      type: object
+      required:
+        - user_id
+        - resource
+        - permission
+      properties:
+        user_id:
+          type: string
+          format: uint64
+          description: ID пользователя
+        resource:
+          type: string
+          description: Путь к ресурсу (например, "guild/{guild_id}/channel/{channel_id}")
+        permission:
+          type: string
+          description: Название разрешения (например, "send_messages", "view_channel")
+
+    CheckPermissionResponse:
+      type: object
+      properties:
+        allowed:
+          type: boolean
+          description: Имеет ли пользователь запрошенное разрешение
+
+    GetPermissionsResponse:
+      type: object
+      properties:
+        permissions:
+          type: array
+          items:
+            type: string
+          description: Список всех доступных названий разрешений в системе
+
+    UpdateRoleOverridesRequest:
+      type: object
+      required:
+        - resource
+      properties:
+        resource:
+          type: string
+          description: Путь к ресурсу
+        overrides:
+          type: array
+          items:
+            $ref: '#/components/schemas/RoleOverride'
+          description: Список переопределений для ролей (полностью заменяет существующие)
+
+    UpdateRoleOverridesResponse:
+      type: object
+      properties:
+        resource:
+          type: string
+          description: Путь к ресурсу
+        overrides:
+          type: array
+          items:
+            $ref: '#/components/schemas/RoleOverride'
+          description: Обновленный список переопределений для ролей
+
+    GetRoleOverridesResponse:
+      type: object
+      properties:
+        resource:
+          type: string
+          description: Путь к ресурсу
+        overrides:
+          type: array
+          items:
+            $ref: '#/components/schemas/RoleOverride'
+          description: Список переопределений для ролей
+
+    UpdateUserOverridesRequest:
+      type: object
+      required:
+        - resource
+      properties:
+        resource:
+          type: string
+          description: Путь к ресурсу
+        overrides:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserOverride'
+          description: Список переопределений для пользователей (полностью заменяет существующие)
+
+    UpdateUserOverridesResponse:
+      type: object
+      properties:
+        resource:
+          type: string
+          description: Путь к ресурсу
+        overrides:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserOverride'
+          description: Обновленный список переопределений для пользователей
+
+    GetUserOverridesResponse:
+      type: object
+      properties:
+        resource:
+          type: string
+          description: Путь к ресурсу
+        overrides:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserOverride'
+          description: Список переопределений для пользователей
