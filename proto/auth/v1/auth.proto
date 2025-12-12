@@ -157,6 +157,22 @@ service UserService {
     };
   }
 
+  rpc GetUserByUsername(GetUserByUsernameRequest) returns (GetUserByUsernameResponse) {
+    option (google.api.http) = {
+      get : "/api/v1/users/{username}"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags : "UserService"
+      summary : "Get user by username"
+      security: {
+        security_requirement: {
+          key: "BearerAuth";
+          value: {}
+        }
+      }
+    };
+  }
+
   rpc CreateUser(CreateUserRequest) returns (CreateUserResponse) {
     option (google.api.http) = {
       post : "/api/v1/users"
@@ -335,6 +351,12 @@ message GetUserRequest {
 }
 
 message GetUserResponse { User user = 1; }
+
+message GetUserByUsernameRequest {
+  string username = 1 [ (buf.validate.field).required = true ];
+}
+
+message GetUserByUsernameResponse { User user = 1; }
 
 message ListUsersRequest {
   int32 limit = 1;
