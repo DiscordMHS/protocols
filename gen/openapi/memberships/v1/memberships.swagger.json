@@ -504,6 +504,14 @@
             "required": true,
             "type": "string",
             "format": "uint64"
+          },
+          {
+            "name": "userId",
+            "description": "User identifier who is initializing the roles.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "uint64"
           }
         ],
         "tags": [
@@ -687,6 +695,14 @@
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "userId",
+            "description": "User identifier who accepted the invite.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "uint64"
           }
         ],
         "tags": [
@@ -977,6 +993,11 @@
     "MembershipServiceCreateInviteBody": {
       "type": "object",
       "properties": {
+        "createdById": {
+          "type": "string",
+          "format": "uint64",
+          "description": "User identifier who created the invite."
+        },
         "channelId": {
           "type": "string",
           "format": "uint64",
@@ -1028,7 +1049,14 @@
       }
     },
     "MembershipServiceJoinGuildBody": {
-      "type": "object"
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "format": "uint64",
+          "description": "User identifier who is joining the guild."
+        }
+      }
     },
     "MembershipServiceUpdateMemberRolesBody": {
       "type": "object",
