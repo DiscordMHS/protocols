@@ -597,8 +597,10 @@ message DeleteRoleRequest {
 message DeleteRoleResponse {}
 
 message InitRolesRequest {
+  // User identifier who is initializing the roles.
+  uint64 user_id = 1 [ (buf.validate.field).required = true ];
   // Guild identifier where roles will be initialized.
-  uint64 guild_id = 1 [ (buf.validate.field).required = true ];
+  uint64 guild_id = 2 [ (buf.validate.field).required = true ];
 }
 
 message InitRolesResponse {
@@ -627,8 +629,10 @@ message CreateMemberResponse {
 }
 
 message JoinGuildRequest {
+  // User identifier who is joining the guild.
+  uint64 user_id = 1 [ (buf.validate.field).required = true ];
   // Guild identifier to join.
-  uint64 guild_id = 1 [ (buf.validate.field).required = true ];
+  uint64 guild_id = 2 [ (buf.validate.field).required = true ];
 }
 
 message JoinGuildResponse {
@@ -710,10 +714,12 @@ message GetUserGuildsResponse {
 // =====================
 
 message CreateInviteRequest {
+  // User identifier who created the invite.
+  uint64 created_by_id = 1 [ (buf.validate.field).required = true ];
   // Guild identifier.
-  uint64 guild_id = 1 [ (buf.validate.field).required = true ];
+  uint64 guild_id = 2 [ (buf.validate.field).required = true ];
   // Optional channel identifier to scope the invite to a specific channel.
-  optional uint64 channel_id = 2;
+  optional uint64 channel_id = 3;
 }
 
 message CreateInviteResponse {
@@ -736,8 +742,10 @@ message CreateInviteResponse {
 }
 
 message AcceptInviteRequest {
+  // User identifier who accepted the invite.
+  uint64 user_id = 1 [ (buf.validate.field).required = true ];
   // Invite token from the invite URL.
-  string token = 1 [ (buf.validate.field).required = true ];
+  string token = 2 [ (buf.validate.field).required = true ];
 }
 
 message AcceptInviteResponse {
