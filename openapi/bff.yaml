@@ -55,6 +55,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+        default:
+          description: Неизвестная ошибка
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
 
     patch:
       tags:
@@ -98,6 +104,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+        default:
+          description: Неизвестная ошибка
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
 
     delete:
       tags:
@@ -135,6 +147,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+        default:
+          description: Неизвестная ошибка
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
 
   /api/v1/guild:
     post:
@@ -160,6 +178,12 @@ paths:
                 $ref: '#/components/schemas/Guild'
         '400':
           description: Неверный запрос
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        default:
+          description: Неизвестная ошибка
           content:
             application/json:
               schema:
@@ -192,6 +216,12 @@ paths:
                 $ref: '#/components/schemas/GetPublicGuildsPageResponse'
         '400':
           description: Неверный запрос
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        default:
+          description: Неизвестная ошибка
           content:
             application/json:
               schema:
@@ -243,6 +273,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+        default:
+          description: Неизвестная ошибка
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
 
   # =====================
   # Auth Service
@@ -274,6 +310,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+        default:
+          description: Неизвестная ошибка
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
 
   /api/v1/auth/login:
     post:
@@ -301,6 +343,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+        default:
+          description: Неизвестная ошибка
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
 
   /api/v1/auth/refresh:
     post:
@@ -324,6 +372,12 @@ paths:
                 $ref: '#/components/schemas/RefreshResponse'
         '400':
           description: Неверный запрос
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        default:
+          description: Неизвестная ошибка
           content:
             application/json:
               schema:
@@ -356,6 +410,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+        default:
+          description: Неизвестная ошибка
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
 
   /api/v1/auth/forgot-password:
     post:
@@ -379,6 +439,12 @@ paths:
                 $ref: '#/components/schemas/ForgotPasswordResponse'
         '400':
           description: Неверный запрос
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        default:
+          description: Неизвестная ошибка
           content:
             application/json:
               schema:
@@ -410,6 +476,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+        default:
+          description: Неизвестная ошибка
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
 
   /api/v1/auth/me:
     get:
@@ -427,6 +499,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetMeResponse'
+        default:
+          description: Неизвестная ошибка
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
 
   # =====================
   # User Service
@@ -472,6 +550,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+        default:
+          description: Неизвестная ошибка
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
 
     post:
       tags:
@@ -496,6 +580,12 @@ paths:
                 $ref: '#/components/schemas/CreateUserResponse'
         '400':
           description: Неверный запрос
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        default:
+          description: Неизвестная ошибка
           content:
             application/json:
               schema:
@@ -534,6 +624,12 @@ paths:
                 $ref: '#/components/schemas/Error'
         '404':
           description: Пользователь не найден
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        default:
+          description: Неизвестная ошибка
           content:
             application/json:
               schema:
@@ -581,6 +677,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+        default:
+          description: Неизвестная ошибка
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
 
     delete:
       tags:
@@ -614,6 +716,12 @@ paths:
                 $ref: '#/components/schemas/Error'
         '404':
           description: Пользователь не найден
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        default:
+          description: Неизвестная ошибка
           content:
             application/json:
               schema:
@@ -656,7 +764,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-
+        default:
+          description: Неизвестная ошибка
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
   # =====================
   # Membership Service
   # =====================
@@ -698,7 +811,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-
+        default:
+          description: Неизвестная ошибка
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
     get:
       tags:
         - MembershipService
@@ -746,7 +864,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-
+        default:
+          description: Неизвестная ошибка
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
   /api/v1/guilds/{guild_id}/roles/{role_id}:
     get:
       tags:
@@ -792,7 +915,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-
+        default:
+          description: Неизвестная ошибка
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
     put:
       tags:
         - MembershipService
@@ -843,7 +971,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-
+        default:
+          description: Неизвестная ошибка
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
     delete:
       tags:
         - MembershipService
@@ -888,7 +1021,13 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-
+        default:
+          description: Неизвестная ошибка
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+                
   /api/v1/guilds/{guild_id}/members:
     post:
       tags:
@@ -926,7 +1065,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-
+        default:
+          description: Неизвестная ошибка
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
     get:
       tags:
         - MembershipService
@@ -974,6 +1118,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+        default:
+          description: Неизвестная ошибка
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
 
   /api/v1/guilds/{guild_id}/join:
     post:
@@ -1002,6 +1152,12 @@ paths:
                 $ref: '#/components/schemas/JoinGuildResponse'
         '400':
           description: Неверный запрос
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        default:
+          description: Неизвестная ошибка
           content:
             application/json:
               schema:
@@ -1052,7 +1208,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-
+        default:
+          description: Неизвестная ошибка
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
     delete:
       tags:
         - MembershipService
@@ -1093,6 +1254,12 @@ paths:
                 $ref: '#/components/schemas/Error'
         '404':
           description: Участник не найден
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        default:
+          description: Неизвестная ошибка
           content:
             application/json:
               schema:
@@ -1149,6 +1316,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+        default:
+          description: Неизвестная ошибка
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
 
   /api/v1/users/{user_id}/guilds:
     get:
@@ -1193,6 +1366,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+        default:
+          description: Неизвестная ошибка
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
 
   /api/v1/guilds/{guild_id}/invites:
     post:
@@ -1231,6 +1410,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+        default:
+          description: Неизвестная ошибка
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
 
   /api/v1/invites/{token}/accept:
     post:
@@ -1261,31 +1446,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-
-  /api/v1/permissions/check:
-    post:
-      tags:
-        - MembershipService
-      summary: Проверить разрешение
-      description: Проксирует запрос в membership-service для проверки наличия разрешения у пользователя для ресурса
-      operationId: checkPermission
-      security:
-        - BearerAuth: []
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CheckPermissionRequest'
-      responses:
-        '200':
-          description: Успешный ответ
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CheckPermissionResponse'
-        '400':
-          description: Неверный запрос
+        default:
+          description: Неизвестная ошибка
           content:
             application/json:
               schema:
@@ -1307,6 +1469,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetPermissionsResponse'
+        default:
+          description: Неизвестная ошибка
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
 
   /api/v1/overrides/roles:
     put:
@@ -1332,6 +1500,12 @@ paths:
                 $ref: '#/components/schemas/UpdateRoleOverridesResponse'
         '400':
           description: Неверный запрос
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        default:
+          description: Неизвестная ошибка
           content:
             application/json:
               schema:
@@ -1365,6 +1539,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+        default:
+          description: Неизвестная ошибка
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
 
   /api/v1/overrides/users:
     put:
@@ -1394,7 +1574,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-
+        default:
+          description: Неизвестная ошибка
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
     get:
       tags:
         - MembershipService
@@ -1423,7 +1608,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-
+        default:
+          description: Неизвестная ошибка
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
 components:
   securitySchemes:
     BearerAuth:
@@ -1588,19 +1778,54 @@ components:
       description: Пустой ответ при успешной регистрации
 
     LoginRequest:
+      oneOf:
+        - $ref: '#/components/schemas/LoginRequestWithEmail'
+        - $ref: '#/components/schemas/LoginRequestWithUsername'
+      discriminator:
+        propertyName: loginType
+        mapping:
+          email: '#/components/schemas/LoginRequestWithEmail'
+          username: '#/components/schemas/LoginRequestWithUsername'
+
+    LoginRequestWithEmail:
       type: object
       required:
+        - loginType
+        - email
         - password
       properties:
+        loginType:
+          type: string
+          enum:
+            - email
+          description: Тип входа - через email
         email:
           type: string
           format: email
-          description: 'Email пользователя (один из email или username)'
+          description: Email пользователя
+        password:
+          type: string
+          minLength: 8
+          maxLength: 64
+          description: Пароль пользователя
+
+    LoginRequestWithUsername:
+      type: object
+      required:
+        - loginType
+        - username
+        - password
+      properties:
+        loginType:
+          type: string
+          enum:
+            - username
+          description: Тип входа - через username
         username:
           type: string
           minLength: 3
           maxLength: 64
-          description: 'Имя пользователя (один из email или username)'
+          description: Имя пользователя
         password:
           type: string
           minLength: 8
@@ -1926,11 +2151,14 @@ components:
 
     Member:
       type: object
+      required:
+        - user
+        - guild_id
+        - role_ids
+        - joined_at
       properties:
-        user_id:
-          type: string
-          format: uint64
-          description: ID пользователя
+        user:
+          $ref: '#/components/schemas/User'
         guild_id:
           type: string
           format: uint64
@@ -2263,31 +2491,6 @@ components:
           type: string
           format: date-time
           description: Дата присоединения
-
-    CheckPermissionRequest:
-      type: object
-      required:
-        - user_id
-        - resource
-        - permission
-      properties:
-        user_id:
-          type: string
-          format: uint64
-          description: ID пользователя
-        resource:
-          type: string
-          description: Путь к ресурсу (например, "guild/{guild_id}/channel/{channel_id}")
-        permission:
-          type: string
-          description: Название разрешения (например, "send_messages", "view_channel")
-
-    CheckPermissionResponse:
-      type: object
-      properties:
-        allowed:
-          type: boolean
-          description: Имеет ли пользователь запрошенное разрешение
 
     GetPermissionsResponse:
       type: object
