@@ -19,6 +19,8 @@ tags:
     description: Проксирование запросов в Membership Service
   - name: ChannelService
     description: Проксирование запросов в Channel Service
+  - name: MessageService
+    description: Проксирование запросов в Message Service
 paths:
   /api/v1/guild/{id}:
     get:
@@ -1938,6 +1940,239 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
 
+  # =====================
+  # Message Service
+  # =====================
+
+  /api/v1/message/{id}:
+    get:
+      tags:
+        - MessageService
+      summary: Получить сообщение по ID
+      description: Проксирует запрос в message-service для получения информации о сообщении
+      operationId: getMessageById
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID сообщения
+          schema:
+            type: integer
+            format: uint64
+            minimum: 1
+      responses:
+        '200':
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetMessageByIdResponse'
+        '400':
+          description: Неверный запрос
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Сообщение не найдено
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        default:
+          description: Неизвестная ошибка
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    put:
+      tags:
+        - MessageService
+      summary: Обновить сообщение
+      description: Проксирует запрос в message-service для обновления информации о сообщении
+      operationId: updateMessage
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID сообщения
+          schema:
+            type: integer
+            format: uint64
+            minimum: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateMessageRequest'
+      responses:
+        '200':
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateMessageResponse'
+        '400':
+          description: Неверный запрос
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Сообщение не найдено
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        default:
+          description: Неизвестная ошибка
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    delete:
+      tags:
+        - MessageService
+      summary: Удалить сообщение
+      description: Проксирует запрос в message-service для удаления сообщения
+      operationId: deleteMessage
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID сообщения
+          schema:
+            type: integer
+            format: uint64
+            minimum: 1
+      responses:
+        '200':
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteMessageResponse'
+        '400':
+          description: Неверный запрос
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Сообщение не найдено
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        default:
+          description: Неизвестная ошибка
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/message:
+    post:
+      tags:
+        - MessageService
+      summary: Создать сообщение
+      description: Проксирует запрос в message-service для создания нового сообщения
+      operationId: createMessage
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateMessageRequest'
+      responses:
+        '200':
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateMessageResponse'
+        '400':
+          description: Неверный запрос
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        default:
+          description: Неизвестная ошибка
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/message/channel/{channel_id}:
+    get:
+      tags:
+        - MessageService
+      summary: Получить сообщения по ID канала
+      description: Проксирует запрос в message-service для получения списка сообщений канала
+      operationId: getMessagesByChannelId
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: channel_id
+          in: path
+          required: true
+          description: ID канала
+          schema:
+            type: integer
+            format: uint64
+            minimum: 1
+        - name: limit
+          in: query
+          required: false
+          description: Максимальное количество сообщений
+          schema:
+            type: integer
+            format: uint64
+        - name: offset
+          in: query
+          required: false
+          description: Смещение для пагинации
+          schema:
+            type: integer
+            format: uint64
+        - name: search
+          in: query
+          required: false
+          description: Поисковый запрос
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetMessagesByChannelIdResponse'
+        '400':
+          description: Неверный запрос
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        default:
+          description: Неизвестная ошибка
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
 components:
   securitySchemes:
     BearerAuth:
@@ -2287,6 +2522,197 @@ components:
         channel:
           $ref: '#/components/schemas/VoiceChannel'
     DeleteVoiceChannelResponse:
+      type: object
+      description: Пустой ответ при успешном удалении
+
+    # =====================
+    # Message Service Schemas
+    # =====================
+
+    Message:
+      type: object
+      required:
+        - id
+        - tc_id
+        - user_sent_id
+        - content
+        - created_at
+        - updated_at
+        - is_deleted
+        - type
+        - pinned
+      properties:
+        id:
+          type: integer
+          format: uint64
+          description: ID сообщения
+          minimum: 1
+        tc_id:
+          type: integer
+          format: uint64
+          description: ID текстового канала
+          minimum: 1
+        user_sent_id:
+          type: integer
+          format: uint64
+          description: ID пользователя, отправившего сообщение
+          minimum: 1
+        content:
+          type: string
+          description: Содержимое сообщения
+        reply_to_id:
+          type: integer
+          format: uint64
+          description: ID сообщения, на которое отвечает данное сообщение
+          nullable: true
+        created_at:
+          type: integer
+          format: int64
+          description: Время создания сообщения (Unix timestamp)
+        updated_at:
+          type: integer
+          format: int64
+          description: Время обновления сообщения (Unix timestamp)
+        is_deleted:
+          type: boolean
+          description: Флаг удаления сообщения
+        type:
+          type: integer
+          format: int32
+          description: Тип сообщения
+        pinned:
+          type: boolean
+          description: Флаг закрепления сообщения
+        attachments:
+          type: array
+          items:
+            $ref: '#/components/schemas/Attachment'
+          description: Список вложений
+
+    Attachment:
+      type: object
+      required:
+        - id
+        - msg_id
+        - mime_type
+        - object_name
+        - size
+        - created_at
+        - updated_at
+      properties:
+        id:
+          type: integer
+          format: uint64
+          description: ID вложения
+          minimum: 1
+        msg_id:
+          type: integer
+          format: uint64
+          description: ID сообщения
+          minimum: 1
+        mime_type:
+          type: string
+          description: MIME тип файла
+        object_name:
+          type: string
+          description: Имя объекта в хранилище
+        size:
+          type: integer
+          format: int32
+          description: Размер файла в байтах
+          minimum: 1
+        created_at:
+          type: integer
+          format: int64
+          description: Время создания (Unix timestamp)
+        updated_at:
+          type: integer
+          format: int64
+          description: Время обновления (Unix timestamp)
+
+    AttachmentMetadata:
+      type: object
+      required:
+        - mime_type
+        - object_name
+        - size
+      properties:
+        mime_type:
+          type: string
+          description: MIME тип файла
+        object_name:
+          type: string
+          description: Имя объекта в хранилище
+        size:
+          type: integer
+          format: int32
+          description: Размер файла в байтах
+          minimum: 1
+
+    GetMessageByIdResponse:
+      type: object
+      properties:
+        message:
+          $ref: '#/components/schemas/Message'
+
+    GetMessagesByChannelIdResponse:
+      type: object
+      properties:
+        messages:
+          type: array
+          items:
+            $ref: '#/components/schemas/Message'
+          description: Список сообщений
+
+    CreateMessageRequest:
+      type: object
+      required:
+        - channel_id
+        - content
+      properties:
+        channel_id:
+          type: integer
+          format: uint64
+          description: ID канала
+          minimum: 1
+        content:
+          type: string
+          description: Содержимое сообщения
+          maxLength: 2000
+        reply_to_id:
+          type: integer
+          format: uint64
+          description: ID сообщения, на которое отвечает данное сообщение
+          nullable: true
+        attachments:
+          type: array
+          items:
+            $ref: '#/components/schemas/AttachmentMetadata'
+          description: Список метаданных вложений
+
+    CreateMessageResponse:
+      type: object
+      properties:
+        message:
+          $ref: '#/components/schemas/Message'
+
+    UpdateMessageRequest:
+      type: object
+      required:
+        - content
+      properties:
+        content:
+          type: string
+          description: Содержимое сообщения
+          maxLength: 2000
+
+    UpdateMessageResponse:
+      type: object
+      properties:
+        message:
+          $ref: '#/components/schemas/Message'
+
+    DeleteMessageResponse:
       type: object
       description: Пустой ответ при успешном удалении
 
