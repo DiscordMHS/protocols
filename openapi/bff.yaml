@@ -17,6 +17,8 @@ tags:
     description: Проксирование запросов в User Service
   - name: MembershipService
     description: Проксирование запросов в Membership Service
+  - name: ChannelService
+    description: Проксирование запросов в Channel Service
 paths:
   /api/v1/guild/{id}:
     get:
@@ -1027,7 +1029,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-                
+
   /api/v1/guilds/{guild_id}/members:
     post:
       tags:
@@ -1614,6 +1616,328 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+  /api/v1/textchannel/{id}:
+    get:
+      tags:
+        - ChannelService
+      summary: Получить текстовый канал по ID
+      description: Проксирует запрос в channel-service для получения информации о текстовом канале
+      operationId: getTextChannelById
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID текстового канала
+          schema:
+            type: integer
+            format: uint64
+            minimum: 1
+      responses:
+        '200':
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetTextChannelByIdResponse'
+        '400':
+          description: Неверный запрос
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    put:
+      tags:
+        - ChannelService
+      summary: Обновить текстовый канал
+      description: Проксирует запрос в channel-service для обновления информации о текстовом канале
+      operationId: updateTextChannel
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID текстового канала
+          schema:
+            type: integer
+            format: uint64
+            minimum: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateTextChannelRequest'
+      responses:
+        '200':
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateTextChannelResponse'
+        '400':
+          description: Неверный запрос
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    delete:
+      tags:
+        - ChannelService
+      summary: Удалить текстовый канал
+      description: Проксирует запрос в channel-service для удаления текстового канала
+      operationId: deleteTextChannel
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID текстового канала
+          schema:
+            type: integer
+            format: uint64
+            minimum: 1
+      responses:
+        '200':
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteTextChannelResponse'
+        '400':
+          description: Неверный запрос
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/textchannel:
+    post:
+      tags:
+        - ChannelService
+      summary: Создать текстовый канал
+      description: Проксирует запрос в channel-service для создания нового текстового канала
+      operationId: createTextChannel
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTextChannelRequest'
+      responses:
+        '200':
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateTextChannelResponse'
+        '400':
+          description: Неверный запрос
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/textchannel/guild/{id}:
+    get:
+      tags:
+        - ChannelService
+      summary: Получить текстовые каналы по ID гильдии
+      description: Проксирует запрос в channel-service для получения списка текстовых каналов гильдии
+      operationId: getTextChannelByGuildId
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID гильдии
+          schema:
+            type: integer
+            format: uint64
+            minimum: 1
+      responses:
+        '200':
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetTextChannelByGuildIdResponse'
+        '400':
+          description: Неверный запрос
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/voicechannel/{id}:
+    get:
+      tags:
+        - ChannelService
+      summary: Получить голосовой канал по ID
+      description: Проксирует запрос в channel-service для получения информации о голосовом канале
+      operationId: getVoiceChannelById
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID голосового канала
+          schema:
+            type: integer
+            format: uint64
+            minimum: 1
+      responses:
+        '200':
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetVoiceChannelByIdResponse'
+        '400':
+          description: Неверный запрос
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    put:
+      tags:
+        - ChannelService
+      summary: Обновить голосовой канал
+      description: Проксирует запрос в channel-service для обновления информации о голосовом канале
+      operationId: updateVoiceChannel
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID голосового канала
+          schema:
+            type: integer
+            format: uint64
+            minimum: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateVoiceChannelRequest'
+      responses:
+        '200':
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateVoiceChannelResponse'
+        '400':
+          description: Неверный запрос
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    delete:
+      tags:
+        - ChannelService
+      summary: Удалить голосовой канал
+      description: Проксирует запрос в channel-service для удаления голосового канала
+      operationId: deleteVoiceChannel
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID голосового канала
+          schema:
+            type: integer
+            format: uint64
+            minimum: 1
+      responses:
+        '200':
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteVoiceChannelResponse'
+        '400':
+          description: Неверный запрос
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/voicechannel:
+    post:
+      tags:
+        - ChannelService
+      summary: Создать голосовой канал
+      description: Проксирует запрос в channel-service для создания нового голосового канала
+      operationId: createVoiceChannel
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateVoiceChannelRequest'
+      responses:
+        '200':
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateVoiceChannelResponse'
+        '400':
+          description: Неверный запрос
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/voicechannel/guild/{id}:
+    get:
+      tags:
+        - ChannelService
+      summary: Получить голосовые каналы по ID гильдии
+      description: Проксирует запрос в channel-service для получения списка голосовых каналов гильдии
+      operationId: getVoiceChannelByGuildId
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID гильдии
+          schema:
+            type: integer
+            format: uint64
+            minimum: 1
+      responses:
+        '200':
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetVoiceChannelByGuildIdResponse'
+        '400':
+          description: Неверный запрос
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
 components:
   securitySchemes:
     BearerAuth:
@@ -1748,6 +2072,223 @@ components:
         message:
           type: string
           description: Сообщение об ошибке
+    TextChannel:
+      type: object
+      required:
+        - id
+        - guild_id
+        - title
+      properties:
+        id:
+          type: integer
+          format: uint64
+          description: ID текстового канала
+          minimum: 1
+        guild_id:
+          type: integer
+          format: uint64
+          description: ID гильдии
+          minimum: 1
+        title:
+          type: string
+          description: Название канала
+        description:
+          type: string
+          description: Описание канала
+          nullable: true
+        nsfw:
+          type: boolean
+          description: Флаг NSFW контента
+        slowmode:
+          type: integer
+          format: uint32
+          description: Задержка между сообщениями в секундах
+          nullable: true
+        position:
+          type: integer
+          format: int32
+          description: Позиция канала
+        is_archived:
+          type: boolean
+          description: Флаг архивации канала
+    VoiceChannel:
+      type: object
+      required:
+        - id
+        - guild_id
+        - title
+      properties:
+        id:
+          type: integer
+          format: uint64
+          description: ID голосового канала
+          minimum: 1
+        guild_id:
+          type: integer
+          format: uint64
+          description: ID гильдии
+          minimum: 1
+        title:
+          type: string
+          description: Название канала
+        position:
+          type: integer
+          format: int32
+          description: Позиция канала
+        user_limit:
+          type: integer
+          format: uint32
+          description: Лимит пользователей в канале
+    GetTextChannelByIdResponse:
+      type: object
+      properties:
+        channel:
+          $ref: '#/components/schemas/TextChannel'
+    GetTextChannelByGuildIdResponse:
+      type: object
+      properties:
+        channel:
+          type: array
+          items:
+            $ref: '#/components/schemas/TextChannel'
+          description: Список текстовых каналов
+    GetVoiceChannelByIdResponse:
+      type: object
+      properties:
+        channel:
+          $ref: '#/components/schemas/VoiceChannel'
+    GetVoiceChannelByGuildIdResponse:
+      type: object
+      properties:
+        channel:
+          type: array
+          items:
+            $ref: '#/components/schemas/VoiceChannel'
+          description: Список голосовых каналов
+    CreateTextChannelRequest:
+      type: object
+      required:
+        - guild_id
+        - title
+      properties:
+        guild_id:
+          type: integer
+          format: uint64
+          description: ID гильдии
+          minimum: 1
+        title:
+          type: string
+          description: Название канала
+        description:
+          type: string
+          description: Описание канала
+          nullable: true
+        nsfw:
+          type: boolean
+          description: Флаг NSFW контента
+        slowmode:
+          type: integer
+          format: uint32
+          description: Задержка между сообщениями в секундах
+          nullable: true
+        position:
+          type: integer
+          format: int32
+          description: Позиция канала
+    CreateTextChannelResponse:
+      type: object
+      properties:
+        channel:
+          $ref: '#/components/schemas/TextChannel'
+    UpdateTextChannelRequest:
+      type: object
+      properties:
+        title:
+          type: string
+          description: Название канала
+          nullable: true
+        description:
+          type: string
+          description: Описание канала
+          nullable: true
+        nsfw:
+          type: boolean
+          description: Флаг NSFW контента
+          nullable: true
+        slowmode:
+          type: integer
+          format: uint32
+          description: Задержка между сообщениями в секундах
+          nullable: true
+        position:
+          type: integer
+          format: int32
+          description: Позиция канала
+          nullable: true
+        is_archived:
+          type: boolean
+          description: Флаг архивации канала
+          nullable: true
+    UpdateTextChannelResponse:
+      type: object
+      properties:
+        channel:
+          $ref: '#/components/schemas/TextChannel'
+    DeleteTextChannelResponse:
+      type: object
+      description: Пустой ответ при успешном удалении
+    CreateVoiceChannelRequest:
+      type: object
+      required:
+        - guild_id
+        - title
+      properties:
+        guild_id:
+          type: integer
+          format: uint64
+          description: ID гильдии
+          minimum: 1
+        title:
+          type: string
+          description: Название канала
+        position:
+          type: integer
+          format: int32
+          description: Позиция канала
+        user_limit:
+          type: integer
+          format: uint32
+          description: Лимит пользователей в канале
+    CreateVoiceChannelResponse:
+      type: object
+      properties:
+        channel:
+          $ref: '#/components/schemas/VoiceChannel'
+    UpdateVoiceChannelRequest:
+      type: object
+      properties:
+        title:
+          type: string
+          description: Название канала
+          nullable: true
+        position:
+          type: integer
+          format: int32
+          description: Позиция канала
+          nullable: true
+        user_limit:
+          type: integer
+          format: uint32
+          description: Лимит пользователей в канале
+          nullable: true
+    UpdateVoiceChannelResponse:
+      type: object
+      properties:
+        channel:
+          $ref: '#/components/schemas/VoiceChannel'
+    DeleteVoiceChannelResponse:
+      type: object
+      description: Пустой ответ при успешном удалении
 
     # =====================
     # Auth Service Schemas
