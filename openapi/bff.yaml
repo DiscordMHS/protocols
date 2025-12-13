@@ -2001,6 +2001,50 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
 
+  /api/v1/voicechannel/{id}/connect:
+    get:
+      tags:
+        - ChannelService
+      summary: Получить токен для подключения к голосовому каналу
+      description: Проксирует запрос в channel-service для получения токена подключения к голосовому каналу
+      operationId: connectToVoiceChannel
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID голосового канала
+          schema:
+            type: integer
+            format: uint64
+            minimum: 1
+      responses:
+        '200':
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConnectToVoiceChannelResponse'
+        '400':
+          description: Неверный запрос
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Голосовой канал не найден
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        default:
+          description: Неизвестная ошибка
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
   # =====================
   # Message Service
   # =====================
@@ -2585,6 +2629,15 @@ components:
     DeleteVoiceChannelResponse:
       type: object
       description: Пустой ответ при успешном удалении
+
+    ConnectToVoiceChannelResponse:
+      type: object
+      required:
+        - token
+      properties:
+        token:
+          type: string
+          description: Токен для подключения к голосовому каналу
 
     # =====================
     # Message Service Schemas
