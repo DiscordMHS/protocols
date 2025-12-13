@@ -29,7 +29,7 @@ option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
       }
     }
   }
-  host: "channels.agoraproject.ru"
+  //host: "channels.agoraproject.ru"
 };
 
 service ChannelService {
@@ -214,6 +214,22 @@ service ChannelService {
     };
   }
 
+  rpc ConnectToVoiceChannel(ConnectToVoiceChannelRequest) returns (ConnectToVoiceChannelResponse) {
+    option (google.api.http) = {
+      get : "/api/v1/voicechannel/{id}/connect"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags : "ChannelService"
+      summary : "Connect to voice channel"
+      security: {
+        security_requirement: {
+          key: "BearerAuth";
+          value: {}
+        }
+      }
+    };
+  };
+
 }
 
 message InitDefaultChannelsRequest {
@@ -326,6 +342,16 @@ message GetVoiceChannelByGuildIdRequest {
 
 message GetVoiceChannelByGuildIdResponse {
     repeated VoiceChannel channel = 1;
+}
+
+message ConnectToVoiceChannelRequest {
+  uint64 id = 1 [
+    (buf.validate.field).required = true
+  ];
+}
+
+message ConnectToVoiceChannelResponse {
+  string token = 1;
 }
 
 message VoiceChannel {

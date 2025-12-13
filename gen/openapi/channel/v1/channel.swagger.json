@@ -10,7 +10,6 @@
       "name": "ChannelService"
     }
   ],
-  "host": "channels.agoraproject.ru",
   "schemes": [
     "http",
     "https"
@@ -438,6 +437,43 @@
           }
         ]
       }
+    },
+    "/api/v1/voicechannel/{id}/connect": {
+      "get": {
+        "summary": "Connect to voice channel",
+        "operationId": "ChannelService_ConnectToVoiceChannel",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ConnectToVoiceChannelResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uint64"
+          }
+        ],
+        "tags": [
+          "ChannelService"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
     }
   },
   "definitions": {
@@ -507,6 +543,14 @@
             "type": "object",
             "$ref": "#/definitions/protobufAny"
           }
+        }
+      }
+    },
+    "v1ConnectToVoiceChannelResponse": {
+      "type": "object",
+      "properties": {
+        "token": {
+          "type": "string"
         }
       }
     },
