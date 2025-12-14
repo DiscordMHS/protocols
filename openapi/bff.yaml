@@ -610,7 +610,7 @@ paths:
           required: true
           description: ID пользователя
           schema:
-            type: string
+            type: integer
             format: uint64
             minimum: 1
       responses:
@@ -653,7 +653,7 @@ paths:
           required: true
           description: ID пользователя
           schema:
-            type: string
+            type: integer
             format: uint64
             minimum: 1
       requestBody:
@@ -702,7 +702,7 @@ paths:
           required: true
           description: ID пользователя
           schema:
-            type: string
+            type: integer
             format: uint64
             minimum: 1
       responses:
@@ -746,7 +746,7 @@ paths:
           required: true
           description: ID пользователя
           schema:
-            type: string
+            type: integer
             format: uint64
             minimum: 1
       requestBody:
@@ -793,7 +793,7 @@ paths:
           required: true
           description: ID гильдии
           schema:
-            type: string
+            type: integer
             format: uint64
             minimum: 1
       requestBody:
@@ -835,7 +835,7 @@ paths:
           required: true
           description: ID гильдии
           schema:
-            type: string
+            type: integer
             format: uint64
             minimum: 1
         - name: limit
@@ -889,7 +889,7 @@ paths:
           required: true
           description: ID гильдии
           schema:
-            type: string
+            type: integer
             format: uint64
             minimum: 1
         - name: role_id
@@ -897,7 +897,7 @@ paths:
           required: true
           description: ID роли
           schema:
-            type: string
+            type: integer
             format: uint64
             minimum: 1
       responses:
@@ -939,7 +939,7 @@ paths:
           required: true
           description: ID гильдии
           schema:
-            type: string
+            type: integer
             format: uint64
             minimum: 1
         - name: role_id
@@ -947,7 +947,7 @@ paths:
           required: true
           description: ID роли
           schema:
-            type: string
+            type: integer
             format: uint64
             minimum: 1
       requestBody:
@@ -995,7 +995,7 @@ paths:
           required: true
           description: ID гильдии
           schema:
-            type: string
+            type: integer
             format: uint64
             minimum: 1
         - name: role_id
@@ -1003,7 +1003,7 @@ paths:
           required: true
           description: ID роли
           schema:
-            type: string
+            type: integer
             format: uint64
             minimum: 1
       responses:
@@ -1047,7 +1047,7 @@ paths:
           required: true
           description: ID гильдии
           schema:
-            type: string
+            type: integer
             format: uint64
             minimum: 1
       requestBody:
@@ -1089,7 +1089,7 @@ paths:
           required: true
           description: ID гильдии
           schema:
-            type: string
+            type: integer
             format: uint64
             minimum: 1
         - name: limit
@@ -1144,7 +1144,7 @@ paths:
           required: true
           description: ID гильдии
           schema:
-            type: string
+            type: integer
             format: uint64
             minimum: 1
       responses:
@@ -1182,7 +1182,7 @@ paths:
           required: true
           description: ID гильдии
           schema:
-            type: string
+            type: integer
             format: uint64
             minimum: 1
         - name: user_id
@@ -1190,7 +1190,7 @@ paths:
           required: true
           description: ID пользователя
           schema:
-            type: string
+            type: integer
             format: uint64
             minimum: 1
       responses:
@@ -1232,7 +1232,7 @@ paths:
           required: true
           description: ID гильдии
           schema:
-            type: string
+            type: integer
             format: uint64
             minimum: 1
         - name: user_id
@@ -1240,7 +1240,7 @@ paths:
           required: true
           description: ID пользователя
           schema:
-            type: string
+            type: integer
             format: uint64
             minimum: 1
       responses:
@@ -1284,7 +1284,7 @@ paths:
           required: true
           description: ID гильдии
           schema:
-            type: string
+            type: integer
             format: uint64
             minimum: 1
         - name: user_id
@@ -1292,7 +1292,7 @@ paths:
           required: true
           description: ID пользователя
           schema:
-            type: string
+            type: integer
             format: uint64
             minimum: 1
       requestBody:
@@ -1342,7 +1342,7 @@ paths:
           required: true
           description: ID пользователя
           schema:
-            type: string
+            type: integer
             format: uint64
             minimum: 1
         - name: limit
@@ -1392,7 +1392,7 @@ paths:
           required: true
           description: ID гильдии
           schema:
-            type: string
+            type: integer
             format: uint64
             minimum: 1
       requestBody:
@@ -3194,7 +3194,7 @@ components:
         role_ids:
           type: array
           items:
-            type: string
+            type: integer
             format: uint64
           description: Список ID ролей участника
         joined_at:
@@ -3367,7 +3367,7 @@ components:
         role_ids:
           type: array
           items:
-            type: string
+            type: integer
             format: uint64
           description: Список ID ролей для назначения
 
@@ -3419,7 +3419,7 @@ components:
         role_ids:
           type: array
           items:
-            type: string
+            type: integer
             format: uint64
           description: Список ID ролей (полностью заменяет существующие)
 
@@ -3439,7 +3439,7 @@ components:
         guild_ids:
           type: array
           items:
-            type: string
+            type: integer
             format: uint64
           description: Список ID гильдий
         total:
