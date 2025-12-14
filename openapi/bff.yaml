@@ -1618,6 +1618,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+
   /api/v1/textchannel/{id}:
     get:
       tags:
@@ -1645,6 +1646,12 @@ paths:
                 $ref: '#/components/schemas/GetTextChannelByIdResponse'
         '400':
           description: Неверный запрос
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        default:
+          description: Неизвестная ошибка
           content:
             application/json:
               schema:
@@ -1686,6 +1693,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+        default:
+          description: Неизвестная ошибка
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
 
     delete:
       tags:
@@ -1717,6 +1730,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+        default:
+          description: Неизвестная ошибка
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
 
   /api/v1/textchannel:
     post:
@@ -1742,6 +1761,12 @@ paths:
                 $ref: '#/components/schemas/CreateTextChannelResponse'
         '400':
           description: Неверный запрос
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        default:
+          description: Неизвестная ошибка
           content:
             application/json:
               schema:
@@ -1778,6 +1803,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+        default:
+          description: Неизвестная ошибка
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
 
   /api/v1/voicechannel/{id}:
     get:
@@ -1806,6 +1837,12 @@ paths:
                 $ref: '#/components/schemas/GetVoiceChannelByIdResponse'
         '400':
           description: Неверный запрос
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        default:
+          description: Неизвестная ошибка
           content:
             application/json:
               schema:
@@ -1847,6 +1884,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+        default:
+          description: Неизвестная ошибка
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
 
     delete:
       tags:
@@ -1874,6 +1917,12 @@ paths:
                 $ref: '#/components/schemas/DeleteVoiceChannelResponse'
         '400':
           description: Неверный запрос
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        default:
+          description: Неизвестная ошибка
           content:
             application/json:
               schema:
@@ -1907,6 +1956,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+        default:
+          description: Неизвестная ошибка
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
 
   /api/v1/voicechannel/guild/{id}:
     get:
@@ -1935,6 +1990,12 @@ paths:
                 $ref: '#/components/schemas/GetVoiceChannelByGuildIdResponse'
         '400':
           description: Неверный запрос
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        default:
+          description: Неизвестная ошибка
           content:
             application/json:
               schema:
