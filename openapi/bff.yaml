@@ -3109,13 +3109,7 @@ components:
 
     UpdateUserRequest:
       type: object
-      required:
-        - id
       properties:
-        id:
-          type: string
-          format: uint64
-          description: ID пользователя
         username:
           type: string
           description: Имя пользователя
@@ -3158,14 +3152,9 @@ components:
     ChangePasswordRequest:
       type: object
       required:
-        - id
         - current_password
         - new_password
       properties:
-        id:
-          type: string
-          format: uint64
-          description: ID пользователя
         current_password:
           type: string
           description: Текущий пароль
@@ -3302,13 +3291,8 @@ components:
     CreateRoleRequest:
       type: object
       required:
-        - guild_id
         - title
       properties:
-        guild_id:
-          type: string
-          format: uint64
-          description: ID гильдии
         title:
           type: string
           description: Название роли
@@ -3354,18 +3338,8 @@ components:
     UpdateRoleRequest:
       type: object
       required:
-        - guild_id
-        - role_id
         - title
       properties:
-        guild_id:
-          type: string
-          format: uint64
-          description: ID гильдии
-        role_id:
-          type: string
-          format: uint64
-          description: ID роли
         title:
           type: string
           description: Название роли
@@ -3406,13 +3380,8 @@ components:
     CreateMemberRequest:
       type: object
       required:
-        - guild_id
         - user_id
       properties:
-        guild_id:
-          type: string
-          format: uint64
-          description: ID гильдии
         user_id:
           type: string
           format: uint64
@@ -3457,18 +3426,7 @@ components:
 
     UpdateMemberRolesRequest:
       type: object
-      required:
-        - guild_id
-        - user_id
       properties:
-        guild_id:
-          type: string
-          format: uint64
-          description: ID гильдии
-        user_id:
-          type: string
-          format: uint64
-          description: ID пользователя
         role_ids:
           type: array
           items:
@@ -3502,13 +3460,7 @@ components:
 
     CreateInviteRequest:
       type: object
-      required:
-        - guild_id
       properties:
-        guild_id:
-          type: string
-          format: uint64
-          description: ID гильдии
         channel_id:
           type: string
           format: uint64
