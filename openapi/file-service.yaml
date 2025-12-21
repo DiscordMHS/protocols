@@ -1,0 +1,107 @@
+openapi: 3.0.3
+info:
+  title: File Service API
+  description: Service for uploading files to object storage and returning permanent URLs
+  version: 0.0.1
+servers:
+  - url: https://filemanager.agoraproject.ru
+    description: Production server
+  - url: http://localhost:8080
+    description: Local development server
+tags:
+  - name: FileService
+    description: File upload and management operations
+paths:
+  /api/v1/files:
+    post:
+      tags:
+        - FileService
+      summary: Upload file and get permanent URL
+      description: Uploads a file, validates its MIME type, stores it in MinIO, and returns a permanent URL
+      operationId: uploadFile
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - file
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: File to upload
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UploadFileResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        default:
+          description: An unexpected error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JWT Bearer token для аутентификации
+  schemas:
+    UploadFileResponse:
+      type: object
+      required:
+        - url
+        - size
+        - mimeType
+      properties:
+        url:
+          type: string
+          format: uri
+          description: Permanent URL of the stored file
+        size:
+          type: integer
+          format: uint64
+          description: Size of the stored file in bytes
+        mimeType:
+          type: string
+          description: MIME type detected by the service
+    Error:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: string
+          description: Error code
+        message:
+          type: string
+          description: Error message
+
