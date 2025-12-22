@@ -40,6 +40,7 @@ const (
 	MembershipService_GetUserOverrides_FullMethodName    = "/memberships.v1.MembershipService/GetUserOverrides"
 	MembershipService_CheckPermission_FullMethodName     = "/memberships.v1.MembershipService/CheckPermission"
 	MembershipService_GetPermissions_FullMethodName      = "/memberships.v1.MembershipService/GetPermissions"
+	MembershipService_GetUserPermissions_FullMethodName  = "/memberships.v1.MembershipService/GetUserPermissions"
 )
 
 // MembershipServiceClient is the client API for MembershipService service.
@@ -88,6 +89,8 @@ type MembershipServiceClient interface {
 	CheckPermission(ctx context.Context, in *CheckPermissionRequest, opts ...grpc.CallOption) (*CheckPermissionResponse, error)
 	// GetPermissions retrieves all available permission names in the system.
 	GetPermissions(ctx context.Context, in *GetPermissionsRequest, opts ...grpc.CallOption) (*GetPermissionsResponse, error)
+	// GetUserPermissions retrieves all permissions for a user. If guild_id is provided, returns guild-specific permissions; otherwise returns global permissions.
+	GetUserPermissions(ctx context.Context, in *GetUserPermissionsRequest, opts ...grpc.CallOption) (*GetUserPermissionsResponse, error)
 }
 
 type membershipServiceClient struct {
@@ -308,6 +311,16 @@ func (c *membershipServiceClient) GetPermissions(ctx context.Context, in *GetPer
 	return out, nil
 }
 
+func (c *membershipServiceClient) GetUserPermissions(ctx context.Context, in *GetUserPermissionsRequest, opts ...grpc.CallOption) (*GetUserPermissionsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetUserPermissionsResponse)
+	err := c.cc.Invoke(ctx, MembershipService_GetUserPermissions_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // MembershipServiceServer is the server API for MembershipService service.
 // All implementations must embed UnimplementedMembershipServiceServer
 // for forward compatibility.
@@ -354,6 +367,8 @@ type MembershipServiceServer interface {
 	CheckPermission(context.Context, *CheckPermissionRequest) (*CheckPermissionResponse, error)
 	// GetPermissions retrieves all available permission names in the system.
 	GetPermissions(context.Context, *GetPermissionsRequest) (*GetPermissionsResponse, error)
+	// GetUserPermissions retrieves all permissions for a user. If guild_id is provided, returns guild-specific permissions; otherwise returns global permissions.
+	GetUserPermissions(context.Context, *GetUserPermissionsRequest) (*GetUserPermissionsResponse, error)
 	mustEmbedUnimplementedMembershipServiceServer()
 }
 
@@ -426,6 +441,9 @@ func (UnimplementedMembershipServiceServer) CheckPermission(context.Context, *Ch
 }
 func (UnimplementedMembershipServiceServer) GetPermissions(context.Context, *GetPermissionsRequest) (*GetPermissionsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetPermissions not implemented")
+}
+func (UnimplementedMembershipServiceServer) GetUserPermissions(context.Context, *GetUserPermissionsRequest) (*GetUserPermissionsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetUserPermissions not implemented")
 }
 func (UnimplementedMembershipServiceServer) mustEmbedUnimplementedMembershipServiceServer() {}
 func (UnimplementedMembershipServiceServer) testEmbeddedByValue()                           {}
@@ -826,6 +844,24 @@ func _MembershipService_GetPermissions_Handler(srv interface{}, ctx context.Cont
 	return interceptor(ctx, in, info, handler)
 }
 
+func _MembershipService_GetUserPermissions_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetUserPermissionsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MembershipServiceServer).GetUserPermissions(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: MembershipService_GetUserPermissions_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MembershipServiceServer).GetUserPermissions(ctx, req.(*GetUserPermissionsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // MembershipService_ServiceDesc is the grpc.ServiceDesc for MembershipService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -916,6 +952,10 @@ var MembershipService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetPermissions",
 			Handler:    _MembershipService_GetPermissions_Handler,
+		},
+		{
+			MethodName: "GetUserPermissions",
+			Handler:    _MembershipService_GetUserPermissions_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

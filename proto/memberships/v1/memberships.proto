@@ -447,6 +447,24 @@ service MembershipService {
       }
     };
   }
+
+  // GetUserPermissions retrieves all permissions for a user. If guild_id is provided, returns guild-specific permissions; otherwise returns global permissions.
+  rpc GetUserPermissions(GetUserPermissionsRequest) returns (GetUserPermissionsResponse) {
+    option (google.api.http) = {
+      get : "/api/v1/users/{user_id}/permissions"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags : "Permissions"
+      summary : "Get user permissions"
+      description : "Returns all permissions for the specified user. If guild_id is provided, returns permissions within that guild; otherwise returns global permissions. Considers roles, overrides, and inheritance."
+      security: {
+        security_requirement: {
+          key: "BearerAuth";
+          value: {}
+        }
+      }
+    };
+  }
 }
 
 // =====================
@@ -840,5 +858,17 @@ message GetPermissionsRequest {
 message GetPermissionsResponse {
   // List of all available permission names in the system.
   repeated string permissions = 1;
+}
+
+message GetUserPermissionsRequest {
+  // User identifier to get permissions for.
+  uint64 user_id = 1 [ (buf.validate.field).required = true ];
+  // Optional guild identifier. If provided, returns permissions within the guild; otherwise returns global permissions.
+  optional uint64 guild_id = 2;
+}
+
+message GetUserPermissionsResponse {
+  // List of all permissions for the user with their resource paths and allow/deny status.
+  repeated Permission permissions = 1;
 }
 
