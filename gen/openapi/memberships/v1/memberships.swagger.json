@@ -987,6 +987,53 @@
           }
         ]
       }
+    },
+    "/api/v1/users/{userId}/permissions": {
+      "get": {
+        "summary": "Get user permissions",
+        "description": "Returns all permissions for the specified user. If guild_id is provided, returns permissions within that guild; otherwise returns global permissions. Considers roles, overrides, and inheritance.",
+        "operationId": "MembershipService_GetUserPermissions",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1GetUserPermissionsResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "userId",
+            "description": "User identifier to get permissions for.",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uint64"
+          },
+          {
+            "name": "guildId",
+            "description": "Optional guild identifier. If provided, returns permissions within the guild; otherwise returns global permissions.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "uint64"
+          }
+        ],
+        "tags": [
+          "Permissions"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
     }
   },
   "definitions": {
@@ -1322,6 +1369,19 @@
             "$ref": "#/definitions/v1UserOverride"
           },
           "description": "List of user overrides."
+        }
+      }
+    },
+    "v1GetUserPermissionsResponse": {
+      "type": "object",
+      "properties": {
+        "permissions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1Permission"
+          },
+          "description": "List of all permissions for the user with their resource paths and allow/deny status."
         }
       }
     },
