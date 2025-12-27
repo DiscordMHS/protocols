@@ -1377,6 +1377,43 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
 
+  /api/v1/users/{user_id}/permissions:
+    get:
+      tags:
+        - MembershipService
+      summary: Получить разрешения пользователя
+      description: Проксирует запрос в membership-service для получения всех разрешений пользователя. Если передан guild_id, возвращает разрешения в рамках гильдии; иначе возвращает глобальные разрешения
+      operationId: getUserPermissions
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: guild_id
+          in: query
+          description: Опциональный ID гильдии для получения разрешений в рамках гильдии
+          schema:
+            type: integer
+            format: uint64
+            minimum: 0
+      responses:
+        '200':
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetUserPermissionsResponse'
+        '400':
+          description: Неверный запрос
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        default:
+          description: Неизвестная ошибка
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
   /api/v1/guilds/{guild_id}/invites:
     post:
       tags:
@@ -3533,6 +3570,15 @@ components:
           items:
             type: string
           description: Список всех доступных названий разрешений в системе
+
+    GetUserPermissionsResponse:
+      type: object
+      properties:
+        permissions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Permission'
+          description: Список всех разрешений пользователя с путями к ресурсам и статусом разрешения/запрета
 
     UpdateRoleOverridesRequest:
       type: object
