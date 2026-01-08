@@ -1,8 +1,8 @@
 syntax = "proto3";
 
-package message.v1;
+package messages.v1;
 
-option go_package = "github.com/DiscordMHS/protocols/gen/go/message/v1;message";
+option go_package = "github.com/DiscordMHS/protocols/gen/go/messages/v1;messages";
 
 import "buf/validate/validate.proto";
 import "google/api/annotations.proto";

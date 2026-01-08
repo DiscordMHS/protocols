@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package notification.v1;
+
+option go_package = "github.com/DiscordMHS/protocols/gen/go/notification/v1;notification";
+
+import "buf/validate/validate.proto";
+import "proto/messages/v1/messages.proto";
+
+message NewMessageEvent {
+  uint64 channel_id = 1 [
+    (buf.validate.field).uint64.gt = 0
+  ];
+  messages.v1.Message message = 2 [
+    (buf.validate.field).required = true
+  ];
+}
+
