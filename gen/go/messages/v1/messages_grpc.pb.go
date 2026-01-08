@@ -2,9 +2,9 @@
 // versions:
 // - protoc-gen-go-grpc v1.5.1
 // - protoc             (unknown)
-// source: message/v1/message.proto
+// source: proto/messages/v1/messages.proto
 
-package message
+package messages
 
 import (
 	context "context"
@@ -19,11 +19,11 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	MessageService_GetMessageById_FullMethodName         = "/message.v1.MessageService/GetMessageById"
-	MessageService_GetMessagesByChannelId_FullMethodName = "/message.v1.MessageService/GetMessagesByChannelId"
-	MessageService_CreateMessage_FullMethodName          = "/message.v1.MessageService/CreateMessage"
-	MessageService_UpdateMessage_FullMethodName          = "/message.v1.MessageService/UpdateMessage"
-	MessageService_DeleteMessage_FullMethodName          = "/message.v1.MessageService/DeleteMessage"
+	MessageService_GetMessageById_FullMethodName         = "/messages.v1.MessageService/GetMessageById"
+	MessageService_GetMessagesByChannelId_FullMethodName = "/messages.v1.MessageService/GetMessagesByChannelId"
+	MessageService_CreateMessage_FullMethodName          = "/messages.v1.MessageService/CreateMessage"
+	MessageService_UpdateMessage_FullMethodName          = "/messages.v1.MessageService/UpdateMessage"
+	MessageService_DeleteMessage_FullMethodName          = "/messages.v1.MessageService/DeleteMessage"
 )
 
 // MessageServiceClient is the client API for MessageService service.
@@ -244,7 +244,7 @@ func _MessageService_DeleteMessage_Handler(srv interface{}, ctx context.Context,
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var MessageService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "message.v1.MessageService",
+	ServiceName: "messages.v1.MessageService",
 	HandlerType: (*MessageServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
@@ -269,5 +269,5 @@ var MessageService_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "message/v1/message.proto",
+	Metadata: "proto/messages/v1/messages.proto",
 }
